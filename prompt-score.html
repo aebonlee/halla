@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <!-- /FAVICON -->
+  <title>프롬프트 자동 점수화 - 한라대학교 AC 기초 트랙</title>
+  <meta name="description" content="작성한 프롬프트를 SCORE 기준으로 자동 채점. 키워드 분석으로 구체성·맥락·출력·역할·효과성을 100점 만점으로 평가.">
+  <!-- OG META -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 AC 기초 트랙">
+  <meta property="og:url" content="https://halla.dreamitbiz.com/prompt-score.html">
+  <meta property="og:title" content="프롬프트 자동 점수화 - 한라대학교 AC 기초 트랙">
+  <meta property="og:description" content="작성한 프롬프트를 SCORE 기준으로 자동 채점하고 즉시 피드백을 받는 도구.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://halla.dreamitbiz.com/prompt-score.html">
+  <!-- /OG META -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260606">
+  <style>
+    /* 시나리오 선택 그리드 */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .scenario-pick {
+      background: white;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      text-align: left;
+    }
+    .scenario-pick:hover {
+      border-color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.04);
+    }
+    .scenario-pick.selected {
+      border-color: var(--color-primary);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.04));
+    }
+    .scenario-pick strong { display: block; font-size: 14px; margin-bottom: 4px; }
+    .scenario-pick span { font-size: 12px; color: var(--color-text-muted); line-height: 1.4; }
+
+    /* 프롬프트 입력 박스 */
+    .prompt-workshop {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .prompt-workshop label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .prompt-workshop textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+    .prompt-workshop textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+    .prompt-workshop .hint-box {
+      background: rgba(245, 158, 11, 0.06);
+      border-left: 3px solid var(--color-accent);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #92400E;
+      margin: 12px 0;
+      border-radius: var(--radius-sm);
+      display: none;
+    }
+    .prompt-workshop .hint-box.shown { display: block; }
+    .prompt-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .prompt-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    /* 결과 패널 */
+    .result-panel {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 32px;
+      margin-top: 24px;
+      display: none;
+    }
+    .result-panel.shown { display: block; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--color-border);
+      flex-wrap: wrap;
+    }
+    .grade-badge {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .grade-info { flex: 1; min-width: 200px; }
+    .total-score {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .total-score small { font-size: 18px; color: var(--color-text-muted); font-weight: 600; }
+    .grade-label { font-size: 14px; color: var(--color-text-muted); font-weight: 600; }
+
+    .score-rows { display: grid; gap: 12px; }
+    .score-row-item {
+      display: grid;
+      grid-template-columns: 100px 1fr 60px;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 0;
+    }
+    .score-row-item .tag {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .score-row-item .tag .letter {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      text-align: center;
+      border-radius: 50%;
+      color: white;
+      font-size: 11px;
+      margin-right: 6px;
+      background: var(--color-primary);
+    }
+    .score-row-item .bar {
+      height: 10px;
+      background: var(--color-bg);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .score-row-item .bar > div {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 0.6s ease;
+    }
+    .score-row-item .mark {
+      font-weight: 800;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-size: 14px;
+    }
+    .feedback-list {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+    }
+    .feedback-list h3 { font-size: 16px; margin-bottom: 12px; }
+    .feedback-list .fb {
+      display: flex;
+      gap: 12px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      background: var(--color-bg);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .feedback-list .fb .fb-letter {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 50%;
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+      background: var(--color-primary);
+    }
+
+    /* 이력 */
+    .history-section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--color-border);
+    }
+    .history-item {
+      display: grid;
+      grid-template-columns: 50px 1fr 80px;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+    }
+    .history-item .h-grade {
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 50%;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .history-item .h-text {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-item .h-score { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="about.html">About</a></li>
+      <li><a href="syllabus.html">강의계획서</a></li>
+      <li><a href="gen-ai.html">Gen AI활용</a></li>
+      <li><a href="pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger active" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="prompt-score.html" class="active">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button"><span>🌤</span> 오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="ai-basic/index.html">과정 개요</a></li>
+          <li><a href="ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button"><span>🌙</span> 오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
+          <li><a href="vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="vibe-coding/day5.html">Day 05 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li><a href="resources.html">참고자료</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="index.html">홈</a> &nbsp;›&nbsp;
+      <a href="prompt-practice.html">프롬프트 실습</a> &nbsp;›&nbsp;
+      <span>자동 점수화</span>
+    </div>
+    <h1>프롬프트 자동 점수화</h1>
+    <p style="opacity:0.95;">키워드 분석으로 본인 프롬프트를 SCORE 기준 100점 만점으로 즉시 평가. 다시 작성하며 점수 변화 추적.</p>
+  </div>
+</section>
+
+<div class="lesson-layout">
+
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#scenario">시나리오 선택</a></li>
+      <li><a href="#workshop">프롬프트 작성</a></li>
+      <li><a href="#result">평가 결과</a></li>
+      <li><a href="#history">이력</a></li>
+      <li><a href="#how-it-works">채점 원리</a></li>
+    </ul>
+  </aside>
+
+  <main class="lesson-main">
+
+    <div class="lesson-section" id="scenario" data-toc>
+      <h2>시나리오 선택</h2>
+      <p>관심 있는 주제를 고르세요. 자유 작성도 가능합니다.</p>
+
+      <div class="scenario-grid" id="scenario-grid">
+        <!-- JS가 채움 -->
+      </div>
+    </div>
+
+    <div class="lesson-section" id="workshop" data-toc>
+      <h2>프롬프트 작성</h2>
+
+      <div class="prompt-workshop">
+        <label for="prompt-text">본인 프롬프트 입력</label>
+        <div id="hint-box" class="hint-box"></div>
+        <textarea id="prompt-text" placeholder="예) 당신은 10년차 마케팅 디렉터입니다. 한라대학교 학생 동아리 모집을 위한 인스타그램 캐러셀 5장을 작성해 주세요. 각 슬라이드 30자 이내, 친근한 톤, 행동 유도(CTA) 1줄씩 포함."></textarea>
+
+        <div class="prompt-meta">
+          <span id="char-count">0자</span>
+          <span id="sentence-count">0문장</span>
+        </div>
+
+        <div class="prompt-actions">
+          <button type="button" class="btn btn-primary" id="btn-evaluate">평가하기</button>
+          <button type="button" class="btn btn-secondary" id="btn-reevaluate" style="display:none;">재평가</button>
+          <button type="button" class="btn btn-ghost" id="btn-reset">초기화</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="result" data-toc>
+      <h2>평가 결과</h2>
+      <p id="result-empty" style="color:var(--color-text-muted);">아직 평가 전입니다. 위에서 프롬프트를 작성하고 <strong>평가하기</strong> 버튼을 누르세요.</p>
+
+      <div class="result-panel" id="result-panel">
+        <div class="result-header">
+          <div class="grade-badge" id="grade-badge">-</div>
+          <div class="grade-info">
+            <div class="total-score" id="total-score">-<small> / 100</small></div>
+            <div class="grade-label" id="grade-label">평가 대기 중</div>
+          </div>
+        </div>
+
+        <div class="score-rows" id="score-rows"></div>
+
+        <div class="feedback-list">
+          <h3>피드백</h3>
+          <div id="feedback-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="history" data-toc>
+      <h2>이력</h2>
+      <p style="color:var(--color-text-muted); font-size:13px;">최근 평가 10건이 브라우저에 저장됩니다.</p>
+      <div id="history-list"></div>
+      <button type="button" class="btn btn-ghost" id="btn-clear-history" style="margin-top:12px;">이력 모두 지우기</button>
+    </div>
+
+    <div class="lesson-section" id="how-it-works" data-toc>
+      <h2>채점 원리</h2>
+      <p>실제 LLM 호출 없이 브라우저에서 키워드·패턴을 분석해 즉시 점수를 계산합니다. 5가지 SCORE 기준 각 20점, 총 100점.</p>
+
+      <table style="width:100%; border-collapse:collapse; margin-top:16px;">
+        <thead>
+          <tr style="background:var(--color-bg);">
+            <th style="padding:10px; text-align:left; border-bottom:2px solid var(--color-border); width:90px;">SCORE</th>
+            <th style="padding:10px; text-align:left; border-bottom:2px solid var(--color-border);">채점 키워드·신호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><strong>S</strong> 구체성</td><td style="padding:8px; border-bottom:1px solid var(--color-border);">길이, 숫자, 구체적 단위(자/원/일), 조건·제약 키워드, 문장 수</td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><strong>C</strong> 맥락</td><td style="padding:8px; border-bottom:1px solid var(--color-border);">배경, 대상(독자/사용자/고객), 목적/이유, 제약 단서</td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><strong>O</strong> 출력</td><td style="padding:8px; border-bottom:1px solid var(--color-border);">형식(표·목록·JSON), 분량(자/단어/페이지), 구조(섹션·단계), 톤·스타일</td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><strong>R</strong> 역할</td><td style="padding:8px; border-bottom:1px solid var(--color-border);">"당신은/너는/~로서/~처럼", 전문성·경력 단서, 관점·시각 표현</td></tr>
+          <tr><td style="padding:8px;"><strong>E</strong> 효과성</td><td style="padding:8px;">위 4개의 종합, 예시 포함 여부, 충분한 길이·구성</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:24px;">등급 기준</h3>
+      <ul>
+        <li><strong style="color:#d69e2e;">S</strong> (90+) — 완성도 최상, 실전 그대로 사용 가능</li>
+        <li><strong style="color:#38a169;">A</strong> (70+) — 우수, 1-2가지만 다듬으면 최상</li>
+        <li><strong style="color:#4299e1;">B</strong> (50+) — 양호, 핵심 요소 보강 필요</li>
+        <li><strong style="color:#ed8936;">C</strong> (30+) — 보통, 4대 구성요소 점검</li>
+        <li><strong style="color:#a0aec0;">D</strong> (0-29) — 개선 필요, 처음부터 설계</li>
+      </ul>
+
+      <div class="callout callout-info" style="margin-top:20px;">
+        <div class="callout-title">참고</div>
+        본 도구는 학습 보조 용입니다. 키워드 매칭 기반이라 의미·맥락의 깊이는 평가하지 못하니, 점수보다 <strong>피드백</strong>을 우선 참고하세요. 더 깊은 학습은 <a href="prompt-practice.html">프롬프트 학습 페이지</a>에서.
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">프롬프트 실습</div>
+      <ul class="footer-links">
+        <li><a href="prompt-practice.html">학습 + 시나리오</a></li>
+        <li><a href="prompt-score.html">자동 점수화 도구</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li>DreamIT Biz · 강사 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="assets/js/site-config.js?v=20260606"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/notifications.js?v=20260606"></script>
+<script src="assets/js/auth.js?v=20260606"></script>
+<script src="assets/js/main.js?v=20260606"></script>
+
+<!-- 프롬프트 자동 채점 엔진 -->
+<script>
+(function () {
+  // ── 시나리오 ──
+  const SCENARIOS = [
+    { id: 'free',  title: '자유 작성', desc: '주제 제한 없음. 직접 정한 프롬프트', hint: '' },
+    { id: 's1',    title: '마케팅 콘텐츠', desc: 'SNS 광고 카피·캐러셀',
+      hint: '제품 정보, 타깃 고객층, 톤앤매너, 채널(인스타/페북), 글자수 제한을 포함해 보세요.' },
+    { id: 's2',    title: '코드 리뷰 요청', desc: '본인 코드 리뷰 요청',
+      hint: '언어, 코드 목적, 리뷰 관점(성능/보안/가독성), 출력 형식(피드백 표·우선순위)을 포함.' },
+    { id: 's3',    title: '학습 자료 생성', desc: '교육용 콘텐츠 작성',
+      hint: '학습 대상(연령·수준), 분량, 형식(슬라이드/문서/퀴즈), 핵심 내용 영역을 포함.' },
+    { id: 's4',    title: '이메일 작성', desc: '비즈니스 이메일 답장',
+      hint: '받는 사람, 본인 신분, 톤(격식/친근), 핵심 메시지, 길이를 포함.' },
+    { id: 's5',    title: '발표자료 개요', desc: '발표 슬라이드 구조 잡기',
+      hint: '발표 시간, 청중, 발표 목적, 구조(후크→본론→마무리), 슬라이드 수.' },
+  ];
+
+  // ── SCORE 채점 엔진 (dasco analyzePrompt 포팅) ──
+  function analyzePrompt(text) {
+    const t = (text || '').trim();
+    if (!t) return null;
+
+    const len = t.length;
+    const sentences = t.split(/[.!?\n。]/).filter(s => s.trim().length > 3);
+
+    // S: Specificity
+    let S = 0;
+    const hasNumbers = /\d+/.test(t);
+    const hasSpecificWords = /(\d+[개월년일시분초건장자%원달러]|예산|기한|마감|분량|범위|제한|이하|이상|이내)/.test(t)
+      || /(\d+\s*(items?|pages?|words?|minutes?|hours?|days?|months?|years?|%))/i.test(t);
+    const hasConditions = /(조건|제약|요구사항|제한|constraints?|requirements?|conditions?|limit)/i.test(t);
+    const hasDetails = sentences.length >= 2;
+    if (len > 30) S += 3;
+    if (len > 80) S += 3;
+    if (len > 150) S += 2;
+    if (hasNumbers) S += 4;
+    if (hasSpecificWords) S += 4;
+    if (hasConditions) S += 2;
+    if (hasDetails) S += 2;
+    S = Math.min(20, S);
+
+    // C: Context
+    let C = 0;
+    const hasBackground = /(배경|상황|현재|목적|이유|위해|because|background|situation|currently|purpose|in order to)/i.test(t);
+    const hasAudience = /(대상|독자|사용자|학생|고객|팀|직장인|교수|for\s+\w+|target|audience|users?|readers?|students?|customers?)/i.test(t);
+    const hasPurpose = /(위해|목적|활용|사용|용도|to\s+\w+|purpose|goal|objective|aim)/i.test(t);
+    const hasConstraints = /(제약|조건|제한|단|다만|예외|단서|however|except|constraint|limitation|note that)/i.test(t);
+    if (hasBackground) C += 5;
+    if (hasAudience) C += 5;
+    if (hasPurpose) C += 5;
+    if (hasConstraints) C += 3;
+    if (len > 100) C += 2;
+    C = Math.min(20, C);
+
+    // O: Output
+    let O = 0;
+    const hasFormat = /(표|목록|리스트|마크다운|JSON|HTML|CSV|슬라이드|문서|보고서|table|list|markdown|format|report|slide|document|bullet)/i.test(t);
+    const hasLength = /(글자|단어|문장|문단|페이지|분량|\d+자|\d+글자|words?|sentences?|paragraphs?|pages?|characters?|length)/i.test(t);
+    const hasStructure = /(제목|소제목|섹션|항목|챕터|단계|순서|section|heading|chapter|step|structure|outline)/i.test(t);
+    const hasStyle = /(톤|어조|스타일|격식|친근|전문|formal|informal|casual|professional|tone|style|manner)/i.test(t);
+    if (hasFormat) O += 6;
+    if (hasLength) O += 5;
+    if (hasStructure) O += 5;
+    if (hasStyle) O += 4;
+    O = Math.min(20, O);
+
+    // R: Role
+    let R = 0;
+    const hasRole = /(당신은|너는|역할|전문가|~로서|~처럼|act as|you are|as a|role|expert|specialist|professional|imagine you)/i.test(t);
+    const hasExpertise = /(경력|경험|\d+년|전문|석사|박사|수석|시니어|senior|experienced|years?.+experience|PhD|master)/i.test(t);
+    const hasPersona = /(관점|입장|시각|perspective|viewpoint|standpoint|approach)/i.test(t);
+    if (hasRole) R += 10;
+    if (hasExpertise) R += 6;
+    if (hasPersona) R += 4;
+    R = Math.min(20, R);
+
+    // E: Effectiveness
+    let E = 0;
+    const criteriaCount = [S > 8, C > 8, O > 8, R > 8].filter(Boolean).length;
+    E += criteriaCount * 3;
+    if (len > 50) E += 2;
+    if (len > 120) E += 2;
+    if (sentences.length >= 3) E += 2;
+    const hasExample = /(예시|예를 들어|예:|예\)|sample|example|e\.g\.|for instance|such as)/i.test(t);
+    if (hasExample) E += 4;
+    E = Math.min(20, E);
+
+    const total = S + C + O + R + E;
+    let grade = 'D';
+    if (total >= 90) grade = 'S';
+    else if (total >= 70) grade = 'A';
+    else if (total >= 50) grade = 'B';
+    else if (total >= 30) grade = 'C';
+
+    // 피드백
+    const fb = (score, good, mid, bad) =>
+      score >= 16 ? good : score >= 10 ? mid : bad;
+
+    return {
+      S, C, O, R, E, total, grade,
+      length: len,
+      sentences: sentences.length,
+      feedback: {
+        S: fb(S, '구체적이고 명확한 요청입니다.',
+              '어느 정도 구체적이나, 수치나 조건을 더 추가해 보세요.',
+              '요청이 모호합니다. 구체적인 수치·범위·조건을 추가하세요.'),
+        C: fb(C, '맥락 정보가 충분합니다.',
+              '맥락이 있으나, 대상·목적·배경을 더 명시해 보세요.',
+              '배경 정보, 대상 독자, 사용 목적을 추가하세요.'),
+        O: fb(O, '출력 형식이 잘 지정되었습니다.',
+              '출력 형식이 부분적입니다. 형식·분량·구조를 더 명시해 보세요.',
+              '원하는 출력 형식(표·목록·보고서 등), 분량, 구조를 지정하세요.'),
+        R: fb(R, '역할 부여가 잘 되어 있습니다.',
+              '역할이 부여되었으나, 전문성이나 경력을 추가해 보세요.',
+              '"당신은 ~ 전문가입니다" 형태로 역할을 부여해 보세요.'),
+        E: fb(E, '종합적으로 효과적인 프롬프트입니다.',
+              '대체로 효과적이나, 부족한 SCORE 요소를 보완하세요.',
+              '여러 SCORE 요소가 부족합니다. 위 피드백을 참고해 보완하세요.'),
+      },
+    };
+  }
+
+  function gradeColor(grade) {
+    return ({ S: '#d69e2e', A: '#38a169', B: '#4299e1', C: '#ed8936' }[grade]) || '#a0aec0';
+  }
+  function scoreBarColor(score) {
+    if (score >= 16) return '#38a169';
+    if (score >= 10) return '#d69e2e';
+    if (score >= 5) return '#ed8936';
+    return '#e53e3e';
+  }
+
+  // ── 상태 ──
+  let selectedScenario = 'free';
+  const STORAGE_KEY = 'halla_prompt_score_history';
+
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  }
+  function saveHistory(list) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(-10))); }
+    catch {}
+  }
+
+  // ── 시나리오 렌더 ──
+  const grid = document.getElementById('scenario-grid');
+  SCENARIOS.forEach(s => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'scenario-pick' + (s.id === 'free' ? ' selected' : '');
+    btn.dataset.id = s.id;
+    btn.innerHTML = `<strong>${s.title}</strong><span>${s.desc}</span>`;
+    btn.addEventListener('click', () => selectScenario(s.id));
+    grid.appendChild(btn);
+  });
+
+  function selectScenario(id) {
+    selectedScenario = id;
+    grid.querySelectorAll('.scenario-pick').forEach(b => {
+      b.classList.toggle('selected', b.dataset.id === id);
+    });
+    const s = SCENARIOS.find(x => x.id === id);
+    const hintBox = document.getElementById('hint-box');
+    if (s && s.hint) {
+      hintBox.textContent = '힌트 — ' + s.hint;
+      hintBox.classList.add('shown');
+    } else {
+      hintBox.classList.remove('shown');
+    }
+  }
+
+  // ── 입력 보조 ──
+  const textarea = document.getElementById('prompt-text');
+  textarea.addEventListener('input', () => {
+    const t = textarea.value;
+    document.getElementById('char-count').textContent = t.length + '자';
+    const sentences = t.split(/[.!?\n。]/).filter(s => s.trim().length > 3).length;
+    document.getElementById('sentence-count').textContent = sentences + '문장';
+  });
+
+  // ── 평가 ──
+  function renderResult(result) {
+    if (!result) return;
+    document.getElementById('result-empty').style.display = 'none';
+    const panel = document.getElementById('result-panel');
+    panel.classList.add('shown');
+
+    // 헤더
+    const gb = document.getElementById('grade-badge');
+    gb.textContent = result.grade;
+    gb.style.background = `linear-gradient(135deg, ${gradeColor(result.grade)}, ${gradeColor(result.grade)}dd)`;
+    document.getElementById('total-score').innerHTML = `${result.total}<small> / 100</small>`;
+    const labels = { S: '완성도 최상 — 실전 그대로 사용 가능',
+                     A: '우수 — 1~2가지만 다듬으면 최상',
+                     B: '양호 — 핵심 요소 보강 필요',
+                     C: '보통 — 4대 구성요소 점검',
+                     D: '개선 필요 — 처음부터 설계' };
+    document.getElementById('grade-label').textContent = labels[result.grade];
+
+    // 점수 막대
+    const rows = document.getElementById('score-rows');
+    rows.innerHTML = ['S','C','O','R','E'].map(k => {
+      const labels = { S:'구체성', C:'맥락', O:'출력', R:'역할', E:'효과성' };
+      const v = result[k];
+      const color = scoreBarColor(v);
+      return `<div class="score-row-item">
+        <div class="tag"><span class="letter" style="background:${color}">${k}</span>${labels[k]}</div>
+        <div class="bar"><div style="width:${(v/20)*100}%; background:linear-gradient(90deg, ${color}, ${color}dd)"></div></div>
+        <div class="mark" style="color:${color}">${v}<span style="color:var(--color-text-muted); font-weight:500;"> / 20</span></div>
+      </div>`;
+    }).join('');
+
+    // 피드백
+    const fc = document.getElementById('feedback-content');
+    fc.innerHTML = ['S','C','O','R','E'].map(k => {
+      const color = scoreBarColor(result[k]);
+      return `<div class="fb"><span class="fb-letter" style="background:${color}">${k}</span><span>${result.feedback[k]}</span></div>`;
+    }).join('');
+
+    document.getElementById('btn-reevaluate').style.display = '';
+    document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function evaluate() {
+    const text = textarea.value.trim();
+    if (!text) { alert('먼저 프롬프트를 작성해 주세요.'); return; }
+    const result = analyzePrompt(text);
+    renderResult(result);
+    // 이력 저장
+    const list = loadHistory();
+    list.push({
+      text: text.slice(0, 200),
+      scenario: selectedScenario,
+      total: result.total,
+      grade: result.grade,
+      time: new Date().toISOString(),
+    });
+    saveHistory(list);
+    renderHistory();
+  }
+
+  document.getElementById('btn-evaluate').addEventListener('click', evaluate);
+  document.getElementById('btn-reevaluate').addEventListener('click', evaluate);
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    textarea.value = '';
+    document.getElementById('char-count').textContent = '0자';
+    document.getElementById('sentence-count').textContent = '0문장';
+    document.getElementById('result-panel').classList.remove('shown');
+    document.getElementById('result-empty').style.display = '';
+    document.getElementById('btn-reevaluate').style.display = 'none';
+  });
+
+  // ── 이력 ──
+  function renderHistory() {
+    const list = loadHistory().reverse();
+    const el = document.getElementById('history-list');
+    if (list.length === 0) {
+      el.innerHTML = '<p style="color:var(--color-text-muted); font-size:13px;">이력이 없습니다.</p>';
+      return;
+    }
+    el.innerHTML = list.map(h => {
+      const color = gradeColor(h.grade);
+      const time = new Date(h.time).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+      const scenario = (SCENARIOS.find(s => s.id === h.scenario) || {}).title || '-';
+      return `<div class="history-item">
+        <div class="h-grade" style="background:linear-gradient(135deg, ${color}, ${color}dd)">${h.grade}</div>
+        <div>
+          <div style="font-weight:700; font-size:13px;">${scenario} <span style="color:var(--color-text-muted); font-weight:500;">· ${time}</span></div>
+          <div class="h-text">${h.text.replace(/</g,'&lt;')}</div>
+        </div>
+        <div class="h-score" style="color:${color}">${h.total}<span style="color:var(--color-text-muted); font-weight:500;"> / 100</span></div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('btn-clear-history').addEventListener('click', () => {
+    if (confirm('이력을 모두 삭제할까요?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      renderHistory();
+    }
+  });
+
+  // 초기 렌더
+  renderHistory();
+})();
+</script>
+</body>
+</html>
