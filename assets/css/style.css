@@ -2175,6 +2175,14 @@ pre code {
 .footer-links a { color: #cbd5e1; text-decoration: none; font-size: 13.5px; transition: color 0.15s; }
 .footer-links a:hover { color: white; }
 
+/* 2열 그리드 변형 — 사이트 메뉴에 사용 */
+.footer-links.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 18px;
+}
+.footer-links.cols-2 li { margin-bottom: 9px; }
+
 .footer-bottom {
   max-width: 1200px;
   margin: 40px auto 0;
