@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260628">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260629">
 </head>
 <body>
 
@@ -105,6 +105,7 @@
       <li><a href="#tools">AI 도구 공식</a></li>
       <li><a href="#learn-more">더 공부하고 싶을 때</a></li>
       <li><a href="#design">디자인 영감</a></li>
+      <li><a href="#colors">색상환 · 컬러 팔레트</a></li>
       <li><a href="#images">무료 이미지</a></li>
       <li><a href="#prompts">프롬프트 모음</a></li>
       <li><a href="#community">한국어 AI 커뮤니티</a></li>
@@ -163,6 +164,183 @@
       <li><a href="https://fonts.google.com" target="_blank" rel="noopener">Google Fonts</a> — 무료 웹폰트</li>
       <li><a href="https://pretendard.dev" target="_blank" rel="noopener">Pretendard</a> — 한글에 가장 어울리는 무료 폰트 (이 사이트에서도 사용)</li>
     </ul>
+  </div>
+
+  <div class="lesson-section" id="colors" data-toc>
+    <h2>색상환 · 컬러 팔레트</h2>
+    <p>웹페이지에서 색을 고를 때 참고할 수 있는 표입니다.<br>색상 칩을 클릭하면 HEX 코드가 복사됩니다.</p>
+
+    <h3>12색상환 (Color Wheel)</h3>
+    <p>인접한 색끼리는 부드럽고, 마주 보는 색끼리는 강한 대비를 만듭니다.</p>
+    <div class="color-wheel-wrap">
+      <svg viewBox="0 0 320 320" class="color-wheel" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="12색상환">
+        <g transform="translate(160 160)">
+          <!-- 12 색상 슬라이스: 각 30도 -->
+          <g class="cw-slice"><path d="M 0 0 L 0 -150 A 150 150 0 0 1 75 -129.9 Z" fill="#ef4444"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 75 -129.9 A 150 150 0 0 1 129.9 -75 Z" fill="#f97316"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 129.9 -75 A 150 150 0 0 1 150 0 Z" fill="#f59e0b"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 150 0 A 150 150 0 0 1 129.9 75 Z" fill="#eab308"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 129.9 75 A 150 150 0 0 1 75 129.9 Z" fill="#84cc16"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 75 129.9 A 150 150 0 0 1 0 150 Z" fill="#22c55e"/></g>
+          <g class="cw-slice"><path d="M 0 0 L 0 150 A 150 150 0 0 1 -75 129.9 Z" fill="#10b981"/></g>
+          <g class="cw-slice"><path d="M 0 0 L -75 129.9 A 150 150 0 0 1 -129.9 75 Z" fill="#06b6d4"/></g>
+          <g class="cw-slice"><path d="M 0 0 L -129.9 75 A 150 150 0 0 1 -150 0 Z" fill="#3b82f6"/></g>
+          <g class="cw-slice"><path d="M 0 0 L -150 0 A 150 150 0 0 1 -129.9 -75 Z" fill="#6366f1"/></g>
+          <g class="cw-slice"><path d="M 0 0 L -129.9 -75 A 150 150 0 0 1 -75 -129.9 Z" fill="#a855f7"/></g>
+          <g class="cw-slice"><path d="M 0 0 L -75 -129.9 A 150 150 0 0 1 0 -150 Z" fill="#ec4899"/></g>
+          <!-- 중앙 흰 원 -->
+          <circle r="50" fill="var(--color-bg)" stroke="var(--color-border)" stroke-width="1"/>
+          <text y="6" text-anchor="middle" font-size="14" font-weight="700" fill="var(--color-text)">12색</text>
+        </g>
+      </svg>
+      <div class="color-wheel-legend">
+        <div><strong>난색(Warm)</strong><br><small>빨강 · 주황 · 노랑 — 따뜻함·활력·식욕</small></div>
+        <div><strong>한색(Cool)</strong><br><small>초록 · 파랑 · 보라 — 차분·신뢰·집중</small></div>
+        <div><strong>중성(Neutral)</strong><br><small>흰 · 회색 · 검정 — 균형·여백</small></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;">기본 12색 팔레트</h3>
+    <div class="color-grid">
+      <button class="color-chip" data-hex="#ef4444"><span class="chip" style="background:#ef4444"></span><span class="chip-name">Red</span><code>#ef4444</code></button>
+      <button class="color-chip" data-hex="#f97316"><span class="chip" style="background:#f97316"></span><span class="chip-name">Orange</span><code>#f97316</code></button>
+      <button class="color-chip" data-hex="#f59e0b"><span class="chip" style="background:#f59e0b"></span><span class="chip-name">Amber</span><code>#f59e0b</code></button>
+      <button class="color-chip" data-hex="#eab308"><span class="chip" style="background:#eab308"></span><span class="chip-name">Yellow</span><code>#eab308</code></button>
+      <button class="color-chip" data-hex="#84cc16"><span class="chip" style="background:#84cc16"></span><span class="chip-name">Lime</span><code>#84cc16</code></button>
+      <button class="color-chip" data-hex="#22c55e"><span class="chip" style="background:#22c55e"></span><span class="chip-name">Green</span><code>#22c55e</code></button>
+      <button class="color-chip" data-hex="#10b981"><span class="chip" style="background:#10b981"></span><span class="chip-name">Emerald</span><code>#10b981</code></button>
+      <button class="color-chip" data-hex="#06b6d4"><span class="chip" style="background:#06b6d4"></span><span class="chip-name">Cyan</span><code>#06b6d4</code></button>
+      <button class="color-chip" data-hex="#3b82f6"><span class="chip" style="background:#3b82f6"></span><span class="chip-name">Blue</span><code>#3b82f6</code></button>
+      <button class="color-chip" data-hex="#6366f1"><span class="chip" style="background:#6366f1"></span><span class="chip-name">Indigo</span><code>#6366f1</code></button>
+      <button class="color-chip" data-hex="#a855f7"><span class="chip" style="background:#a855f7"></span><span class="chip-name">Purple</span><code>#a855f7</code></button>
+      <button class="color-chip" data-hex="#ec4899"><span class="chip" style="background:#ec4899"></span><span class="chip-name">Pink</span><code>#ec4899</code></button>
+    </div>
+
+    <h3 style="margin-top:32px;">색의 톤(Tone) — 같은 색 계열의 9단계</h3>
+    <p>같은 계열의 색을 밝기 단계별로 미리 정리해 두면, 강조·배경·테두리·텍스트 색을 일관되게 쓸 수 있습니다.</p>
+    <div class="tone-table">
+      <div class="tone-row">
+        <div class="tone-label">Blue</div>
+        <div class="tone-cell" style="background:#eff6ff"><span>50</span></div>
+        <div class="tone-cell" style="background:#dbeafe"><span>100</span></div>
+        <div class="tone-cell" style="background:#bfdbfe"><span>200</span></div>
+        <div class="tone-cell" style="background:#93c5fd"><span>300</span></div>
+        <div class="tone-cell" style="background:#60a5fa; color:#fff"><span>400</span></div>
+        <div class="tone-cell" style="background:#3b82f6; color:#fff"><span>500</span></div>
+        <div class="tone-cell" style="background:#2563eb; color:#fff"><span>600</span></div>
+        <div class="tone-cell" style="background:#1d4ed8; color:#fff"><span>700</span></div>
+        <div class="tone-cell" style="background:#1e40af; color:#fff"><span>800</span></div>
+        <div class="tone-cell" style="background:#1e3a8a; color:#fff"><span>900</span></div>
+      </div>
+      <div class="tone-row">
+        <div class="tone-label">Green</div>
+        <div class="tone-cell" style="background:#f0fdf4"><span>50</span></div>
+        <div class="tone-cell" style="background:#dcfce7"><span>100</span></div>
+        <div class="tone-cell" style="background:#bbf7d0"><span>200</span></div>
+        <div class="tone-cell" style="background:#86efac"><span>300</span></div>
+        <div class="tone-cell" style="background:#4ade80"><span>400</span></div>
+        <div class="tone-cell" style="background:#22c55e; color:#fff"><span>500</span></div>
+        <div class="tone-cell" style="background:#16a34a; color:#fff"><span>600</span></div>
+        <div class="tone-cell" style="background:#15803d; color:#fff"><span>700</span></div>
+        <div class="tone-cell" style="background:#166534; color:#fff"><span>800</span></div>
+        <div class="tone-cell" style="background:#14532d; color:#fff"><span>900</span></div>
+      </div>
+      <div class="tone-row">
+        <div class="tone-label">Red</div>
+        <div class="tone-cell" style="background:#fef2f2"><span>50</span></div>
+        <div class="tone-cell" style="background:#fee2e2"><span>100</span></div>
+        <div class="tone-cell" style="background:#fecaca"><span>200</span></div>
+        <div class="tone-cell" style="background:#fca5a5"><span>300</span></div>
+        <div class="tone-cell" style="background:#f87171"><span>400</span></div>
+        <div class="tone-cell" style="background:#ef4444; color:#fff"><span>500</span></div>
+        <div class="tone-cell" style="background:#dc2626; color:#fff"><span>600</span></div>
+        <div class="tone-cell" style="background:#b91c1c; color:#fff"><span>700</span></div>
+        <div class="tone-cell" style="background:#991b1b; color:#fff"><span>800</span></div>
+        <div class="tone-cell" style="background:#7f1d1d; color:#fff"><span>900</span></div>
+      </div>
+      <div class="tone-row">
+        <div class="tone-label">Gray</div>
+        <div class="tone-cell" style="background:#f9fafb"><span>50</span></div>
+        <div class="tone-cell" style="background:#f3f4f6"><span>100</span></div>
+        <div class="tone-cell" style="background:#e5e7eb"><span>200</span></div>
+        <div class="tone-cell" style="background:#d1d5db"><span>300</span></div>
+        <div class="tone-cell" style="background:#9ca3af"><span>400</span></div>
+        <div class="tone-cell" style="background:#6b7280; color:#fff"><span>500</span></div>
+        <div class="tone-cell" style="background:#4b5563; color:#fff"><span>600</span></div>
+        <div class="tone-cell" style="background:#374151; color:#fff"><span>700</span></div>
+        <div class="tone-cell" style="background:#1f2937; color:#fff"><span>800</span></div>
+        <div class="tone-cell" style="background:#111827; color:#fff"><span>900</span></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;">배색 방법 — 어울리는 색 고르기</h3>
+    <div class="harmony-grid">
+      <div class="harmony-card">
+        <div class="harmony-bar"><span style="background:#3b82f6"></span><span style="background:#f97316"></span></div>
+        <h4>보색 (Complementary)</h4>
+        <p>색상환에서 정반대 위치에 있는 두 색.<br>강한 대비 — 강조 포인트에 효과적.</p>
+      </div>
+      <div class="harmony-card">
+        <div class="harmony-bar"><span style="background:#3b82f6"></span><span style="background:#6366f1"></span><span style="background:#06b6d4"></span></div>
+        <h4>유사색 (Analogous)</h4>
+        <p>이웃한 3색.<br>안정적이고 부드러운 분위기 — 단조롭지 않게 한 색을 살짝 강조하세요.</p>
+      </div>
+      <div class="harmony-card">
+        <div class="harmony-bar"><span style="background:#ef4444"></span><span style="background:#eab308"></span><span style="background:#3b82f6"></span></div>
+        <h4>삼각 (Triadic)</h4>
+        <p>색상환에서 120도 간격 3색.<br>활기차고 균형 잡힌 느낌 — 한 색은 메인, 나머지는 보조.</p>
+      </div>
+      <div class="harmony-card">
+        <div class="harmony-bar"><span style="background:#1e40af"></span><span style="background:#3b82f6"></span><span style="background:#93c5fd"></span></div>
+        <h4>단색(Monochrome)</h4>
+        <p>같은 색의 명도만 변화.<br>차분하고 통일감 — 비즈니스·미니멀 디자인에 적합.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;">시멘틱 컬러 (의미가 정해진 색)</h3>
+    <p>웹·앱 UI에서 이미 의미가 굳어진 색입니다. 가급적 관행을 따라야 사용자가 헷갈리지 않습니다.</p>
+    <div class="semantic-grid">
+      <div class="semantic-row" style="background:#10b98115; border-left:4px solid #10b981;">
+        <strong style="color:#047857;">성공 · Success</strong>
+        <code>#10b981</code>
+        <span>완료, 확인, 저장됨</span>
+      </div>
+      <div class="semantic-row" style="background:#3b82f615; border-left:4px solid #3b82f6;">
+        <strong style="color:#1d4ed8;">정보 · Info</strong>
+        <code>#3b82f6</code>
+        <span>안내, 링크, 도움말</span>
+      </div>
+      <div class="semantic-row" style="background:#f59e0b15; border-left:4px solid #f59e0b;">
+        <strong style="color:#b45309;">주의 · Warning</strong>
+        <code>#f59e0b</code>
+        <span>경고, 확인 필요</span>
+      </div>
+      <div class="semantic-row" style="background:#ef444415; border-left:4px solid #ef4444;">
+        <strong style="color:#b91c1c;">오류 · Error</strong>
+        <code>#ef4444</code>
+        <span>실패, 삭제, 위험</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;">색 고를 때 쓰는 도구</h3>
+    <ul>
+      <li><a href="https://coolors.co" target="_blank" rel="noopener">Coolors</a> — 스페이스바로 무한히 새 팔레트 생성</li>
+      <li><a href="https://color.adobe.com" target="_blank" rel="noopener">Adobe Color</a> — 색상환 기반 배색 (보색·유사색·삼각)</li>
+      <li><a href="https://tailwindcss.com/docs/customizing-colors" target="_blank" rel="noopener">Tailwind Colors</a> — 22개 컬러 × 11단계 (이 페이지 컬러 출처)</li>
+      <li><a href="https://uicolors.app/create" target="_blank" rel="noopener">UI Colors</a> — Tailwind 형식으로 9단계 자동 생성</li>
+      <li><a href="https://realtimecolors.com" target="_blank" rel="noopener">Realtime Colors</a> — 실제 페이지에 색을 입혀 미리보기</li>
+      <li><a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener">WebAIM Contrast Checker</a> — 텍스트 대비비 검증 (가독성 필수)</li>
+      <li><a href="https://www.color-blindness.com/coblis-color-blindness-simulator/" target="_blank" rel="noopener">Coblis</a> — 색맹 시뮬레이터 (접근성 점검)</li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-title">팁 — 색은 적게, 의미는 분명히</div>
+      <ul style="margin:8px 0 0 0;">
+        <li>한 화면에 메인 1 + 보조 1 + 강조 1 = <strong>3색이면 충분</strong>합니다.</li>
+        <li>중성색(회색)은 색 수에서 빼고 마음껏 쓰세요.</li>
+        <li>색만으로 정보를 전달하지 마세요 — 색맹 사용자를 위해 아이콘·텍스트와 함께 씁니다.</li>
+      </ul>
+    </div>
   </div>
 
   <div class="lesson-section" id="images" data-toc>
@@ -315,10 +493,47 @@
   </div>
 </footer>
 
-<script src="assets/js/site-config.js?v=20260628"></script>
+<script src="assets/js/site-config.js?v=20260629"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/notifications.js?v=20260628"></script>
-<script src="assets/js/auth.js?v=20260628"></script>
-<script src="assets/js/main.js?v=20260628"></script>
+<script src="assets/js/notifications.js?v=20260629"></script>
+<script src="assets/js/auth.js?v=20260629"></script>
+<script src="assets/js/main.js?v=20260629"></script>
+<script>
+  // 색상 칩 클릭 → HEX 코드 클립보드 복사
+  document.querySelectorAll('.color-chip').forEach(chip => {
+    chip.addEventListener('click', async () => {
+      const hex = chip.dataset.hex;
+      try {
+        await navigator.clipboard.writeText(hex);
+        const orig = chip.querySelector('code').textContent;
+        chip.querySelector('code').textContent = '복사됨 ✓';
+        chip.classList.add('copied');
+        setTimeout(() => {
+          chip.querySelector('code').textContent = orig;
+          chip.classList.remove('copied');
+        }, 1200);
+      } catch (e) {
+        console.warn('클립보드 복사 실패:', e);
+      }
+    });
+  });
+  // 톤 셀 클릭 → HEX 복사
+  document.querySelectorAll('.tone-cell').forEach(cell => {
+    cell.addEventListener('click', async () => {
+      const bg = getComputedStyle(cell).backgroundColor;
+      // rgb → hex
+      const m = bg.match(/\d+/g);
+      if (!m) return;
+      const hex = '#' + m.slice(0,3).map(n => Number(n).toString(16).padStart(2,'0')).join('');
+      try {
+        await navigator.clipboard.writeText(hex);
+        const orig = cell.querySelector('span').textContent;
+        cell.querySelector('span').textContent = '✓';
+        setTimeout(() => { cell.querySelector('span').textContent = orig; }, 900);
+      } catch(e) {}
+    });
+    cell.style.cursor = 'pointer';
+  });
+</script>
 </body>
 </html>
