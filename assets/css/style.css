@@ -2171,7 +2171,35 @@ pre code {
   font-size: 13px;
   color: #64748b;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
 }
+
+@media (max-width: 600px) { .footer-bottom { justify-content: center; } }
+
+/* 회사 정보 블록 (footer-brand 아래) */
+.company-info {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.company-info p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12.5px;
+  margin-bottom: 4px;
+  line-height: 1.7;
+}
+.company-info p strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
+}
+.company-info a {
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+}
+.company-info a:hover { color: white; }
 
 /* ---------- 모바일 네비 ---------- */
 @media (max-width: 800px) {
