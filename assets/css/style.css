@@ -538,8 +538,14 @@ body {
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
+
+/* 히어로 캔버스 — JS가 동적 추가 */
+.hero > canvas { z-index: 0 !important; }
+
+/* 히어로 본문 — 캔버스 위 */
+.hero > *:not(canvas) { position: relative; z-index: 1; }
 
 /* 부유 빛 효과 */
 .hero::after {
