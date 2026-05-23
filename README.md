@@ -2,7 +2,7 @@
 
 비전공자를 위한 **AI 기초 실습 (15H) + 바이브 코딩 1주차 (25H) = 총 40시간** 부트캠프 강의 사이트입니다.
 
-🌐 **배포 주소**: [halla.dreamitbiz.com](https://halla.dreamitbiz.com)
+🌐 **배포 주소**: 비공개
 
 ## 강의 개요
 
@@ -37,9 +37,6 @@ halla/
 │   ├── js/main.js            # 모바일 네비, 스크롤 애니메이션
 │   └── img/                  # 이미지 자산
 ├── examples/                 # 학생 예제 코드
-├── docs/
-│   └── DEV_LOG.md            # 개발 일지
-├── CNAME                     # halla.dreamitbiz.com
 └── README.md
 ```
 
@@ -70,8 +67,6 @@ halla/
 별도 빌드 도구 없이 정적 HTML/CSS/JS로 동작합니다.
 
 ```bash
-git clone https://github.com/aebonlee/halla.git
-cd halla
 python3 -m http.server 8000
 ```
 
@@ -79,9 +74,7 @@ python3 -m http.server 8000
 
 ## 배포
 
-GitHub Pages로 자동 배포됩니다. `main` 브랜치에 푸시하면 약 1-2분 내에 [halla.dreamitbiz.com](https://halla.dreamitbiz.com)에 반영됩니다.
-
-CNAME 파일이 `halla.dreamitbiz.com`을 가리킵니다.
+정적 호스팅 환경에서 자동 배포됩니다. `main` 브랜치에 푸시하면 약 1-2분 내에 사이트에 반영됩니다.
 
 ## 운영
 
