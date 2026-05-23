@@ -6,7 +6,7 @@
   <title>바이브 코딩 (25H · 1주차) - 한라대학교 AC 기초 트랙</title>
   <meta name="description" content="Claude·Cursor로 자연어로 코딩하는 새로운 패러다임. 비전공자도 5일 만에 본인 웹사이트를 만드는 25시간 입문 과정.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260524">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260525">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
     <ul class="nav-menu">
       <li><a href="../about.html">About</a></li>
       <li class="nav-dropdown">
-        <button class="nav-dropdown-trigger cohort-am" type="button">오전반 (AI 기초)</button>
+        <button class="nav-dropdown-trigger cohort-am" type="button"><span>🌤</span> 오전반</button>
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
         <li><a href="../ai-basic/index.html">과정 개요</a></li>
@@ -32,10 +32,11 @@
         <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
         <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
         <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
-        </ul>
+      <li id="auth-slot"></li>
+    </ul>
       </li>
       <li class="nav-dropdown">
-        <button class="nav-dropdown-trigger cohort-pm active" type="button">오후반 (바이브 코딩)</button>
+        <button class="nav-dropdown-trigger cohort-pm active" type="button"><span>🌙</span> 오후반</button>
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
         <li><a href="../vibe-coding/index.html" class="active">과정 개요</a></li>
@@ -231,6 +232,8 @@
   <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
 </footer>
 
-<script src="../assets/js/main.js?v=20260524"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/auth.js?v=20260525"></script>
+<script src="../assets/js/main.js?v=20260525"></script>
 </body>
 </html>
