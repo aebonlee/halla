@@ -2148,19 +2148,31 @@ pre code {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.6fr 1fr 1.2fr 1.6fr;
+  gap: 48px;
 }
 
-@media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+}
 
-.footer-brand { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; }
-.footer-desc { font-size: 14px; line-height: 1.6; color: #94a3b8; }
+.footer-brand { font-size: 18px; font-weight: 700; color: white; margin-bottom: 10px; }
+.footer-desc { font-size: 14px; line-height: 1.7; color: #94a3b8; max-width: 280px; }
 
-.footer-title { font-weight: 700; color: white; margin-bottom: 12px; font-size: 14px; }
-.footer-links { list-style: none; padding: 0; }
-.footer-links li { margin-bottom: 8px; }
-.footer-links a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+.footer-title {
+  font-weight: 800;
+  color: #5B8AF0;
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 9px; color: #cbd5e1; font-size: 13.5px; }
+.footer-links a { color: #cbd5e1; text-decoration: none; font-size: 13.5px; transition: color 0.15s; }
 .footer-links a:hover { color: white; }
 
 .footer-bottom {
@@ -2179,27 +2191,29 @@ pre code {
 
 @media (max-width: 600px) { .footer-bottom { justify-content: center; } }
 
-/* 회사 정보 블록 (footer-brand 아래) */
-.company-info {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
+/* 회사 정보 블록 (자체 컬럼) */
 .company-info p {
   color: rgba(255, 255, 255, 0.62);
   font-size: 12.5px;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   line-height: 1.7;
 }
 .company-info p strong {
   color: rgba(255, 255, 255, 0.92);
   font-weight: 700;
+  font-size: 13.5px;
 }
 .company-info a {
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
 }
 .company-info a:hover { color: white; }
+
+.footer-version {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #475569;
+}
 
 /* ---------- 모바일 네비 ---------- */
 @media (max-width: 800px) {
