@@ -8,31 +8,57 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
   }
 
-  // 드롭다운 메뉴 — 클릭/호버 토글
+  // 드롭다운 메뉴 — 클릭/호버 토글 + 지연 close로 6px 갭 통과 허용
   const dropdowns = document.querySelectorAll('.nav-dropdown');
+  const isDesktop = window.matchMedia('(min-width: 801px)').matches;
+  let closeTimer = null;
+
+  const closeAll = () => {
+    dropdowns.forEach(d => d.classList.remove('open'));
+  };
+  const cancelClose = () => {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+  };
+  const scheduleClose = (dd) => {
+    cancelClose();
+    closeTimer = setTimeout(() => dd.classList.remove('open'), 220);
+  };
+
   dropdowns.forEach(dd => {
     const trigger = dd.querySelector('.nav-dropdown-trigger');
+    const menu = dd.querySelector('.nav-dropdown-menu');
     if (!trigger) return;
+
+    // 클릭: 토글. 클릭으로 열린 건 mouseleave에도 닫히지 않게 sticky 표시.
     trigger.addEventListener('click', e => {
       e.stopPropagation();
       const wasOpen = dd.classList.contains('open');
-      dropdowns.forEach(d => d.classList.remove('open'));
+      cancelClose();
+      closeAll();
       if (!wasOpen) dd.classList.add('open');
     });
-  });
-  // 데스크탑 호버 (마우스 들어오면 열기)
-  if (window.matchMedia('(min-width: 801px)').matches) {
-    dropdowns.forEach(dd => {
+
+    // 호버 (데스크탑): 즉시 열고, 떠나면 지연 후 닫기
+    if (isDesktop) {
       dd.addEventListener('mouseenter', () => {
-        dropdowns.forEach(d => d.classList.remove('open'));
+        cancelClose();
+        dropdowns.forEach(d => { if (d !== dd) d.classList.remove('open'); });
         dd.classList.add('open');
       });
-      dd.addEventListener('mouseleave', () => dd.classList.remove('open'));
-    });
-  }
-  // 바깥 클릭 시 닫기
-  document.addEventListener('click', () => {
-    dropdowns.forEach(d => d.classList.remove('open'));
+      dd.addEventListener('mouseleave', () => scheduleClose(dd));
+
+      // 메뉴 박스 자체에도 동일 핸들러 — 트리거 → 갭 → 메뉴 이동 시 close 취소
+      if (menu) {
+        menu.addEventListener('mouseenter', cancelClose);
+        menu.addEventListener('mouseleave', () => scheduleClose(dd));
+      }
+    }
+  });
+
+  // 바깥 클릭 시 닫기 — 단, 드롭다운 내부 클릭은 무시
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav-dropdown')) return;
+    closeAll();
   });
 
   // 현재 페이지 메뉴 활성화

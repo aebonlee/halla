@@ -136,6 +136,77 @@
     }
   }
 
+  // ───────────────────────────────────────────────────────────────
+  // 공용 Supabase Edge Function 호출 (templete_2 패턴 — send-email은 이미 배포됨)
+  // 모든 dreamitbiz.com 사이트에서 공유 사용. Resend 발신: noreply@dreamitbiz.com
+  // ───────────────────────────────────────────────────────────────
+  async function sendEmail({ to, subject, html, type }) {
+    const c = getClient();
+    if (!c) return { success: false, error: 'Supabase client unavailable' };
+    try {
+      const { data, error } = await c.functions.invoke('send-email', {
+        body: { to, subject, html, type: type || 'halla-notification' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return { success: true, data };
+    } catch (e) {
+      console.warn('[auth] sendEmail failed:', e?.message || e);
+      return { success: false, error: String(e?.message || e) };
+    }
+  }
+
+  // 가입 환영 메일 — onAuthStateChange의 SIGNED_IN 이벤트에서 1회만 호출
+  let welcomeMailSent = false;
+  async function maybeSendWelcomeMail() {
+    if (welcomeMailSent) return;
+    const user = await getUser();
+    if (!user || !user.email) return;
+    // 이미 보낸 적 있는지 localStorage로 1회 제한 (재로그인 시 재전송 방지)
+    const key = `halla_welcome_${user.id}`;
+    if (localStorage.getItem(key)) {
+      welcomeMailSent = true;
+      return;
+    }
+    const name =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email.split('@')[0];
+    const html = `
+      <div style="font-family:'Pretendard',sans-serif;color:#0f172a;max-width:520px;margin:0 auto;padding:24px;">
+        <h1 style="color:#2563eb;font-size:24px;margin-bottom:12px;">한라대학교 AC 기초 트랙에 오신 것을 환영합니다 👋</h1>
+        <p>안녕하세요 ${escapeHtml(name)}님,</p>
+        <p>한라대학교 AC 기초 트랙 강의 사이트에 가입해 주셔서 감사합니다.</p>
+        <p style="margin-top:20px;">
+          오전반(AI 기초 · 15H)과 오후반(바이브 코딩 · 25H) 중 본인에게 맞는 과정을 선택해
+          학습을 시작해 보세요.
+        </p>
+        <p style="margin-top:24px;">
+          <a href="https://halla.dreamitbiz.com/profile.html"
+             style="display:inline-block;padding:12px 24px;background:#2563eb;color:white;
+                    text-decoration:none;border-radius:8px;font-weight:700;">
+            내 프로필 열기 →
+          </a>
+        </p>
+        <hr style="margin:32px 0;border:none;border-top:1px solid #e2e8f0;">
+        <p style="color:#94a3b8;font-size:13px;">
+          한라대학교 · DreamIT Biz<br>
+          문의: aebon@kyonggi.ac.kr
+        </p>
+      </div>
+    `;
+    const result = await sendEmail({
+      to: user.email,
+      subject: '[한라대 AC 기초 트랙] 가입을 환영합니다',
+      html,
+      type: 'halla-welcome',
+    });
+    if (result.success) {
+      localStorage.setItem(key, new Date().toISOString());
+      welcomeMailSent = true;
+    }
+  }
+
   // 외부 API
   window.HallaAuth = {
     getClient,
@@ -146,6 +217,7 @@
     signInWithKakao,
     signOut,
     renderNavAuth,
+    sendEmail,
   };
 
   // 로드 시 자동으로 nav 갱신 + auth 상태 변화 구독
@@ -155,9 +227,13 @@
       const c = getClient();
       if (!c) return setTimeout(tryRender, 150);
       renderNavAuth();
-      c.auth.onAuthStateChange(() => {
+      c.auth.onAuthStateChange((event) => {
         userCache = null;
         renderNavAuth();
+        // 처음 로그인 시 환영 메일 1회 발송
+        if (event === 'SIGNED_IN') {
+          maybeSendWelcomeMail();
+        }
       });
     };
     tryRender();
