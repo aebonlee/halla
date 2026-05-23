@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사전학습 - 한라대학교 AC 기초 트랙</title>
+  <meta name="description" content="수강 시작 전 준비. 노트북·계정·도구 설치·사전 지식 체크리스트.">
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <!-- /FAVICON -->
+  <!-- OG META -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 AC 기초 트랙">
+  <meta property="og:url" content="https://halla.dreamitbiz.com/pre-learning.html">
+  <meta property="og:title" content="사전학습 - 한라대학교 AC 기초 트랙">
+  <meta property="og:description" content="수강 시작 전 준비 - 노트북·계정·도구 설치·사전 지식 체크리스트">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://halla.dreamitbiz.com/pre-learning.html">
+  <!-- /OG META -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260601">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="about.html">About</a></li>
+      <li><a href="syllabus.html">강의계획서</a></li>
+      <li><a href="gen-ai.html">Gen AI활용</a></li>
+      <li><a href="pre-learning.html" class="active">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button"><span>🌤</span> 오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="ai-basic/index.html">과정 개요</a></li>
+          <li><a href="ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button"><span>🌙</span> 오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
+          <li><a href="vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="vibe-coding/day5.html">Day 05 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li><a href="resources.html">참고자료</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="index.html">홈</a> &nbsp;›&nbsp; <span>사전학습</span></div>
+    <h1>사전학습 — 수강 전 1시간 준비</h1>
+    <p style="opacity:0.95;">강의 첫날 부드럽게 시작하기 위한 사전 체크리스트. 1시간이면 끝납니다.</p>
+  </div>
+</section>
+
+<div class="lesson-layout">
+
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#checklist">✅ 체크리스트 한눈에</a></li>
+      <li><a href="#laptop">💻 1. 노트북 준비</a></li>
+      <li><a href="#claude">🤖 2. Claude 계정 + Pro 구독</a></li>
+      <li><a href="#cursor">📝 3. Cursor 설치 (오후반만)</a></li>
+      <li><a href="#canva">🎨 4. Canva 계정 (오전반만)</a></li>
+      <li><a href="#gamma">🎯 5. Gamma 계정 (오전반만)</a></li>
+      <li><a href="#github">🐙 6. GitHub 계정 (오후반만)</a></li>
+      <li><a href="#mindset">🧠 7. 마인드셋 점검</a></li>
+      <li><a href="#firstday">🎒 첫날 가져올 것</a></li>
+      <li><a href="#troubleshoot">🛠 자주 묻는 사전 질문</a></li>
+    </ul>
+  </aside>
+
+  <main class="lesson-main">
+
+    <div class="lesson-section" id="checklist" data-toc>
+      <h2>✅ 체크리스트 한눈에</h2>
+      <p>본인이 수강하는 과정에 맞춰 체크하세요. <strong>두 과정 모두 듣는다면 전부 필요</strong>합니다.</p>
+
+      <div class="compare-grid" style="margin-top:20px;">
+        <div class="compare-box" style="border-color:var(--color-ai); background:rgba(6,182,212,0.04);">
+          <div class="compare-label" style="color:var(--color-ai);">🌤 오전반 (AI 기초) 필수</div>
+          <ul style="margin-top:8px; padding-left:20px;">
+            <li>노트북 (브라우저 동작 가능한 모든 기기)</li>
+            <li>Claude 계정 + Pro 구독</li>
+            <li>Canva 계정 (무료 가능)</li>
+            <li>Gamma 계정 (무료 가능)</li>
+            <li>구글 계정 (위 3개 가입에 사용)</li>
+          </ul>
+        </div>
+        <div class="compare-box" style="border-color:var(--color-vibe); background:rgba(236,72,153,0.04);">
+          <div class="compare-label" style="color:var(--color-vibe);">🌙 오후반 (바이브 코딩) 필수</div>
+          <ul style="margin-top:8px; padding-left:20px;">
+            <li>노트북 (RAM 8GB 이상 권장)</li>
+            <li>Claude 계정 + Pro 구독</li>
+            <li>Cursor 에디터 설치 (무료)</li>
+            <li>Python 3.10+ 설치</li>
+            <li>GitHub 계정 (무료, 배포용)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="laptop" data-toc>
+      <h2>💻 1. 노트북 준비</h2>
+
+      <h3>최소 사양</h3>
+      <ul>
+        <li><strong>OS</strong>: macOS · Windows 10/11 · Linux 모두 가능</li>
+        <li><strong>RAM</strong>: 4GB 이상 (오전반) / <strong>8GB 권장</strong> (오후반 Cursor 사용)</li>
+        <li><strong>저장공간</strong>: 여유 10GB 이상</li>
+        <li><strong>인터넷</strong>: 안정적인 Wi-Fi (강의실 제공)</li>
+        <li><strong>웹 브라우저</strong>: Chrome / Edge / Safari 최신 버전</li>
+      </ul>
+
+      <div class="callout callout-info">
+        <div class="callout-title">💡 노트북이 없다면</div>
+        한라대 실습실 PC도 사용 가능합니다. 다만 본인 노트북이면 강의 후에도 본인이 만든 결과물에 계속 작업할 수 있어 권장.
+      </div>
+    </div>
+
+    <div class="lesson-section" id="claude" data-toc>
+      <h2>🤖 2. Claude 계정 + Pro 구독 (두 과정 공통)</h2>
+
+      <h3>가입 (5분)</h3>
+      <ol>
+        <li><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> 접속</li>
+        <li>구글 계정 또는 이메일로 가입</li>
+        <li>한국 가능, 휴대폰 인증 필요</li>
+      </ol>
+
+      <h3>Pro 구독 (월 $20, 학생 단체 할인 별도 안내)</h3>
+      <ol>
+        <li>로그인 → 우측 상단 프로필 → <strong>Subscription</strong></li>
+        <li><strong>Upgrade to Pro</strong> 클릭 → 카드 정보 입력</li>
+        <li>3개월(약 6만원)이 강의 기간 권장</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠️ 안내</div>
+        <strong>Pro 구독 없이는 강의 실습 한도가 빠르게 차서 따라가기 어렵습니다.</strong> 한라대 단체 할인 안내가 있을 수 있으니 강사 공지 확인.
+      </div>
+
+      <h3>가입 후 한 번 만져보기</h3>
+      <p>강의 첫날 부드럽게 시작하려면 지금 한 번 채팅을 던져 보세요.</p>
+<pre>안녕, Claude. 나는 한라대학교 비전공자야.
+다음 주에 AI 기초 강의를 들어. 시작하기 전에
+내가 알면 좋을 AI 활용 팁 5가지를 알려줘.</pre>
+    </div>
+
+    <div class="lesson-section" id="cursor" data-toc>
+      <h2>📝 3. Cursor 설치 (오후반만, 15분)</h2>
+
+      <ol>
+        <li><a href="https://cursor.sh" target="_blank" rel="noopener">cursor.sh</a> 접속 → <strong>Download</strong></li>
+        <li>본인 OS(macOS/Windows/Linux) 맞는 버전 다운로드</li>
+        <li>설치 후 첫 실행 → 본인 이메일로 <strong>Sign Up</strong> (무료 플랜 충분)</li>
+        <li>설정 (⚙️) → <strong>Models</strong> → claude-opus 또는 claude-sonnet 기본으로</li>
+      </ol>
+
+      <h3>설치 확인</h3>
+      <ol>
+        <li>Cursor 실행 → File → New File → <code>hello.py</code></li>
+        <li>다음 입력 후 저장:</li>
+      </ol>
+<pre>print("Cursor 정상 작동")</pre>
+      <ol start="3">
+        <li>오른쪽 상단 <strong>▶️ Run</strong> 또는 터미널 <code>python hello.py</code></li>
+        <li>출력 보이면 OK</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠️ Python 없을 때</div>
+        Mac: 보통 <code>python3</code>로 설치돼 있음. Windows: Microsoft Store에서 "Python 3.11" 무료 설치.
+      </div>
+    </div>
+
+    <div class="lesson-section" id="canva" data-toc>
+      <h2>🎨 4. Canva 계정 (오전반만)</h2>
+
+      <ol>
+        <li><a href="https://canva.com" target="_blank" rel="noopener">canva.com</a> 접속 → 구글 계정으로 가입</li>
+        <li>한국 가능, 무료 플랜으로 충분</li>
+        <li>가입 후 한 번 "디자인 만들기 → 인스타 게시물" 시도해 보기</li>
+        <li>좌측 메뉴에서 <strong>앱 → Magic Media</strong>가 보이는지 확인 (AI 이미지 생성 도구)</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section" id="gamma" data-toc>
+      <h2>🎯 5. Gamma 계정 (오전반만)</h2>
+
+      <ol>
+        <li><a href="https://gamma.app" target="_blank" rel="noopener">gamma.app</a> 접속 → 구글 계정으로 가입</li>
+        <li>한국어 지원, 무료 플랜으로 시작</li>
+        <li>가입 후 "+ 새로 만들기 → 프레젠테이션 → AI로 생성"이 보이는지 확인</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section" id="github" data-toc>
+      <h2>🐙 6. GitHub 계정 (오후반만)</h2>
+
+      <p>강의 4일차에 본인 웹사이트를 인터넷에 공개할 때 사용합니다.</p>
+
+      <ol>
+        <li><a href="https://github.com" target="_blank" rel="noopener">github.com</a> 접속 → <strong>Sign up</strong></li>
+        <li>학교 이메일로 가입 (<code>.ac.kr</code> 도메인은 Student Pack 혜택 가능)</li>
+        <li>사용자명은 본인 영문이름 권장 (URL에 노출됨, 추후 변경 어려움)</li>
+        <li>가입 후 <strong>Settings → Emails</strong>에서 이메일 인증 완료</li>
+      </ol>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 GitHub Student Pack</div>
+        학교 이메일로 가입했다면 <a href="https://education.github.com/pack" target="_blank" rel="noopener">education.github.com/pack</a>에서 학생 인증 → 다양한 개발 도구 무료 (Copilot, JetBrains, Notion 등).
+      </div>
+    </div>
+
+    <div class="lesson-section" id="mindset" data-toc>
+      <h2>🧠 7. 마인드셋 점검</h2>
+
+      <p>강의 첫날부터 부드럽게 출발하려면, 다음 세 가지 마음가짐을 갖고 오시면 됩니다.</p>
+
+      <h3>① "외우려 하지 말기"</h3>
+      <p>AI 도구의 모든 기능을 외울 필요 없습니다. <strong>"필요한 일을 묘사하는 능력"</strong>이 새 시대의 실력입니다.</p>
+
+      <h3>② "처음 결과가 별로여도 정상"</h3>
+      <p>AI 결과의 90%는 "프롬프트를 다시 다듬으면" 좋아집니다. <strong>3번 다듬기를 기본으로</strong> 생각하세요.</p>
+
+      <h3>③ "막혀도 강사·동료에게 즉시 물어보기"</h3>
+      <p>비전공자가 가장 흔히 하는 실수는 <strong>혼자 30분 헤매는 것</strong>입니다. 막히면 3분 안에 손드세요.</p>
+
+      <div class="callout callout-info">
+        <div class="callout-title">💬 사전 예열 활동 (선택)</div>
+        강의 전에 Claude에게 다음을 시도해 보세요. 도구 감각이 자연스럽게 잡힙니다.
+        <ul style="margin-top:8px;">
+          <li>"내 전공 분야에 AI가 어떤 식으로 활용되고 있는지 사례 5개"</li>
+          <li>"내가 자주 하는 [업무·과제]를 AI로 어떻게 자동화할 수 있나"</li>
+          <li>"비전공자가 1주일 안에 만들 수 있는 작은 AI 프로젝트 추천"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="firstday" data-toc>
+      <h2>🎒 첫날 가져올 것</h2>
+
+      <ul>
+        <li>✅ <strong>노트북</strong> + 충전기 (강의실 콘센트 제한될 수 있음)</li>
+        <li>✅ <strong>이어폰</strong> (영상 시청 시 사용)</li>
+        <li>✅ <strong>본인 신분증</strong> (수강생 확인용)</li>
+        <li>✅ <strong>필기도구</strong> (메모 습관 권장)</li>
+        <li>✅ <strong>마음의 준비</strong> — 5일 동안 새로운 것을 매일 시도하기</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">📅 첫날 일정</div>
+        <strong>6월 29일 (월) 한라대학교 본관 실습실</strong><br>
+        - 오전반: 09:00 시작, 1~3교시 (3H)<br>
+        - 오후반: 13:00 시작, 5~9교시 (5H)<br>
+        강의실 위치는 강사 공지로 안내됩니다.
+      </div>
+    </div>
+
+    <div class="lesson-section" id="troubleshoot" data-toc>
+      <h2>🛠 자주 묻는 사전 질문</h2>
+
+      <h3>Q. Claude Pro가 꼭 필요한가요?</h3>
+      <p>네. 무료 플랜은 하루에 던질 수 있는 메시지 수가 매우 적어서, 강의 실습 따라가기에 부족합니다. 5일짜리 부트캠프 동안 1개월 구독($20)으로도 충분합니다.</p>
+
+      <h3>Q. 코딩을 한 번도 안 해봤는데 오후반 따라갈 수 있나요?</h3>
+      <p>네. 오후반은 <strong>"AI가 코드를 만들어 주는 것을 사람이 다듬는"</strong> 방식이라, 전통 코딩 강의보다 진입 장벽이 훨씬 낮습니다. 컴퓨터 사용에 거부감만 없으면 따라갈 수 있도록 설계됐습니다.</p>
+
+      <h3>Q. 두 과정(오전+오후) 같이 들어도 되나요?</h3>
+      <p>물리적으로는 가능합니다 (09:00-18:00 같은 주). 다만 1주에 40시간 학습은 부담이 큽니다. 본인 체력·집중력에 맞춰 결정하세요.</p>
+
+      <h3>Q. 노트북 사양이 안 좋아요. 실습실 PC를 써도 되나요?</h3>
+      <p>네. 다만 본인이 만든 결과물을 강의 후에도 이어가려면 본인 노트북 권장. 임시로 실습실 사용 → 결과물을 GitHub/Google Drive에 백업하는 방법도 있음.</p>
+
+      <h3>Q. 사전 가입에 실패했어요!</h3>
+      <p>강의 첫날 1교시에 강사가 함께 셋업을 진행합니다. 너무 걱정 마시고 오세요. 다만 1시간 더 미리 준비하면 학습 시간을 절약할 수 있어 추천합니다.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">메뉴</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="syllabus.html">강의계획서</a></li>
+        <li><a href="gen-ai.html">Gen AI활용</a></li>
+        <li><a href="pre-learning.html">사전학습</a></li>
+        <li><a href="resources.html">참고자료</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li>DreamIT Biz · 강사 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="assets/js/site-config.js?v=20260601"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/notifications.js?v=20260601"></script>
+<script src="assets/js/auth.js?v=20260601"></script>
+<script src="assets/js/main.js?v=20260601"></script>
+</body>
+</html>
