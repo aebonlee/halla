@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260614">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260615">
 </head>
 <body>
 
@@ -100,9 +100,8 @@
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
+      <li><a href="#board">게시판</a></li>
       <li><a href="#announcements">공지사항</a></li>
-      <li><a href="#discussion">질문 & 토론</a></li>
-      <li><a href="#showcase">결과물 쇼케이스</a></li>
       <li><a href="#channels">소통 채널</a></li>
       <li><a href="#guidelines">참여 가이드</a></li>
       <li><a href="#alumni">수료 후 활동</a></li>
@@ -124,50 +123,18 @@
       </div>
     </div>
 
-    <div class="lesson-section" id="discussion" data-toc>
-      <h2>질문 & 토론</h2>
-      <p>수업 중 막힌 부분, 프롬프트 작성 조언, 도구 활용 노하우를 자유롭게 공유합니다.</p>
-
-      <div class="card-grid" style="margin-top:16px;">
-        <div class="card">
-          <div class="card-icon">Q</div>
-          <h3>이번 주 질문 TOP 3</h3>
-          <p>같은 질문을 두 번 받지 않도록 모아 정리합니다. 강의 종료 후 매주 공개.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon ai">A</div>
-          <h3>강사 직접 답변</h3>
-          <p>핵심 질문에는 강사가 직접 답변·예시 코드와 함께 안내합니다.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon vibe">P</div>
-          <h3>피어 리뷰</h3>
-          <p>동료의 결과물에 따뜻한 피드백을 남기는 문화. SCORE 기준으로 건설적으로.</p>
-        </div>
+    <div class="lesson-section" id="board" data-toc>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+        <h2 style="margin:0;">게시판</h2>
+        <button type="button" id="btn-write" class="btn btn-primary" style="display:none;">글쓰기</button>
       </div>
-    </div>
+      <p style="color:var(--color-text-muted); font-size:14px;">질문 · 결과물 공유 · 자유 토론. 로그인하면 글·댓글 작성 가능합니다.</p>
 
-    <div class="lesson-section" id="showcase" data-toc>
-      <h2>결과물 쇼케이스</h2>
-      <p>5일차 미니 프로젝트 발표 후 베스트 결과물이 여기에 공개됩니다.</p>
+      <!-- 카테고리 탭 -->
+      <div id="board-tabs" class="board-tabs"></div>
 
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-icon ai">A</div>
-          <h3>오전반 · AI 활용 콘텐츠</h3>
-          <p>발표자료·인포그래픽·영상 스크립트·워크플로 문서 — 학기 발표·과제에 바로 사용 가능.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon vibe">V</div>
-          <h3>오후반 · 개인 웹사이트</h3>
-          <p>본인 자기소개·포트폴리오·SNS 링크 페이지. 배포된 URL 공개.</p>
-        </div>
-      </div>
-
-      <div class="callout callout-info" style="margin-top:20px;">
-        <div class="callout-title">참여 방법</div>
-        본인 결과물을 공개해도 좋다면 발표 후 강사에게 알려 주세요. 익명/실명 선택 가능합니다.
-      </div>
+      <!-- 게시글 목록 -->
+      <div id="board-list" class="board-list"></div>
     </div>
 
     <div class="lesson-section" id="channels" data-toc>
@@ -256,6 +223,43 @@
   </main>
 </div>
 
+<!-- 게시글 상세 모달 -->
+<div id="board-modal" class="board-modal" aria-hidden="true">
+  <div class="board-modal-inner">
+    <button type="button" id="board-modal-close" class="board-modal-close" aria-label="닫기">×</button>
+    <div id="board-modal-body"></div>
+  </div>
+</div>
+
+<!-- 새 글 작성 폼 (모달) -->
+<div id="new-post" class="board-modal" aria-hidden="true">
+  <div class="board-modal-inner">
+    <button type="button" id="new-post-cancel-x" class="board-modal-close" aria-label="닫기">×</button>
+    <h2 style="font-size:20px; margin-bottom:18px;">새 글 작성</h2>
+    <form id="new-post-form">
+      <label for="new-category" style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">카테고리</label>
+      <select id="new-category" style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; margin-bottom:14px;">
+        <option value="question">질문</option>
+        <option value="showcase">결과물 공유</option>
+        <option value="free">자유</option>
+      </select>
+
+      <label for="new-title" style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">제목</label>
+      <input id="new-title" type="text" maxlength="120" required
+        style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; margin-bottom:14px;">
+
+      <label for="new-body" style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">내용</label>
+      <textarea id="new-body" rows="10" required
+        style="width:100%; padding:12px; border:1px solid var(--color-border); border-radius:8px; font-family:inherit; resize:vertical;"></textarea>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+        <button type="button" id="new-post-cancel" class="btn btn-ghost">취소</button>
+        <button type="submit" class="btn btn-primary">작성</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div>
@@ -282,10 +286,11 @@
   <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
 </footer>
 
-<script src="assets/js/site-config.js?v=20260614"></script>
+<script src="assets/js/site-config.js?v=20260615"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/notifications.js?v=20260614"></script>
-<script src="assets/js/auth.js?v=20260614"></script>
-<script src="assets/js/main.js?v=20260614"></script>
+<script src="assets/js/notifications.js?v=20260615"></script>
+<script src="assets/js/auth.js?v=20260615"></script>
+<script src="assets/js/main.js?v=20260615"></script>
+<script src="assets/js/community.js?v=20260615"></script>
 </body>
 </html>

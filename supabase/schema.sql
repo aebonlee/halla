@@ -124,6 +124,159 @@ create index if not exists instructor_profiles_created_at_idx    on public.instr
 create index if not exists instructor_profiles_signup_domain_idx on public.instructor_profiles (signup_domain);
 create index if not exists instructor_profiles_site_id_idx       on public.instructor_profiles (site_id);
 
+-- =========================================================
+-- 커뮤니티 게시판 — instructor_posts + instructor_comments
+-- =========================================================
+
+create table if not exists public.instructor_posts (
+  id          bigserial primary key,
+  user_id     uuid      not null references auth.users(id) on delete cascade,
+  site_id     text      default 'halla',
+  category    text      not null check (category in ('notice', 'question', 'showcase', 'free')) default 'free',
+  title       text      not null,
+  body        text      not null,
+  pinned      boolean   default false,
+  view_count  integer   default 0,
+  created_at  timestamptz default now(),
+  updated_at  timestamptz default now()
+);
+
+comment on table public.instructor_posts is '커뮤니티 게시판 — 한라 사이트 글';
+comment on column public.instructor_posts.category is 'notice(공지) | question(질문) | showcase(결과물) | free(자유)';
+
+create index if not exists instructor_posts_site_idx on public.instructor_posts (site_id, created_at desc);
+create index if not exists instructor_posts_category_idx on public.instructor_posts (category, created_at desc);
+create index if not exists instructor_posts_pinned_idx on public.instructor_posts (pinned, created_at desc) where pinned = true;
+
+alter table public.instructor_posts enable row level security;
+
+-- 누구나(비로그인 포함) 읽기 가능 — 게시판은 공개
+drop policy if exists "instructor_posts_select_public" on public.instructor_posts;
+create policy "instructor_posts_select_public"
+  on public.instructor_posts for select using (true);
+
+-- 로그인한 사용자만 글쓰기 + 본인만 가능
+drop policy if exists "instructor_posts_insert_own" on public.instructor_posts;
+create policy "instructor_posts_insert_own"
+  on public.instructor_posts for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "instructor_posts_update_own" on public.instructor_posts;
+create policy "instructor_posts_update_own"
+  on public.instructor_posts for update using (auth.uid() = user_id);
+
+drop policy if exists "instructor_posts_delete_own" on public.instructor_posts;
+create policy "instructor_posts_delete_own"
+  on public.instructor_posts for delete using (auth.uid() = user_id);
+
+drop trigger if exists instructor_posts_set_updated_at on public.instructor_posts;
+create trigger instructor_posts_set_updated_at
+  before update on public.instructor_posts
+  for each row execute procedure public.instructor_set_updated_at();
+
+-- 댓글
+create table if not exists public.instructor_comments (
+  id          bigserial primary key,
+  post_id     bigint    not null references public.instructor_posts(id) on delete cascade,
+  user_id     uuid      not null references auth.users(id) on delete cascade,
+  body        text      not null,
+  created_at  timestamptz default now(),
+  updated_at  timestamptz default now()
+);
+
+comment on table public.instructor_comments is '게시글 댓글';
+
+create index if not exists instructor_comments_post_idx on public.instructor_comments (post_id, created_at);
+
+alter table public.instructor_comments enable row level security;
+
+drop policy if exists "instructor_comments_select_public" on public.instructor_comments;
+create policy "instructor_comments_select_public"
+  on public.instructor_comments for select using (true);
+
+drop policy if exists "instructor_comments_insert_own" on public.instructor_comments;
+create policy "instructor_comments_insert_own"
+  on public.instructor_comments for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "instructor_comments_update_own" on public.instructor_comments;
+create policy "instructor_comments_update_own"
+  on public.instructor_comments for update using (auth.uid() = user_id);
+
+drop policy if exists "instructor_comments_delete_own" on public.instructor_comments;
+create policy "instructor_comments_delete_own"
+  on public.instructor_comments for delete using (auth.uid() = user_id);
+
+drop trigger if exists instructor_comments_set_updated_at on public.instructor_comments;
+create trigger instructor_comments_set_updated_at
+  before update on public.instructor_comments
+  for each row execute procedure public.instructor_set_updated_at();
+
+-- 게시글에 댓글 수를 노출하는 view
+create or replace view public.instructor_posts_with_counts as
+select
+  p.*,
+  coalesce(c.cnt, 0)::int as comment_count
+from public.instructor_posts p
+left join (
+  select post_id, count(*) as cnt from public.instructor_comments group by post_id
+) c on c.post_id = p.id;
+
+-- =========================================================
+-- 수강생 후기 — instructor_testimonials
+-- =========================================================
+
+create table if not exists public.instructor_testimonials (
+  id           bigserial primary key,
+  site_id      text     default 'halla',
+  cohort       text     check (cohort in ('am', 'pm', 'both')),
+  display_name text     not null,
+  affiliation  text,
+  cohort_year  text,
+  quote        text     not null,
+  rating       smallint default 5 check (rating between 1 and 5),
+  avatar_color smallint default 1 check (avatar_color between 1 and 6),
+  is_published boolean  default true,
+  is_external  boolean  default false,
+  source_note  text,
+  created_at   timestamptz default now()
+);
+
+comment on table public.instructor_testimonials is '수강생 후기. is_external=true는 타 대학 사례, is_published=false는 비공개';
+comment on column public.instructor_testimonials.cohort is 'am | pm | both';
+
+alter table public.instructor_testimonials enable row level security;
+
+drop policy if exists "instructor_testimonials_select_public" on public.instructor_testimonials;
+create policy "instructor_testimonials_select_public"
+  on public.instructor_testimonials for select using (is_published = true);
+
+-- 관리자만 추가 — RLS 없이 service_role로 SQL에서 insert (또는 별도 admin 정책)
+
+-- 초기 시드: 다른 학교 동일 커리큘럼 수강생 후기 (한라 첫 회차 전 참고용)
+insert into public.instructor_testimonials
+  (cohort, display_name, affiliation, cohort_year, quote, rating, avatar_color, is_external, source_note)
+values
+  ('am', '김O지', '경기대학교 간호학과', '23학번',
+   '평생 컴퓨터를 무서워했는데 5일 만에 Canva·Gamma로 발표자료 5장을 만들었어요. 학과 발표가 두렵지 않아졌습니다.',
+   5, 1, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
+  ('pm', '박O혁', '한국폴리텍 디지털컨버전스과', '22학번',
+   'HTML이 뭔지도 몰랐는데 금요일에 본인 웹사이트를 인터넷에 공개했어요. URL을 부모님께 보여드리니 표정이 잊혀지지 않습니다.',
+   5, 2, true, '폴리텍 동일 커리큘럼 시범 회차 (2025)'),
+  ('am', '이O아', '경기대학교 사회복지학과', '21학번',
+   '프롬프트 3대 무기 배우고 나서 리포트 작성 시간이 절반으로 줄었어요. 이메일 답장도 30분이면 끝납니다.',
+   5, 3, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
+  ('pm', '정O준', '한국폴리텍 전기과', '24학번',
+   '"AI한테 시키면 진짜 되네"라는 게 신기했어요. 다크모드 토글까지 직접 추가해 발표 때 박수받았습니다.',
+   5, 4, true, '폴리텍 동일 커리큘럼 시범 회차 (2025)'),
+  ('am', '최O연', '경기대학교 유아교육과', '22학번',
+   'Gamma로 30분 만에 발표자료 만든 게 가장 충격적이었어요. 학기 중 다른 과목 발표에도 그대로 쓰는 중입니다.',
+   4, 5, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
+  ('pm', '한O서', '한국폴리텍 콘텐츠디자인과', '23학번',
+   '에러가 나서 막혔는데 Claude에게 에러 메시지 그대로 보여주니 5초 만에 해결됐어요. 디버깅이 무섭지 않아졌습니다.',
+   5, 6, true, '폴리텍 동일 커리큘럼 시범 회차 (2025)')
+on conflict do nothing;
+
 -- ---------- 사이트별 운영 편의 VIEW ----------
 -- 한라 사이트 가입자만 보는 view (signup_domain 또는 site_id로 필터)
 create or replace view public.instructor_halla_users as
