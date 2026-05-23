@@ -132,7 +132,7 @@ create table if not exists public.instructor_posts (
   id          bigserial primary key,
   user_id     uuid      not null references auth.users(id) on delete cascade,
   site_id     text      default 'halla',
-  category    text      not null check (category in ('notice', 'question', 'showcase', 'free')) default 'free',
+  category    text      default 'free',
   title       text      not null,
   body        text      not null,
   pinned      boolean   default false,
@@ -141,11 +141,28 @@ create table if not exists public.instructor_posts (
   updated_at  timestamptz default now()
 );
 
--- 기존 테이블 호환
+-- 기존 테이블 호환: 누락 컬럼 안전 추가 (42703 방지)
 alter table public.instructor_posts add column if not exists site_id    text default 'halla';
+alter table public.instructor_posts add column if not exists category   text default 'free';
 alter table public.instructor_posts add column if not exists pinned     boolean default false;
 alter table public.instructor_posts add column if not exists view_count integer default 0;
 alter table public.instructor_posts add column if not exists updated_at timestamptz default now();
+
+-- 기존 행에 NULL 채워서 NOT NULL 적용 가능하게
+update public.instructor_posts set category = 'free' where category is null;
+update public.instructor_posts set site_id  = 'halla' where site_id  is null;
+
+-- NOT NULL 적용 (DO 블록으로 안전: 이미 NOT NULL이면 그대로)
+do $$ begin
+  alter table public.instructor_posts alter column category set not null;
+exception when others then null; end $$;
+
+-- CHECK 제약 추가 (이미 있으면 skip)
+do $$ begin
+  alter table public.instructor_posts
+    add constraint instructor_posts_category_check
+    check (category in ('notice', 'question', 'showcase', 'free'));
+exception when duplicate_object then null; end $$;
 
 comment on table public.instructor_posts is '커뮤니티 게시판 — 한라 사이트 글';
 comment on column public.instructor_posts.category is 'notice(공지) | question(질문) | showcase(결과물) | free(자유)';
@@ -252,12 +269,32 @@ create table if not exists public.instructor_testimonials (
 -- 기존 테이블 호환: 누락 컬럼 추가 (42703 undefined_column 방지)
 alter table public.instructor_testimonials add column if not exists site_id      text default 'halla';
 alter table public.instructor_testimonials add column if not exists cohort       text;
+alter table public.instructor_testimonials add column if not exists display_name text;
+alter table public.instructor_testimonials add column if not exists affiliation  text;
 alter table public.instructor_testimonials add column if not exists cohort_year  text;
+alter table public.instructor_testimonials add column if not exists quote        text;
 alter table public.instructor_testimonials add column if not exists rating       smallint default 5;
 alter table public.instructor_testimonials add column if not exists avatar_color smallint default 1;
 alter table public.instructor_testimonials add column if not exists is_published boolean default true;
 alter table public.instructor_testimonials add column if not exists is_external  boolean default false;
 alter table public.instructor_testimonials add column if not exists source_note  text;
+
+-- cohort/rating/avatar_color CHECK 제약 안전 추가
+do $$ begin
+  alter table public.instructor_testimonials
+    add constraint instructor_testimonials_cohort_check
+    check (cohort is null or cohort in ('am', 'pm', 'both'));
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter table public.instructor_testimonials
+    add constraint instructor_testimonials_rating_check
+    check (rating between 1 and 5);
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter table public.instructor_testimonials
+    add constraint instructor_testimonials_avatar_check
+    check (avatar_color between 1 and 6);
+exception when duplicate_object then null; end $$;
 
 comment on table public.instructor_testimonials is '수강생 후기. is_external=true는 타 대학 사례, is_published=false는 비공개';
 comment on column public.instructor_testimonials.cohort is 'am | pm | both';
