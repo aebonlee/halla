@@ -5,6 +5,8 @@
   "description": "한라대학교 AC 기초 트랙 강의 사이트 - 정적 HTML/CSS/JS + Supabase 인증",
   "scripts": {
     "og-image": "node scripts/generate-og.cjs",
+    "favicon": "node scripts/generate-favicon.cjs",
+    "assets": "npm run og-image && npm run favicon",
     "dev": "python3 -m http.server 8000",
     "preview": "open http://localhost:8000"
   },
