@@ -1761,7 +1761,15 @@ body {
   opacity: 0.95;
 }
 
-.lesson-meta-item { display: flex; align-items: center; gap: 6px; }
+.lesson-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  /* 텍스트(숫자/한글)는 Pretendard로, 이모지만 컬러 이모지 폰트로 렌더 */
+  font-family: var(--font-sans);
+  color: #fff;
+  opacity: 1;
+}
 
 .lesson-content {
   max-width: 900px;
@@ -1957,10 +1965,12 @@ body {
 
 .timetable-row {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 140px 1fr;
+  column-gap: 24px;
+  align-items: start;
   background: var(--color-bg);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 18px 22px;
   border-left: 4px solid var(--color-primary);
 }
 
@@ -1968,9 +1978,29 @@ body {
 .timetable-row.lecture { border-color: var(--color-primary); }
 .timetable-row.break { border-color: var(--color-text-muted); background: #f1f5f9; }
 
-.timetable-time { font-weight: 700; color: var(--color-primary); }
-.timetable-content { font-size: 14px; }
-.timetable-content strong { display: block; margin-bottom: 4px; }
+.timetable-time {
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  padding-right: 8px;
+  border-right: 1px solid var(--color-border);
+}
+.timetable-content { font-size: 14px; line-height: 1.6; }
+.timetable-content strong { display: block; margin-bottom: 6px; font-size: 15px; }
+
+@media (max-width: 640px) {
+  .timetable-row {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 8px;
+  }
+  .timetable-time {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 6px;
+  }
+}
 
 /* 코드 블록 */
 pre {
