@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4일차 · 웹페이지 만들기 ② - 바이브 코딩</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+      <li><a href="index.html" class="active">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero vibe">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">바이브 코딩</a> &nbsp;›&nbsp;
+      <span>4일차</span>
+    </div>
+    <h1>4일차 · 웹페이지 만들기 ②</h1>
+    <p style="opacity:0.95;">JavaScript로 페이지에 움직임을 넣고, 버튼·입력폼·반응형까지 완성합니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 7/2 (목)</span>
+      <span class="lesson-meta-item">⏰ 5~9교시 (5H)</span>
+      <span class="lesson-meta-item">📌 JS + 반응형</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">13:00–13:50</div>
+        <div class="timetable-content">
+          <strong>5교시 · 강의</strong>
+          JavaScript 동작 원리 — 변수, 함수, 이벤트
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">14:00–14:50</div>
+        <div class="timetable-content">
+          <strong>6교시 · 실습</strong>
+          버튼 클릭 → 글자 바꾸기 / 색 토글하기
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">15:00–15:50</div>
+        <div class="timetable-content">
+          <strong>7교시 · 실습</strong>
+          입력폼 다루기 — 이름 받아서 인사하기, 방명록
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">16:00–16:50</div>
+        <div class="timetable-content">
+          <strong>8교시 · 실습</strong>
+          반응형 디자인 / 다크모드 토글 / 햄버거 메뉴
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">17:00–17:50</div>
+        <div class="timetable-content">
+          <strong>9교시 · 마무리</strong>
+          개인 소개 페이지 최종 완성 / GitHub Pages로 배포 미리보기
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 학습 목표</h2>
+    <ul>
+      <li>JavaScript의 "이벤트"라는 개념을 이해한다 (클릭, 입력, 마우스 이동 등).</li>
+      <li>버튼 / 입력폼 / 다크모드 / 햄버거 메뉴를 자연어 요청으로 추가할 수 있다.</li>
+      <li>본인의 개인 소개 페이지를 모바일에서도 잘 보이게 마무리한다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ JavaScript는 "반응하는 뇌"</h2>
+
+    <p>
+      HTML로 뼈대를 만들고 CSS로 옷을 입혔다면, JavaScript는 그 페이지가 <strong>반응하게</strong> 만듭니다.
+      "사용자가 ○○했을 때, △△을 해라"라는 약속을 코드로 적는 것입니다.
+    </p>
+
+    <h3>JS 1줄 맛보기</h3>
+    <pre>&lt;button onclick="alert('안녕!')"&gt;클릭&lt;/button&gt;</pre>
+    <p>이 버튼을 누르면 "안녕!" 팝업이 뜹니다. 이게 JS의 가장 단순한 모습입니다.</p>
+
+    <h3>좀 더 깔끔한 방법 (이벤트 리스너)</h3>
+    <pre>&lt;button id="myBtn"&gt;클릭&lt;/button&gt;
+
+&lt;script&gt;
+  const btn = document.getElementById('myBtn');
+  btn.addEventListener('click', () =&gt; {
+    alert('안녕!');
+  });
+&lt;/script&gt;</pre>
+
+    <h3>JS의 3대 동작</h3>
+    <ol>
+      <li><strong>찾기</strong>: <code>document.getElementById('id')</code>로 HTML 요소를 찾는다</li>
+      <li><strong>듣기</strong>: <code>.addEventListener('click', ...)</code>로 이벤트를 기다린다</li>
+      <li><strong>바꾸기</strong>: <code>.textContent = '새 글자'</code>로 내용을 바꾼다</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ 실습 ① 버튼 클릭 - 색 토글</h2>
+
+    <p>Cursor 채팅에 요청하세요.</p>
+
+    <pre>HTML 한 파일에 다음 동작을 만들어줘:
+
+- 가운데 큰 박스 하나 (200x200, 푸른색)
+- 박스 위에 "색 바꾸기" 버튼
+- 버튼 클릭할 때마다 박스 색이 [파랑 → 빨강 → 노랑 → 초록 → 파랑]으로 순환
+- 박스 안에 현재 색 이름을 한글로 표시
+
+자세한 주석 한국어로.</pre>
+
+    <p>AI가 만든 코드를 실행해 보고, 다음을 추가 요청해 보세요.</p>
+    <ul>
+      <li>"색 바뀔 때 부드럽게 전환되도록 0.3초 transition 추가."</li>
+      <li>"키보드 스페이스바로도 색 바뀌게 해줘."</li>
+      <li>"다음 색 미리보기를 작은 동그라미로 옆에 표시해줘."</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ 실습 ② 입력폼 - 방명록</h2>
+
+    <pre>방명록 페이지를 만들어줘.
+
+- 이름 입력칸 + 메시지 입력칸 + "남기기" 버튼
+- 버튼 누르면 아래 목록에 [이름: 메시지] 형식으로 추가
+- 새로 추가되는 항목은 위에 쌓이게
+- 빈 칸은 제출 안 되게
+- 입력 후 칸은 자동으로 비워지게
+- localStorage로 새로고침해도 메시지가 남게
+
+디자인은 깔끔한 카드 스타일, 푸른색 강조.</pre>
+
+    <h3>발전 과제 - 자연어로 다음 기능 추가</h3>
+    <ul>
+      <li>"각 메시지에 작성 시간(몇 분 전) 표시."</li>
+      <li>"각 메시지 옆에 '❤' 좋아요 버튼. 누를 때마다 카운트 증가."</li>
+      <li>"본인이 남긴 메시지는 삭제 버튼이 보이게."</li>
+      <li>"비속어 필터 - 특정 단어가 들어가면 ***로 가리기."</li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">💡 핵심 학습 포인트</div>
+      <code>localStorage</code>는 브라우저에 데이터를 저장합니다. 새로고침해도 데이터가 살아 있죠.
+      이게 백엔드 없이도 작은 앱을 만들 수 있게 해주는 마법입니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ 실습 ③ 다크모드 토글</h2>
+
+    <p>요즘 모든 사이트에 있는 다크모드를 본인 페이지에도 추가해 봅니다.</p>
+
+    <pre>내 자기소개 페이지(about.html)에 다크모드 토글 기능 추가해줘.
+
+요구사항:
+- 우측 상단에 🌙 / ☀️ 아이콘 버튼
+- 클릭하면 다크 ↔ 라이트 전환
+- CSS 변수(--bg, --text 등)를 써서 색을 깔끔하게 관리
+- 사용자의 선택을 localStorage에 저장
+- 다음에 페이지를 다시 열면 이전 선택 유지
+- 전환은 0.3초 부드럽게</pre>
+
+    <p>잘 안 되면 다음과 같이 디버깅 요청:</p>
+    <pre>다크모드 토글이 작동하지 않아.
+버튼을 눌러도 색이 안 바뀌어.
+콘솔에는 다음 에러가 떠:
+[브라우저 개발자도구 콘솔의 에러 메시지 그대로 붙여넣기]
+
+뭐가 문제이고 어떻게 고쳐야 해?</pre>
+  </div>
+
+  <div class="lesson-section">
+    <h2>5️⃣ 실습 ④ 반응형 - 모바일에서도 멋지게</h2>
+
+    <p>요즘 웹 트래픽의 60%는 모바일에서 옵니다. 반응형이 필수입니다.</p>
+
+    <h3>핵심 개념 - Media Query</h3>
+    <pre>/* 화면 너비가 700px 이하일 때 적용 */
+@media (max-width: 700px) {
+  .container {
+    padding: 16px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  .grid {
+    grid-template-columns: 1fr;  /* 한 줄에 하나씩 */
+  }
+}</pre>
+
+    <h3>실전 요청</h3>
+    <pre>내 about.html을 다음 조건의 반응형으로 만들어줘:
+
+- 데스크탑(1024px+): 3컬럼 그리드, 좌우 여백 넉넉히
+- 태블릿(700-1023px): 2컬럼
+- 모바일(700px 이하): 1컬럼, 글자 크기 살짝 줄임
+- 모바일에선 상단 메뉴를 햄버거 메뉴(☰)로 변경
+- 햄버거 클릭하면 메뉴가 슬라이드로 펼쳐지게
+
+CSS는 기존 스타일과 충돌 없게.</pre>
+
+    <h3>모바일에서 테스트</h3>
+    <ol>
+      <li>본인 페이지를 브라우저에서 열기</li>
+      <li>개발자도구 (F12) → 모바일 토글 아이콘 (📱)</li>
+      <li>iPhone, iPad, Galaxy 등 여러 사이즈로 확인</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <h2>6️⃣ GitHub Pages로 배포 미리보기</h2>
+
+    <p>오늘 만든 페이지를 인터넷에 올려 봅시다. 무료로, 5분이면 됩니다.</p>
+
+    <ol>
+      <li><code>github.com</code> 가입 (학교 이메일 추천)</li>
+      <li>"New repository" → 이름 <code>halla-portfolio</code> → Public</li>
+      <li>본인 약속 페이지 파일들을 드래그&드롭으로 업로드</li>
+      <li>Settings → Pages → Source: "Deploy from a branch" → main / root → Save</li>
+      <li>1-2분 후 <code>https://[본인아이디].github.io/halla-portfolio</code>로 접속 가능</li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 자주 만나는 문제</div>
+      <ul>
+        <li><strong>파일명은 반드시 <code>index.html</code></strong>이어야 메인으로 인식됩니다 (about.html이면 URL 뒤에 /about.html 붙여야 함)</li>
+        <li>한글 파일명은 가급적 피하세요 (URL 인코딩 문제)</li>
+        <li>이미지 경로는 상대 경로 또는 외부 URL 사용</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">🌐 본인 도메인 만들기 (선택)</div>
+      <code>이름.github.io</code>라는 이름의 리포지토리를 만들면, <code>이름.github.io</code> 자체가 도메인이 됩니다.
+      여기에 본인 페이지를 올리면 명함처럼 깔끔합니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 오늘의 과제 - 내일 발표 준비</h2>
+    <ol>
+      <li>본인 개인 소개 페이지 <strong>최종본</strong> 완성하기. 다음이 들어가면 좋습니다:
+        <ul>
+          <li>이름, 학과, 자기소개 한 문장</li>
+          <li>관심사 / 좋아하는 것</li>
+          <li>포트폴리오 또는 본인의 작품 (이번 강의에서 만든 것들도 좋음)</li>
+          <li>연락하기 (이메일, GitHub, SNS)</li>
+          <li>다크모드 토글 또는 다른 인터랙션 1개 이상</li>
+          <li>모바일에서 잘 보이게</li>
+        </ul>
+      </li>
+      <li>GitHub Pages로 배포까지 완료. <strong>접속 가능한 URL</strong>이 내일 발표 자료입니다.</li>
+      <li>발표 준비 — "어떤 프롬프트로 어떤 결과를 얻었는지" 가장 인상 깊은 순간 1개 정하기.</li>
+    </ol>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day3.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">3일차 · 웹페이지 ①</div>
+    </a>
+    <a href="day5.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">5일차 · 미니 프로젝트 ②</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+        <li><a href="index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

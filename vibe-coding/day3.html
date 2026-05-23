@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3일차 · 웹페이지 만들기 ① - 바이브 코딩</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+      <li><a href="index.html" class="active">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero vibe">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">바이브 코딩</a> &nbsp;›&nbsp;
+      <span>3일차</span>
+    </div>
+    <h1>3일차 · 웹페이지 만들기 ①</h1>
+    <p style="opacity:0.95;">HTML과 CSS의 기본 골격을 익히고, Claude에게 자연어로 웹페이지를 만들어 달라고 요청합니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 7/1 (수)</span>
+      <span class="lesson-meta-item">⏰ 5~9교시 (5H)</span>
+      <span class="lesson-meta-item">📌 HTML + CSS</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">13:00–13:50</div>
+        <div class="timetable-content">
+          <strong>5교시 · 강의</strong>
+          웹의 3대 언어 — HTML (뼈대) + CSS (옷) + JavaScript (동작)
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">14:00–14:50</div>
+        <div class="timetable-content">
+          <strong>6교시 · 실습</strong>
+          HTML 기본 태그 10가지 손으로 직접 쳐보기
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">15:00–15:50</div>
+        <div class="timetable-content">
+          <strong>7교시 · 실습</strong>
+          CSS 색·폰트·여백 적용 / 첫 자기소개 페이지 골격
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">16:00–16:50</div>
+        <div class="timetable-content">
+          <strong>8교시 · 실습</strong>
+          Claude에게 "○○한 페이지 만들어줘" 요청 / 결과 수정 반복
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">17:00–17:50</div>
+        <div class="timetable-content">
+          <strong>9교시 · 정리</strong>
+          오늘 만든 페이지 공유 / 내일 JS 사전 안내
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 학습 목표</h2>
+    <ul>
+      <li>HTML 태그가 "뜻을 가진 단어"라는 개념을 이해한다.</li>
+      <li>CSS로 색·여백·폰트를 자유롭게 바꿀 수 있다.</li>
+      <li>Claude에게 자연어로 정확한 웹페이지를 만들어 달라고 요청할 수 있다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ 웹의 3대 언어</h2>
+
+    <p>모든 웹사이트는 세 가지 언어가 한 팀을 이뤄 만듭니다.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon vibe">🦴</div>
+        <h3>HTML</h3>
+        <p><strong>뼈대 / 구조</strong>. 제목·문단·링크·이미지 같은 "이게 뭔지"를 정의.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon vibe">👕</div>
+        <h3>CSS</h3>
+        <p><strong>스타일 / 옷</strong>. 색·크기·여백·폰트 같은 "어떻게 보일지"를 정의.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon vibe">🤖</div>
+        <h3>JavaScript</h3>
+        <p><strong>동작 / 뇌</strong>. 버튼 클릭, 폼 제출 같은 "어떻게 움직일지"를 정의.</p>
+      </div>
+    </div>
+
+    <p>오늘은 HTML과 CSS, 내일은 JavaScript입니다.</p>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ HTML - 손으로 직접 쳐보는 기본 태그 10가지</h2>
+
+    <p>Cursor에서 새 파일 <code>my-first.html</code>을 만듭니다. 다음 코드를 <strong>직접 타이핑</strong>해 보세요.</p>
+
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;나의 첫 웹페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;안녕하세요, 저는 [이름]입니다&lt;/h1&gt;
+  &lt;h2&gt;한라대학교 학생&lt;/h2&gt;
+  &lt;p&gt;바이브 코딩을 배우는 중입니다.&lt;/p&gt;
+  &lt;img src="https://placehold.co/300x200" alt="프로필 이미지"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;좋아하는 것: 커피, 영화, 코딩&lt;/li&gt;
+    &lt;li&gt;싫어하는 것: 졸음, 매운 음식&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;a href="https://halla.ac.kr"&gt;한라대학교 홈페이지&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+    <h3>저장 후 미리보기</h3>
+    <ol>
+      <li>저장 (Cmd/Ctrl + S)</li>
+      <li>Cursor에서 파일을 우클릭 → "Open with Live Server" (확장 프로그램 설치 안내 받으면 설치)</li>
+      <li>또는 브라우저에서 파일 직접 열기</li>
+    </ol>
+
+    <h3>핵심 태그 외워야 할 10개</h3>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:var(--color-bg);">
+            <th style="padding:10px; text-align:left; border-bottom:2px solid var(--color-border);">태그</th>
+            <th style="padding:10px; text-align:left; border-bottom:2px solid var(--color-border);">뜻</th>
+            <th style="padding:10px; text-align:left; border-bottom:2px solid var(--color-border);">예시</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;h1&gt;~&lt;h6&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">제목 (큰 것부터 작은 것)</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;h1&gt;안녕&lt;/h1&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;p&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">문단 (paragraph)</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;p&gt;내용&lt;/p&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;a&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">링크</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;a href="..."&gt;링크&lt;/a&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;img&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">이미지</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;img src="..." alt="..."&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;ul&gt;, &lt;li&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">목록 (불릿)</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;ul&gt;&lt;li&gt;A&lt;/li&gt;&lt;/ul&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;ol&gt;, &lt;li&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">목록 (번호)</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;ol&gt;&lt;li&gt;첫째&lt;/li&gt;&lt;/ol&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;div&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">박스 (그룹화)</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;div&gt;묶음&lt;/div&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;span&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">한 줄 안의 작은 묶음</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;span&gt;강조&lt;/span&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;button&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">버튼</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;button&gt;클릭&lt;/button&gt;</code></td></tr>
+          <tr><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;input&gt;</code></td><td style="padding:8px; border-bottom:1px solid var(--color-border);">입력 칸</td><td style="padding:8px; border-bottom:1px solid var(--color-border);"><code>&lt;input type="text"&gt;</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ CSS - 옷 입히기</h2>
+
+    <p>같은 <code>my-first.html</code>의 <code>&lt;head&gt;</code> 안에 다음을 추가합니다.</p>
+
+    <pre>&lt;style&gt;
+  body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 40px;
+    line-height: 1.6;
+  }
+  h1 {
+    color: #2563eb;
+    font-size: 36px;
+  }
+  h2 {
+    color: #7c3aed;
+  }
+  p {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  img {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  a {
+    color: #ec4899;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+&lt;/style&gt;</pre>
+
+    <p>저장 후 새로고침하면 분위기가 완전히 달라집니다.</p>
+
+    <h3>CSS의 기본 개념 3가지</h3>
+    <ol>
+      <li><strong>선택자 (Selector)</strong>: 어떤 태그를 꾸밀지 (예: <code>h1</code>, <code>p</code>)</li>
+      <li><strong>속성 (Property)</strong>: 무엇을 바꿀지 (예: <code>color</code>, <code>font-size</code>)</li>
+      <li><strong>값 (Value)</strong>: 어떻게 바꿀지 (예: <code>red</code>, <code>20px</code>)</li>
+    </ol>
+
+    <pre>h1 {
+  color: red;          /* 글자 색 */
+  font-size: 24px;     /* 글자 크기 */
+  background: yellow;  /* 배경 색 */
+  padding: 10px;       /* 안쪽 여백 */
+  margin: 20px;        /* 바깥 여백 */
+  border-radius: 8px;  /* 모서리 둥글게 */
+}</pre>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">🎨 색 선택 꿀팁</div>
+      <code>red</code>, <code>blue</code> 같은 이름도 되지만, <strong>#2563eb</strong>처럼 16진수 색상 코드를 쓰면 정확합니다.
+      <code>coolors.co</code>나 <code>color.adobe.com</code>에서 어울리는 색 조합을 추천받을 수 있습니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ Claude에게 "○○한 페이지 만들어줘"</h2>
+
+    <p>이제 본격적인 바이브 코딩입니다. Cursor 채팅에서 자연어로 요청합니다.</p>
+
+    <h3>실습 ① 첫 요청</h3>
+    <pre>한라대학교 학생의 개인 소개 웹페이지를 만들어줘.
+
+요구사항:
+- 상단에 큰 이름 + 짧은 소개 문장
+- 프로필 사진 자리 (placeholder 이미지)
+- "관심사" 섹션 (불릿 3-4개)
+- "포트폴리오" 섹션 (카드 3개 그리드)
+- "연락하기" 섹션 (이메일 + GitHub 링크)
+- 모바일에서도 잘 보이게 (반응형)
+- 디자인 톤: 미니멀, 푸른 계열, 둥근 모서리
+- HTML과 CSS를 한 파일에 작성
+
+파일명은 about.html로 저장해줘.</pre>
+
+    <h3>실습 ② 결과 다듬기 - 자연어 수정 사이클</h3>
+    <p>처음 결과가 100% 마음에 들 일은 거의 없습니다. 자연어로 계속 다듬어 봅니다.</p>
+    <ul>
+      <li>"배경색을 흰색에서 부드러운 베이지로 바꿔줘."</li>
+      <li>"포트폴리오 카드에 마우스 올리면 살짝 떠오르는 효과 줘."</li>
+      <li>"이름 위에 작은 배지로 '한라대학교 컴퓨터공학과 24학번' 표시해줘."</li>
+      <li>"맨 아래에 푸터 추가 - 본인 SNS 링크들과 ⓒ 2026 표기."</li>
+      <li>"전체 폰트를 Pretendard로 바꿔줘. CDN으로 불러오기."</li>
+    </ul>
+
+    <h3>실습 ③ 동일 페이지의 3가지 분위기</h3>
+    <p>다음 세 가지 분위기로 같은 페이지를 변형해 봅니다.</p>
+    <ul>
+      <li>"이 페이지를 어두운 다크 테마로 바꿔줘. 형광 보라색 강조."</li>
+      <li>"이 페이지를 파스텔 톤 카페 분위기로 바꿔줘. 핑크 + 베이지."</li>
+      <li>"이 페이지를 80년대 레트로 게임 스타일로 바꿔줘. 픽셀 폰트 사용."</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-title">🎯 학습 포인트</div>
+      세 가지 결과를 비교해 보면, <strong>"같은 구조에 옷만 갈아입히는"</strong> 게 CSS임을 체감하게 됩니다.
+      이게 HTML과 CSS의 핵심 분리 원칙입니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>5️⃣ 흔히 만나는 문제와 해결</h2>
+
+    <h3>이미지가 안 보여요</h3>
+    <ul>
+      <li><code>src</code> 경로 확인. 같은 폴더에 있으면 <code>src="my.jpg"</code></li>
+      <li>임시로 <code>https://placehold.co/300x200</code> 같은 placeholder 사용</li>
+    </ul>
+
+    <h3>모바일에서 깨져요</h3>
+    <p><code>&lt;head&gt;</code>에 다음 한 줄이 있는지 확인.</p>
+    <pre>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</pre>
+
+    <h3>한글이 깨져요</h3>
+    <p><code>&lt;head&gt;</code>에 다음이 있는지 확인.</p>
+    <pre>&lt;meta charset="UTF-8"&gt;</pre>
+
+    <h3>CSS가 적용 안 돼요</h3>
+    <ul>
+      <li><code>&lt;style&gt;</code> 태그가 <code>&lt;head&gt;</code> 안에 있는지</li>
+      <li>중괄호 <code>{ }</code>가 정확히 짝이 맞는지</li>
+      <li>속성 끝에 세미콜론 <code>;</code> 빠진 곳 없는지</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 오늘의 과제</h2>
+    <ol>
+      <li>본인 만의 자기소개 페이지 골격 완성하기 (HTML + CSS · JavaScript는 내일)</li>
+      <li>색·폰트·여백을 한 번이라도 본인이 직접 바꿔본 흔적 만들기</li>
+      <li>내일은 버튼·입력폼·반응형 동작을 추가합니다. <strong>"내 페이지에 어떤 동작이 있으면 좋을지"</strong> 1개 메모해 오기.</li>
+    </ol>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day2.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">2일차 · 자연어로 코드 읽기</div>
+    </a>
+    <a href="day4.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">4일차 · 웹페이지 만들기 ②</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+        <li><a href="index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

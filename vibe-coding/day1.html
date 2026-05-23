@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1일차 · 바이브코딩 개념 + 환경 세팅 - 바이브 코딩</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+      <li><a href="index.html" class="active">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero vibe">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">바이브 코딩</a> &nbsp;›&nbsp;
+      <span>1일차</span>
+    </div>
+    <h1>1일차 · 바이브코딩 개념 + 환경 세팅</h1>
+    <p style="opacity:0.95;">AI 개발 패러다임을 이해하고, Claude + Cursor로 첫 번째 코드를 생성해 봅니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 6/29 (월)</span>
+      <span class="lesson-meta-item">⏰ 5~9교시 (5H)</span>
+      <span class="lesson-meta-item">📌 환경 세팅 + 강의</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">13:00–13:50</div>
+        <div class="timetable-content">
+          <strong>5교시 · 강의</strong>
+          바이브 코딩이란 무엇인가 · AI 개발 패러다임의 변화
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">14:00–14:50</div>
+        <div class="timetable-content">
+          <strong>6교시 · 실습</strong>
+          Claude 가입 + 첫 대화 · Cursor 설치 + 한국어 설정
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">15:00–15:50</div>
+        <div class="timetable-content">
+          <strong>7교시 · 실습</strong>
+          첫 폴더 만들기 · 첫 파이썬 파일 · "Hello, World!" 출력
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">16:00–16:50</div>
+        <div class="timetable-content">
+          <strong>8교시 · 실습</strong>
+          Cursor의 AI 채팅으로 "계산기 프로그램" 자동 생성
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">17:00–17:50</div>
+        <div class="timetable-content">
+          <strong>9교시 · 정리</strong>
+          오늘 만든 결과물 공유 · 내일 사전 학습 안내
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 학습 목표</h2>
+    <ul>
+      <li>"바이브 코딩"이 기존 프로그래밍과 어떻게 다른지 한 문장으로 설명할 수 있다.</li>
+      <li>Claude · Cursor를 본인 노트북에 설치하고 정상 작동 확인까지 마친다.</li>
+      <li>AI에게 자연어로 요청해서 작동하는 프로그램 1개를 만든다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ 바이브 코딩이란?</h2>
+
+    <p>
+      2025년 2월, OpenAI 공동창업자였던 Andrej Karpathy가 자신의 트위터에 이렇게 썼습니다.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="callout-title">📜 원문</div>
+      <em>"There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."</em>
+      <br><br>
+      <strong>번역</strong>: "내가 '바이브 코딩'이라고 부르는 새로운 코딩이 있다. 그저 흐름에 몸을 맡기고, AI의 폭발적 능력을 받아들이고,
+      코드가 존재한다는 사실조차 잊어버리는 코딩이다."
+    </div>
+
+    <h3>전통 코딩 vs 바이브 코딩</h3>
+    <div class="compare-grid">
+      <div class="compare-box compare-bad">
+        <div class="compare-label">전통 코딩</div>
+        <ul style="margin:0; padding-left:20px;">
+          <li>언어 문법을 외운다</li>
+          <li>한 줄 한 줄 직접 친다</li>
+          <li>구글에서 답을 찾는다</li>
+          <li>스택오버플로 검색</li>
+          <li>에러 메시지를 직접 해석</li>
+        </ul>
+      </div>
+      <div class="compare-box compare-good">
+        <div class="compare-label">바이브 코딩</div>
+        <ul style="margin:0; padding-left:20px;">
+          <li>원하는 결과를 묘사한다</li>
+          <li>AI가 코드를 만든다</li>
+          <li>AI에게 직접 묻는다</li>
+          <li>대화로 문제 해결</li>
+          <li>에러를 AI에게 보여주고 고친다</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>그럼 코딩을 안 배워도 되나요?</h3>
+    <p>
+      배워야 합니다. 하지만 <strong>"외우는 게 아니라 읽는 능력"</strong>이 중요해졌습니다.
+      AI가 만든 코드가 무슨 일을 하는지 알아야 수정도 하고, 잘못된 부분도 찾을 수 있기 때문입니다.
+    </p>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">💡 새로운 코딩 실력의 정의</div>
+      <ol>
+        <li>원하는 것을 정확히 묘사하는 능력 (= 좋은 프롬프트)</li>
+        <li>AI가 만든 코드를 읽고 이해하는 능력 (= 독해)</li>
+        <li>안 되는 것을 알아채고 다시 요청하는 능력 (= 디버깅 마인드)</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ 환경 세팅 - 30분 안에 끝내기</h2>
+
+    <h3>① Claude 가입 + Pro 구독 확인</h3>
+    <ol>
+      <li><code>claude.ai</code> 접속 → 구글 또는 이메일로 가입</li>
+      <li>오른쪽 상단 프로필 → "Subscription" 클릭</li>
+      <li>"Claude Pro" 또는 "Team" 플랜이 활성화돼 있는지 확인</li>
+      <li>구독이 안 되어 있다면 강사에게 단체 구독 안내 받기</li>
+    </ol>
+
+    <h3>② Cursor 에디터 설치</h3>
+    <ol>
+      <li><code>cursor.sh</code> 접속 → "Download" 클릭 → 본인 OS 맞게 다운</li>
+      <li>설치 후 첫 실행 → 언어 한국어 선택 가능 (영어 권장)</li>
+      <li>"Sign in" → 본인 이메일로 가입 (무료 플랜으로 충분)</li>
+      <li>설정 (⚙️) → "Models" → "claude-opus" 또는 "claude-sonnet"을 기본 모델로 선택</li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ Windows 사용자 주의</div>
+      Cursor 설치 후 "Microsoft Defender SmartScreen" 경고가 뜨면 → "추가 정보" → "실행"을 클릭하세요. 정상 동작입니다.
+    </div>
+
+    <h3>③ 작업 폴더 만들기</h3>
+    <ol>
+      <li>바탕화면에 <code>halla-vibe</code> 폴더 생성</li>
+      <li>Cursor 실행 → "File" → "Open Folder" → 방금 만든 폴더 선택</li>
+      <li>좌측 사이드바에 폴더가 보이면 성공</li>
+    </ol>
+
+    <h3>④ 첫 파이썬 파일</h3>
+    <ol>
+      <li>좌측 사이드바에서 "새 파일" 아이콘 클릭</li>
+      <li>파일 이름: <code>hello.py</code></li>
+      <li>다음 코드 작성:</li>
+    </ol>
+
+    <pre>print("안녕, 한라대학교!")
+print("나는 오늘부터 바이브 코더야.")</pre>
+
+    <ol start="4">
+      <li>저장 (Ctrl/Cmd + S)</li>
+      <li>오른쪽 위 "▶️ Run" 버튼 또는 터미널에서 <code>python hello.py</code></li>
+      <li>결과가 출력되면 환경 세팅 완료!</li>
+    </ol>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">🐍 파이썬이 없어요!</div>
+      "python: command not found" 에러가 뜬다면 → 강사에게 도움 요청.
+      Mac은 보통 <code>python3</code>를 사용하고, Windows는 Microsoft Store에서 Python 3.11 설치 권장.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ 첫 번째 바이브 코딩 - 계산기 만들기</h2>
+
+    <p>이제 진짜 바이브 코딩을 해 봅시다. Cursor의 AI 채팅 (Ctrl/Cmd + L)을 엽니다.</p>
+
+    <h3>실습 ① 자연어로 요청하기</h3>
+    <p>채팅창에 다음을 그대로 붙여 보세요:</p>
+
+    <pre>파이썬으로 간단한 계산기를 만들어줘.
+- 사용자에게 두 숫자를 입력받기
+- 사칙연산 중 어떤 걸 할지 선택받기 (+, -, *, /)
+- 결과를 보기 좋게 출력
+- 0으로 나누는 경우는 에러 처리
+- 한국어 안내 문구</pre>
+
+    <p>Cursor가 코드를 만들어 줍니다. 결과 코드 예시:</p>
+
+    <pre>def calculator():
+    print("=== 계산기 ===")
+    a = float(input("첫 번째 숫자: "))
+    b = float(input("두 번째 숫자: "))
+    op = input("연산자 (+, -, *, /): ")
+
+    if op == "+":
+        result = a + b
+    elif op == "-":
+        result = a - b
+    elif op == "*":
+        result = a * b
+    elif op == "/":
+        if b == 0:
+            print("0으로 나눌 수 없습니다!")
+            return
+        result = a / b
+    else:
+        print("잘못된 연산자입니다.")
+        return
+
+    print(f"결과: {a} {op} {b} = {result}")
+
+calculator()</pre>
+
+    <h3>실습 ② 코드 적용 + 실행</h3>
+    <ol>
+      <li>AI가 만든 코드 위에 "Apply" 버튼이 보입니다 → 클릭하면 자동으로 파일에 들어감</li>
+      <li>파일 이름은 <code>calc.py</code> 정도로 저장</li>
+      <li>실행해 보고 정상 작동 확인</li>
+    </ol>
+
+    <h3>실습 ③ 자연어로 수정 요청</h3>
+    <p>같은 채팅에서 이어서 요청합니다.</p>
+    <ul>
+      <li>"한 번 계산하고 끝내지 말고, 사용자가 '종료'라고 입력할 때까지 반복하게 해줘."</li>
+      <li>"계산 결과를 history.txt 파일에 기록해줘."</li>
+      <li>"%(나머지)와 **(거듭제곱) 연산도 추가해줘."</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-title">🔁 이것이 바이브 코딩의 핵심 사이클</div>
+      <strong>자연어 요청 → AI 코드 생성 → 실행 → 결과 보기 → 자연어로 수정 → 반복</strong><br>
+      이 사이클이 빠르게 돌수록 좋은 바이브 코더입니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ Cursor 핵심 단축키 5가지</h2>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:var(--color-bg);">
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">단축키 (Mac / Win)</th>
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">기능</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><code>Cmd/Ctrl + L</code></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">AI 채팅 열기</td></tr>
+          <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><code>Cmd/Ctrl + K</code></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">인라인 코드 생성/수정 (선택한 부분만)</td></tr>
+          <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><code>Cmd/Ctrl + I</code></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">Composer (여러 파일 한꺼번에 수정)</td></tr>
+          <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><code>Tab</code></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">AI 자동 완성 수락</td></tr>
+          <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><code>Cmd/Ctrl + \</code></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">에디터 화면 분할 (코드 + AI 채팅 동시 보기)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 오늘의 과제</h2>
+    <ol>
+      <li>오늘 만든 계산기에 본인이 직접 기능 1가지 더 추가하기 (예: 평균 계산, 절댓값 등)</li>
+      <li>내일 사용할 Python 파일 1개를 미리 만들어 오기 - "주사위 게임" 또는 "가위바위보" 게임. Claude에게 자연어로 요청해서 만들면 됩니다.</li>
+    </ol>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="index.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">바이브 코딩 개요</div>
+    </a>
+    <a href="day2.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">2일차 · 자연어로 코드 읽기</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="../ai-basic/index.html">AI 기초 실습</a></li>
+        <li><a href="index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

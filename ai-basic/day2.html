@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2일차 · 프롬프트 기초 - AI 기초 실습</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">AI 기초 실습</a></li>
+      <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero ai">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">AI 기초 실습</a> &nbsp;›&nbsp;
+      <span>2일차</span>
+    </div>
+    <h1>2일차 · 프롬프트 기초</h1>
+    <p style="opacity:0.95;">같은 AI에게 묻더라도, 어떻게 물어보냐에 따라 결과는 완전히 달라집니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 6/30 (화)</span>
+      <span class="lesson-meta-item">⏰ 1~3교시 (3H)</span>
+      <span class="lesson-meta-item">📌 실습 중심</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">09:00–09:50</div>
+        <div class="timetable-content">
+          <strong>1교시 · 강의 + 시연</strong>
+          좋은 프롬프트 vs 나쁜 프롬프트 — 같은 일에 5배 다른 결과를 받는 법
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">10:00–10:50</div>
+        <div class="timetable-content">
+          <strong>2교시 · 실습</strong>
+          역할 부여 / 맥락 제공 / 출력 형식 지정 — 세 가지 무기 익히기
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">11:00–11:50</div>
+        <div class="timetable-content">
+          <strong>3교시 · 미니 챌린지</strong>
+          어제 메모해 온 "내가 자주 하는 일 3가지"를 프롬프트로 만들기
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 학습 목표</h2>
+    <ul>
+      <li>같은 작업이라도 프롬프트의 차이가 결과에 얼마나 큰 영향을 주는지 직접 체감한다.</li>
+      <li><strong>역할 · 맥락 · 출력 형식</strong> 세 가지 요소를 의식적으로 넣어 프롬프트를 작성할 수 있다.</li>
+      <li>본인의 일상 업무 한 가지를 AI 프롬프트로 자동화할 수 있다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ 좋은 프롬프트 vs 나쁜 프롬프트</h2>
+
+    <p>먼저 직접 비교해 봅시다. 같은 일을 시키는데 결과는 완전히 다릅니다.</p>
+
+    <h3>예시 ① 자기소개</h3>
+    <div class="compare-grid">
+      <div class="compare-box compare-bad">
+        <div class="compare-label">❌ 나쁜 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"자기소개 써줘"</p>
+        <p style="font-size:13px; color:var(--color-text-muted); margin-top:8px;">
+          → 너무 모호함. AI는 "어떤 자기소개?", "누구를 위한?", "어디서 쓸?"을 알 수 없음.
+        </p>
+      </div>
+      <div class="compare-box compare-good">
+        <div class="compare-label">✅ 좋은 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"너는 IT 회사 신입 채용 담당자야. 한라대학교 컴퓨터공학과를 졸업한 24세 지원자가 IT 스타트업에 보낼 자기소개서를 작성해줘. 1000자 이내, 진취적이지만 겸손한 톤으로. 강점 3가지를 항목으로 정리해줘."</p>
+      </div>
+    </div>
+
+    <h3>예시 ② 이메일</h3>
+    <div class="compare-grid">
+      <div class="compare-box compare-bad">
+        <div class="compare-label">❌ 나쁜 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"교수님께 이메일 써줘"</p>
+      </div>
+      <div class="compare-box compare-good">
+        <div class="compare-label">✅ 좋은 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"한라대학교 컴공과 김교수님께 보낼 이메일이야. 내일까지 제출해야 하는 데이터구조 과제를, 가족 경조사로 인해 이틀 늦게 제출해도 될지 정중하게 양해를 구하는 내용. 격식 있되 너무 딱딱하지 않게. 200자 정도."</p>
+      </div>
+    </div>
+
+    <h3>예시 ③ 학습 도움</h3>
+    <div class="compare-grid">
+      <div class="compare-box compare-bad">
+        <div class="compare-label">❌ 나쁜 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"미분 설명해줘"</p>
+      </div>
+      <div class="compare-box compare-good">
+        <div class="compare-label">✅ 좋은 프롬프트</div>
+        <p style="font-family:var(--font-mono); font-size:13px;">"나는 고등학교 수학을 거의 까먹은 대학교 1학년 비전공자야. 미분이 무엇인지, 일상생활의 예시 2가지로 설명해줘. 수식은 최소화하고, 마지막에 30초 안에 외울 수 있는 한 줄 요약을 붙여줘."</p>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">💡 핵심 통찰</div>
+      AI는 마음을 읽지 못합니다. <strong>"내가 누구인지, 왜 이게 필요한지, 어떤 결과를 원하는지"</strong>를 명확히 알려줄수록 결과 품질이 폭발적으로 올라갑니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ 프롬프트의 3대 무기</h2>
+
+    <p>좋은 프롬프트엔 항상 다음 셋 중 둘 이상이 들어 있습니다.</p>
+
+    <h3>① 역할 부여 (Role)</h3>
+    <p>AI에게 어떤 사람인 것처럼 답하라고 지시합니다.</p>
+    <pre>"너는 10년차 마케팅 디렉터야."
+"너는 친절한 초등학교 선생님이야."
+"너는 까다로운 면접관이야."</pre>
+    <p>같은 질문이라도 누가 답하느냐에 따라 톤·전문성·관점이 달라집니다.</p>
+
+    <h3>② 맥락 제공 (Context)</h3>
+    <p>지금 상황, 대상 독자, 목적을 알려줍니다.</p>
+    <pre>"나는 비전공자야."
+"청중은 50대 이상 어르신들이야."
+"이메일은 거래처 부장님께 보낼 거야."
+"보고서는 회사 임원진을 대상으로 해."</pre>
+
+    <h3>③ 출력 형식 지정 (Format)</h3>
+    <p>결과물의 길이·구조·스타일을 미리 정합니다.</p>
+    <pre>"500자 이내로 답해줘."
+"표 형식으로 정리해줘."
+"불릿 포인트 5개로 요약해줘."
+"JSON 형식으로 줘."
+"이모지를 섞어서 친근한 톤으로 써줘."</pre>
+
+    <div class="callout callout-info">
+      <div class="callout-title">🧪 황금 공식</div>
+      <strong>[역할] + [상황·맥락] + [구체적 요청] + [출력 형식] = 좋은 프롬프트</strong>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ 실습 - 똑같은 일을 3가지 방식으로</h2>
+
+    <p>"한라대학교 동아리 모집 포스터 문구"를 다음 세 가지 방식으로 작성해 봅시다.</p>
+
+    <h3>실습 ① 역할만 바꿔보기</h3>
+    <ul>
+      <li>"너는 카피라이터야. 사진동아리 모집 문구를 써줘."</li>
+      <li>"너는 시인이야. 사진동아리 모집 문구를 써줘."</li>
+      <li>"너는 SNS 인플루언서야. 사진동아리 모집 문구를 써줘."</li>
+    </ul>
+
+    <h3>실습 ② 출력 형식만 바꿔보기</h3>
+    <ul>
+      <li>"30자 이내로 짧게 써줘."</li>
+      <li>"기·승·전·결 네 줄로 써줘."</li>
+      <li>"인스타그램 캐러셀 5장 분량으로 써줘."</li>
+    </ul>
+
+    <h3>실습 ③ 맥락만 바꿔보기</h3>
+    <ul>
+      <li>"대상은 1학년 신입생이야."</li>
+      <li>"대상은 사진을 한 번도 안 찍어본 비전공자야."</li>
+      <li>"대상은 이미 카메라를 가진 동호인이야."</li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">🔍 관찰 포인트</div>
+      9가지 결과물의 분위기가 어떻게 다른지 비교해 보세요. <strong>"하나만 바꿔도 결과가 달라진다"</strong>는 감각이 잡힙니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ 자주 쓰는 프롬프트 템플릿</h2>
+
+    <p>외워두면 평생 써먹는 5가지 템플릿입니다.</p>
+
+    <h3>① 요약 템플릿</h3>
+    <pre>다음 글을 [3줄 / 5줄 / 한 문단]으로 요약해줘.
+대상 독자는 [누구]야.
+[딱딱한 / 친근한] 톤으로 써줘.
+
+---
+(요약할 글 붙여넣기)</pre>
+
+    <h3>② 이메일 작성 템플릿</h3>
+    <pre>나는 [내 신분/이름]이야.
+[받는 사람]에게 [목적]에 대한 이메일을 쓰려고 해.
+배경 상황은 [상황 설명]이야.
+[격식 있게 / 친근하게] [몇 자] 정도로 작성해줘.</pre>
+
+    <h3>③ 비교 분석 템플릿</h3>
+    <pre>[A]와 [B]를 다음 5가지 기준으로 비교해줘.
+1. [기준1]
+2. [기준2]
+...
+표로 정리한 다음, 어떤 상황엔 어느 쪽이 더 좋은지 추천해줘.</pre>
+
+    <h3>④ 학습 도우미 템플릿</h3>
+    <pre>나는 [내 수준]이야.
+[배우고 싶은 개념]을 다음 방식으로 설명해줘.
+1. 일상생활 비유 1개
+2. 가장 간단한 예시 1개
+3. 흔히 하는 오해 1개
+4. 한 줄 요약</pre>
+
+    <h3>⑤ 브레인스토밍 템플릿</h3>
+    <pre>나는 [상황]에 대한 아이디어 10개가 필요해.
+조건은 [예산/시간/대상] 이야.
+평범한 아이디어 5개 + 좀 엉뚱한 아이디어 5개를 섞어서 줘.
+각 아이디어마다 1줄 설명을 붙여줘.</pre>
+  </div>
+
+  <div class="lesson-section">
+    <h2>5️⃣ 미니 챌린지 - 내 일을 프롬프트로 바꾸기</h2>
+
+    <p>어제 메모해 온 <strong>"내가 자주 하는 일 3가지"</strong>를 꺼내세요.</p>
+
+    <ol>
+      <li>그중 가장 시간이 많이 드는 일 한 가지를 고릅니다.</li>
+      <li>그 일을 AI에게 맡길 수 있도록 <strong>프롬프트 템플릿</strong>을 작성합니다.</li>
+      <li>실제 Claude에 넣어보고 결과를 확인합니다.</li>
+      <li>마음에 들지 않으면 프롬프트를 <strong>3번 이상 수정</strong>합니다. (이걸 "프롬프트 튜닝"이라고 합니다.)</li>
+      <li>최종 프롬프트와 결과물을 공유 문서에 올립니다.</li>
+    </ol>
+
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 흔한 함정</div>
+      처음 결과가 만족스럽지 않을 때 "AI는 별로네"라고 결론짓지 마세요.
+      <strong>거의 99%의 경우 프롬프트를 더 다듬으면 결과는 좋아집니다.</strong>
+      AI는 도구이고, 도구는 쓰는 사람의 실력 차이가 크게 납니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 오늘의 과제</h2>
+    <ol>
+      <li>오늘 만든 프롬프트 템플릿 1개를 다듬어, 본인의 실제 업무·과제에 써보고 <strong>before/after 비교 문서</strong> 작성</li>
+      <li>내일 사용할 Canva AI 계정 가입하기 (<code>canva.com</code> 한국 계정 가능)</li>
+    </ol>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day1.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">1일차 · AI란 무엇인가</div>
+    </a>
+    <a href="day3.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">3일차 · 생성형 AI 도구 활용</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="index.html">AI 기초 실습</a></li>
+        <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

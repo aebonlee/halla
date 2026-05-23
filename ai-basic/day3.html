@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3일차 · 생성형 AI 도구 활용 - AI 기초 실습</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">AI 기초 실습</a></li>
+      <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero ai">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">AI 기초 실습</a> &nbsp;›&nbsp;
+      <span>3일차</span>
+    </div>
+    <h1>3일차 · 생성형 AI 도구 활용</h1>
+    <p style="opacity:0.95;">이미지·문서·번역·이메일까지, AI가 할 수 있는 일의 범위를 직접 만져보며 체감합니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 7/1 (수)</span>
+      <span class="lesson-meta-item">⏰ 1~3교시 (3H)</span>
+      <span class="lesson-meta-item">📌 실습 100%</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row activity">
+        <div class="timetable-time">09:00–09:50</div>
+        <div class="timetable-content">
+          <strong>1교시 · 실습</strong>
+          이미지 생성 — Canva AI로 동아리 포스터 만들기
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">10:00–10:50</div>
+        <div class="timetable-content">
+          <strong>2교시 · 실습</strong>
+          문서 요약 · 번역 · 정리 — Claude로 PDF 한 권 정리하기
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">11:00–11:50</div>
+        <div class="timetable-content">
+          <strong>3교시 · 실습</strong>
+          이메일 자동화 — AI를 비서처럼 쓰는 법
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 학습 목표</h2>
+    <ul>
+      <li>Canva AI로 본인이 원하는 분위기의 이미지·디자인을 만들 수 있다.</li>
+      <li>Claude를 활용해 긴 문서를 빠르게 요약·번역·재구성할 수 있다.</li>
+      <li>일주일 분량의 이메일 응대를 30분 안에 끝낼 수 있는 워크플로를 갖는다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ 이미지 생성 - Canva AI</h2>
+
+    <p>
+      Canva는 원래 디자인 도구지만, 최근 <strong>"Magic Studio"</strong>라는 이름의 AI 기능이 들어와서
+      "글로 묘사하면 그림을 그려주는" 도구가 되었습니다.
+    </p>
+
+    <h3>실습 ① 텍스트로 이미지 만들기 (Magic Media)</h3>
+    <ol>
+      <li><code>canva.com</code> 로그인 → "디자인 만들기" → 사용자 지정 크기 (1080×1080)</li>
+      <li>좌측 메뉴에서 <strong>"앱"</strong> → "Magic Media" 선택</li>
+      <li>다음과 같은 프롬프트를 시도해 봅니다.</li>
+    </ol>
+
+    <pre>"한라산 정상에서 일출을 바라보는 등산객의 뒷모습,
+영화 같은 색감, 시네마틱 라이팅, 4K 디테일"
+
+"카페에서 노트북으로 코딩하는 20대 한국 대학생,
+파스텔 톤, 일러스트 스타일"
+
+"AI를 상징하는 미래적 로고, 미니멀, 푸른 그라데이션,
+화이트 배경"</pre>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">🎨 좋은 이미지 프롬프트의 공식</div>
+      <strong>[주제] + [구도] + [스타일] + [분위기/색감] + [디테일 수준]</strong>
+    </div>
+
+    <h3>실습 ② 한라대 동아리 포스터 디자인</h3>
+    <ol>
+      <li>Canva 템플릿 검색: "포스터" → 마음에 드는 것 선택</li>
+      <li>제목과 문구는 <strong>어제 만든 Claude 프롬프트로 생성한 문구</strong>를 붙여넣기</li>
+      <li>배경 이미지를 Magic Media로 생성</li>
+      <li>색상 통일 → 글꼴 변경 → 완성</li>
+    </ol>
+
+    <div class="callout callout-info">
+      <div class="callout-title">⏱️ 시간 측정</div>
+      예전엔 "포스터 한 장에 디자이너 + 카피라이터 + 사진 작가가 반나절 일하던" 작업이
+      이제 본인 한 명이서 <strong>20분</strong>에 끝납니다. 이게 생성형 AI가 바꾸는 본질입니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ 문서 요약·번역·정리 - Claude</h2>
+
+    <p>Claude는 긴 글을 다루는 데 특히 강합니다. 영어 논문 한 편을 통째로 넣어도 잘 읽어냅니다.</p>
+
+    <h3>실습 ① 영문 기사 요약 + 번역</h3>
+    <ol>
+      <li>BBC, NYT, MIT Tech Review 등에서 관심 있는 영어 기사 하나를 복사</li>
+      <li>Claude에 다음 프롬프트로 요청:</li>
+    </ol>
+
+    <pre>다음 영어 기사를 처리해줘:
+
+1. 핵심 내용을 한국어로 3줄 요약
+2. 주요 인물·사건·숫자를 표로 정리
+3. 비전공자도 이해할 수 있게 풀어 설명
+4. 마지막에 "더 알아볼 키워드 5개"를 추천
+
+---
+(여기에 기사 본문 붙여넣기)</pre>
+
+    <h3>실습 ② PDF 한 권 정리하기</h3>
+    <p>Claude는 PDF 파일을 직접 첨부할 수 있습니다.</p>
+    <ol>
+      <li>관심 분야의 PDF 자료 (보고서, 논문, 매뉴얼 등) 1개를 준비</li>
+      <li>Claude 채팅창의 📎 아이콘으로 PDF 업로드</li>
+      <li>다음 프롬프트로 요청:</li>
+    </ol>
+
+    <pre>이 PDF를 다음 형식으로 정리해줘:
+
+## 한 줄 요약
+(1문장)
+
+## 핵심 메시지
+(3문장)
+
+## 챕터별 요약
+(각 챕터당 2-3줄)
+
+## 처음 보는 사람을 위한 용어 사전
+(주요 용어 5개 + 짧은 설명)
+
+## 깊이 읽고 싶다면 이 페이지부터
+(페이지 번호 추천)</pre>
+
+    <h3>실습 ③ 일본어·중국어 자료 번역</h3>
+    <p>Claude는 한·영뿐 아니라 일·중도 거의 사람급으로 처리합니다.</p>
+    <pre>이 일본어 텍스트를 한국어로 번역해줘.
+번역체가 아니라 한국 사람이 쓴 것처럼 자연스럽게.
+번역 옆에 [의역 / 직역] 라벨을 붙여줘.</pre>
+
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 주의 - 환각 (Hallucination)</div>
+      AI는 "그럴듯한 거짓말"을 만들 때가 있습니다. 특히 <strong>수치·인용·날짜</strong>는 반드시 원문에서 확인하세요.
+      Claude는 다른 AI보다 환각이 적은 편이지만, 0은 아닙니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ 이메일 자동화 - 30분 이메일 워크플로</h2>
+
+    <p>매일 이메일 응대에 1시간 쓰는 사람을 30분으로 줄이는 4단계 워크플로입니다.</p>
+
+    <h3>단계 ① 받은 이메일 요약</h3>
+    <pre>다음 이메일을 30초 안에 이해할 수 있게 요약해줘.
+
+- 발신자가 원하는 것: (한 줄)
+- 마감이나 약속된 시간: (있다면)
+- 내가 응답해야 할 핵심: (한 줄)
+- 답장 우선순위: 즉시 / 오늘 안 / 천천히
+
+---
+(이메일 본문)</pre>
+
+    <h3>단계 ② 답장 초안 생성</h3>
+    <pre>위 이메일에 답장하려고 해.
+나는 [신분]이고, [상황]이야.
+다음 내용을 담아 답장 초안을 써줘:
+
+1. [전달할 내용 1]
+2. [전달할 내용 2]
+3. [전달할 내용 3]
+
+톤: [정중함 / 친근함] 정도
+길이: [짧게 / 보통 / 자세히]</pre>
+
+    <h3>단계 ③ 검토 - "이건 빼야 해"</h3>
+    <p>Claude가 만든 초안을 그대로 보내지 말고, 다음을 점검하세요.</p>
+    <ul>
+      <li>❓ 거짓 정보가 들어가지는 않았나? (특히 일정·금액·이름)</li>
+      <li>❓ 너무 길지 않나? (한국 비즈니스 이메일은 보통 짧을수록 좋음)</li>
+      <li>❓ 받는 사람이 내 톤이라고 받아들일까?</li>
+    </ul>
+
+    <h3>단계 ④ 시그니처·서명 자동화</h3>
+    <p>"앞으로 모든 이메일에 이 시그니처를 붙여줘" 같은 식으로 Claude에 미리 알려두면 편합니다.</p>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">💡 실전 팁</div>
+      <strong>"내 평소 말투를 학습시키기"</strong>도 가능합니다. 본인이 예전에 쓴 잘 된 이메일 3-4개를 보여주고
+      "앞으로 이 톤으로 써줘"라고 하면 점점 본인스럽게 답해 줍니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ AI를 비서처럼 쓰는 7가지 일</h2>
+
+    <p>오늘 배운 도구들을 조합하면 다음 일들을 직접 해볼 수 있습니다.</p>
+
+    <ol>
+      <li>📅 <strong>회의록 정리</strong> — 녹음 → 음성 → 텍스트 → 요약 → 액션 아이템</li>
+      <li>📊 <strong>엑셀 차트 해석</strong> — 데이터 표를 붙여넣고 "이 데이터에서 보이는 패턴 3가지" 요청</li>
+      <li>🎤 <strong>발표 리허설 파트너</strong> — "내가 이 자료로 발표할 거야. 청중이 던질 만한 까다로운 질문 5개 만들어줘"</li>
+      <li>✍️ <strong>이력서 첨삭</strong> — "이 이력서 어디가 약한지 솔직하게 평가해줘"</li>
+      <li>🔍 <strong>주제 조사</strong> — "○○에 대해 30분 만에 전문가처럼 말하려면 알아야 할 핵심 10가지"</li>
+      <li>🎨 <strong>SNS 콘텐츠 기획</strong> — 캡션 + 해시태그 + 이미지 프롬프트까지 한 번에</li>
+      <li>🍳 <strong>일상 자동화</strong> — 냉장고 식재료 사진 → "이걸로 만들 수 있는 요리 3가지"</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 오늘의 과제</h2>
+    <ol>
+      <li>오늘 만든 Canva AI 포스터 + Claude로 정리한 문서를 본인 폴더에 저장해 오기</li>
+      <li>내일 사용할 Gamma 계정 가입 (<code>gamma.app</code> · 구글 계정 가능)</li>
+      <li>5일차 미니 프로젝트 발표 주제 1차 후보 3가지 메모해 오기</li>
+    </ol>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day2.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">2일차 · 프롬프트 기초</div>
+    </a>
+    <a href="day4.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">4일차 · AI 콘텐츠 제작</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="index.html">AI 기초 실습</a></li>
+        <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

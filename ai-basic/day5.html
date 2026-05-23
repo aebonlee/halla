@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5일차 · 미니 프로젝트 ① - AI 기초 실습</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../index.html">홈</a></li>
+      <li><a href="index.html" class="active">AI 기초 실습</a></li>
+      <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      <li><a href="../syllabus.html">강의 계획서</a></li>
+      <li><a href="../resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero ai">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">AI 기초 실습</a> &nbsp;›&nbsp;
+      <span>5일차</span>
+    </div>
+    <h1>5일차 · 미니 프로젝트 ①</h1>
+    <p style="opacity:0.95;">"내가 만든 AI 활용 콘텐츠" — 1인 1주제, 5분 발표 + 피어 피드백.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 7/3 (금)</span>
+      <span class="lesson-meta-item">⏰ 1~3교시 (3H)</span>
+      <span class="lesson-meta-item">📌 발표 + 평가</span>
+    </div>
+  </div>
+</section>
+
+<main class="lesson-content">
+
+  <div class="lesson-section">
+    <h2>📋 오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row break">
+        <div class="timetable-time">09:00–09:15</div>
+        <div class="timetable-content">
+          <strong>발표 준비 & 리허설</strong>
+          마지막 점검, 발표 순서 추첨
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">09:15–10:45</div>
+        <div class="timetable-content">
+          <strong>1부 발표 (1~20번)</strong>
+          개인당 5분 발표 + 2분 피드백 · 중간 휴식 10분
+        </div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">10:55–11:30</div>
+        <div class="timetable-content">
+          <strong>2부 발표 (21~40번)</strong>
+          개인당 5분 발표 + 2분 피드백
+        </div>
+      </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">11:30–11:50</div>
+        <div class="timetable-content">
+          <strong>회고 + 우수 사례 수상</strong>
+          전체 회고 / 동료가 뽑은 베스트 콘텐츠 시상 / 다음 주 일정 안내
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🎯 오늘의 목표</h2>
+    <ul>
+      <li>지난 4일간 배운 도구로 만든 본인의 콘텐츠를 5분 안에 효과적으로 발표한다.</li>
+      <li>"AI에게 무엇을 어떻게 시켰는가"를 명확히 설명한다.</li>
+      <li>다른 사람의 발표에 건설적이고 따뜻한 피드백을 남긴다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2>1️⃣ 발표 구성 - 5분 안에 들어가야 할 5가지</h2>
+
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">0:00 - 0:30</div>
+        <div class="timetable-content">
+          <strong>① 인사 + 주제 한 줄</strong>
+          "안녕하세요, ○○입니다. 저는 '[주제]'를 만들어 봤습니다."
+        </div>
+      </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">0:30 - 1:30</div>
+        <div class="timetable-content">
+          <strong>② 왜 이 주제를 골랐는가</strong>
+          본인의 일상·고민·관심사와 연결. "저는 평소에 ~~한 게 너무 귀찮았는데"
+        </div>
+      </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">1:30 - 3:30</div>
+        <div class="timetable-content">
+          <strong>③ AI에게 어떻게 요청했는가 (핵심!)</strong>
+          처음 프롬프트 → 만족스럽지 않은 결과 → 어떻게 다듬었는가 → 최종 프롬프트
+        </div>
+      </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">3:30 - 4:30</div>
+        <div class="timetable-content">
+          <strong>④ 결과물 공개</strong>
+          최종 콘텐츠를 보여주고, 가장 마음에 드는 부분 1개를 강조
+        </div>
+      </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">4:30 - 5:00</div>
+        <div class="timetable-content">
+          <strong>⑤ 배운 점 + 청중 질문</strong>
+          "이번에 배운 가장 큰 것은 ~~. 여러분이라면 이걸 어떻게 더 쓰시겠어요?"
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 흔한 실수</div>
+      <ul>
+        <li><strong>결과물만 자랑하기</strong> — 청중은 "어떻게 만들었는가"가 더 궁금합니다.</li>
+        <li><strong>도구 자랑하기</strong> — "Claude는 진짜 좋아요"가 아니라 "Claude로 이런 일을 했어요"가 핵심.</li>
+        <li><strong>5분 넘기기</strong> — 5분에서 끊습니다. 시간 관리도 발표 역량입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>2️⃣ 평가 루브릭</h2>
+
+    <p>강사 60% + 동료 평가 40%로 합산합니다.</p>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse: collapse; margin-top:16px;">
+        <thead>
+          <tr style="background: var(--color-bg);">
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">평가 항목</th>
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">배점</th>
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">평가 기준</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>주제 선정</strong></td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">20점</td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">본인 일상·관심사와 연결되어 있는가</td>
+          </tr>
+          <tr>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>AI 활용 깊이</strong></td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">30점</td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">프롬프트 튜닝 과정이 잘 보이는가, 도구 2개 이상 조합했는가</td>
+          </tr>
+          <tr>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>결과물 품질</strong></td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">25점</td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">콘텐츠 완성도, 일관성, 디테일</td>
+          </tr>
+          <tr>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>전달력</strong></td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">15점</td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">5분 안에 들어왔는가, 청중 시선 잡았는가</td>
+          </tr>
+          <tr>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>피드백 참여</strong></td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">10점</td>
+            <td style="padding:12px; border-bottom:1px solid var(--color-border);">다른 발표에 건설적 코멘트를 남겼는가</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>3️⃣ 피어 피드백 가이드</h2>
+
+    <p>다른 사람의 발표가 끝나면 다음 양식으로 피드백 카드를 남깁니다.</p>
+
+    <h3>피드백 카드 양식</h3>
+    <pre>발표자: ___________
+
+⭐ 좋았던 점 (반드시 작성)
+-
+
+💡 더 알고 싶은 점 / 궁금한 점
+-
+
+🔧 제안 (선택, 비난이 아닌 제안)
+-
+
+📌 내 발표에 가져갈 인사이트 (선택)
+- </pre>
+
+    <div class="callout callout-tip">
+      <div class="callout-title">💡 좋은 피드백의 원칙</div>
+      <ol>
+        <li><strong>구체적으로</strong>: "좋았어요"보다 "○○ 부분의 ○○ 설명이 좋았어요"</li>
+        <li><strong>사람이 아닌 결과물에 대해</strong>: "발표자가 별로"가 아니라 "이 슬라이드는 좀 빽빽했어요"</li>
+        <li><strong>제안은 명령 아닌 제안으로</strong>: "이렇게 해야 해" 대신 "이렇게 하면 어떨까요"</li>
+        <li><strong>적어도 한 가지는 칭찬</strong>: 사람은 비판만 들으면 닫힙니다</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>4️⃣ 우수 사례 - "베스트 콘텐츠" 시상</h2>
+
+    <p>동료 투표로 다음 4개 부문 베스트를 선정합니다.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon ai">🏆</div>
+        <h3>가장 실용적이었던 사례</h3>
+        <p>"오, 나도 따라할래"라는 마음이 든 콘텐츠</p>
+      </div>
+      <div class="card">
+        <div class="card-icon vibe">🎨</div>
+        <h3>가장 창의적이었던 사례</h3>
+        <p>"이런 발상은 못 했네"라는 발표</p>
+      </div>
+      <div class="card">
+        <div class="card-icon accent">📚</div>
+        <h3>프롬프트 마스터</h3>
+        <p>프롬프트 튜닝 과정을 가장 잘 보여준 발표</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎤</div>
+        <h3>최고의 전달력</h3>
+        <p>5분 동안 시선이 떠나지 않은 발표</p>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-title">🎁 시상품</div>
+      각 부문 1위에게 <strong>Claude Pro 1개월 추가 구독권</strong> + 한라대 굿즈를 제공합니다.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📚 회고 + 다음 주 안내</h2>
+
+    <h3>AI 기초 실습을 마무리하며</h3>
+    <p>
+      5일 동안 정말 많은 것을 만져 보셨습니다. ChatGPT, Claude, Canva AI, Gamma, 프롬프트 튜닝, 콘텐츠 자동화…
+      이 모든 게 <strong>"AI는 도구이고, 도구를 다루는 본인의 의사결정이 진짜 실력"</strong>이라는 한 가지 메시지로 모입니다.
+    </p>
+    <p>
+      다음 주부터는 <strong>바이브 코딩</strong>이 시작됩니다.
+      이번엔 AI에게 자연어로 말해서 진짜 작동하는 코드를 만들어 봅니다. 본인의 웹사이트를 직접 만드는 1주일입니다.
+    </p>
+
+    <h3>주말 권장 활동</h3>
+    <ul>
+      <li>오늘 만든 본인 콘텐츠를 SNS · 노션 · 블로그 등에 정리해 올려보기 (자기 포트폴리오 시작)</li>
+      <li>월요일 바이브 코딩 1일차 사전 자료 읽어보기 → <a href="../vibe-coding/day1.html">바이브 코딩 1일차</a></li>
+      <li>Cursor 에디터 설치만 미리 해두면 월요일 진행이 부드럽습니다 (<code>cursor.sh</code>)</li>
+    </ul>
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day4.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">4일차 · AI 콘텐츠 제작</div>
+    </a>
+    <a href="../vibe-coding/index.html" class="next">
+      <div class="lesson-nav-dir">다음 트랙 →</div>
+      <div class="lesson-nav-title">바이브 코딩 시작하기</div>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">강의</div>
+      <ul class="footer-links">
+        <li><a href="index.html">AI 기초 실습</a></li>
+        <li><a href="../vibe-coding/index.html">바이브 코딩</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
