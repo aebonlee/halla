@@ -21,7 +21,11 @@
     <button class="nav-toggle">☰</button>
     <ul class="nav-menu">
       <li><a href="about.html">About</a></li>
-      <li><a href="learn.html">학습하기</a></li>
+      <li><a href="day1.html">Day01</a></li>
+      <li><a href="day2.html">Day02</a></li>
+      <li><a href="day3.html">Day03</a></li>
+      <li><a href="day4.html">Day04</a></li>
+      <li><a href="day5.html">Day05</a></li>
       <li><a href="syllabus.html">강의 계획서</a></li>
       <li><a href="resources.html" class="active">참고 자료</a></li>
     </ul>
@@ -36,9 +40,25 @@
   </div>
 </section>
 
-<main class="lesson-content">
+<div class="lesson-layout">
 
-  <div class="lesson-section">
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#tools">🤖 AI 도구 공식</a></li>
+      <li><a href="#learn-more">📚 더 공부하고 싶을 때</a></li>
+      <li><a href="#design">🎨 디자인 영감</a></li>
+      <li><a href="#images">🖼️ 무료 이미지</a></li>
+      <li><a href="#prompts">💡 프롬프트 모음</a></li>
+      <li><a href="#community">🌐 한국어 AI 커뮤니티</a></li>
+      <li><a href="#videos">📺 추천 영상</a></li>
+      <li><a href="#faq">❓ 자주 묻는 질문</a></li>
+    </ul>
+  </aside>
+
+  <main class="lesson-main">
+
+  <div class="lesson-section" id="tools" data-toc>
     <h2>🤖 AI 도구 공식 사이트</h2>
     <ul>
       <li><a href="https://claude.ai" target="_blank" rel="noopener"><strong>Claude</strong></a> — Anthropic의 AI 어시스턴트. 본 강의 메인 도구.</li>
@@ -50,7 +70,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="learn-more" data-toc>
     <h2>📚 더 공부하고 싶을 때</h2>
 
     <h3>AI · 프롬프트</h3>
@@ -76,7 +96,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="design" data-toc>
     <h2>🎨 디자인 영감</h2>
     <ul>
       <li><a href="https://dribbble.com" target="_blank" rel="noopener">Dribbble</a> — 디자이너 작품 갤러리</li>
@@ -88,7 +108,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="images" data-toc>
     <h2>🖼️ 무료 이미지 / 일러스트</h2>
     <ul>
       <li><a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> — 고품질 무료 사진</li>
@@ -99,7 +119,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="prompts" data-toc>
     <h2>💡 프롬프트 모음 (강의에서 사용한 것들)</h2>
 
     <h3>AI 기초 실습 - 자주 쓰는 프롬프트</h3>
@@ -141,7 +161,7 @@
 기존 구조는 건드리지 말고, 새 코드만 표시해줘."</pre>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="community" data-toc>
     <h2>🌐 한국어 AI 커뮤니티</h2>
     <ul>
       <li><a href="https://www.threads.net" target="_blank" rel="noopener">Threads</a> — 한국 AI 활용 사례 가장 활발히 공유</li>
@@ -151,7 +171,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="videos" data-toc>
     <h2>📺 추천 영상</h2>
     <ul>
       <li>Andrej Karpathy - "Software Is Changing (Again)" - 2025 (영문)</li>
@@ -161,7 +181,7 @@
     </ul>
   </div>
 
-  <div class="lesson-section">
+  <div class="lesson-section" id="faq" data-toc>
     <h2>❓ 자주 묻는 질문</h2>
 
     <h3>Q. Claude Pro 구독은 꼭 필요한가요?</h3>
@@ -180,7 +200,8 @@
     <p>강의 5일차 마지막에 본인 관심사에 따른 다음 단계 트랙을 안내합니다 (심화 웹개발 / AI API / 모바일 / 데이터 분석).</p>
   </div>
 
-</main>
+  </main>
+</div>
 
 <footer class="site-footer">
   <div class="footer-inner">

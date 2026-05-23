@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 04 · AI 콘텐츠 + 웹페이지 ② - 한라대학교 AC 기초 트랙</title>
+  <meta name="description" content="4일차 오전 Gamma 발표자료·영상 스크립트 + 오후 JS·다크모드·반응형. 총 8시간.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교 AC 기초 트랙</span>
+        <span class="brand-sub">AI · 바이브 코딩 · 40H</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="about.html">About</a></li>
+      <li><a href="day1.html">Day01</a></li>
+      <li><a href="day2.html">Day02</a></li>
+      <li><a href="day3.html">Day03</a></li>
+      <li><a href="day4.html" class="active">Day04</a></li>
+      <li><a href="day5.html">Day05</a></li>
+      <li><a href="syllabus.html">강의 계획서</a></li>
+      <li><a href="resources.html">참고 자료</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="index.html">홈</a> &nbsp;›&nbsp; <span>Day 04</span></div>
+    <h1>Day 04 — AI 콘텐츠 + 웹페이지 ②</h1>
+    <p style="opacity:0.95;">Gamma로 발표자료 30분에 만들고, 본인 페이지에 다크모드·반응형까지 완성합니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 7/2 (목)</span>
+      <span class="lesson-meta-item">🌤 오전 3H</span>
+      <span class="lesson-meta-item">🌙 오후 5H</span>
+      <span class="lesson-meta-item">⏱ 총 8H</span>
+    </div>
+  </div>
+</section>
+
+<div class="lesson-layout">
+
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#overview">📋 오늘의 흐름</a></li>
+      <li><a href="#am" class="toc-group">🌤 오전 · AI 콘텐츠 (3H)</a></li>
+      <li><a href="#am-schedule" class="toc-l2">시간표</a></li>
+      <li><a href="#am-goals" class="toc-l2">학습 목표</a></li>
+      <li><a href="#am-gamma" class="toc-l2">Gamma 발표자료</a></li>
+      <li><a href="#am-video" class="toc-l2">영상 스크립트 30초</a></li>
+      <li><a href="#am-ethics" class="toc-l2">콘텐츠 제작 원칙</a></li>
+      <li><a href="#am-topic" class="toc-l2">발표 주제 확정</a></li>
+      <li><a href="#am-tasks" class="toc-l2">오전 과제</a></li>
+      <li><a href="#pm" class="toc-group">🌙 오후 · 웹페이지 ② (5H)</a></li>
+      <li><a href="#pm-schedule" class="toc-l2">시간표</a></li>
+      <li><a href="#pm-goals" class="toc-l2">학습 목표</a></li>
+      <li><a href="#pm-js" class="toc-l2">JavaScript 기초</a></li>
+      <li><a href="#pm-button" class="toc-l2">버튼 클릭 인터랙션</a></li>
+      <li><a href="#pm-form" class="toc-l2">입력폼 - 방명록</a></li>
+      <li><a href="#pm-dark" class="toc-l2">다크모드 토글</a></li>
+      <li><a href="#pm-responsive" class="toc-l2">반응형 디자인</a></li>
+      <li><a href="#pm-deploy" class="toc-l2">정적 호스팅으로 배포</a></li>
+      <li><a href="#pm-tasks" class="toc-l2">오후 과제</a></li>
+      <li><a href="#next" class="toc-group">→ 다음 단계</a></li>
+    </ul>
+  </aside>
+
+  <main class="lesson-main">
+
+    <div class="lesson-section" id="overview" data-toc>
+      <h2>📋 오늘의 흐름</h2>
+      <p>
+        오전에 <strong>발표자료를 30분에 만들고</strong>, 오후엔 본인 페이지에 <strong>반응하는 동작 + 다크모드 + 반응형</strong>을 모두 끝내고 인터넷에 공개합니다.
+      </p>
+      <ul>
+        <li>🌤 <strong>09:00-12:00</strong> Gamma 발표자료 + 영상 스크립트 + 5일차 주제 확정</li>
+        <li>🌙 <strong>13:00-18:00</strong> JS 인터랙션 + 다크모드 + 반응형 + 정적 호스팅 배포</li>
+      </ul>
+    </div>
+
+    <!-- =================== 오전 =================== -->
+
+    <div class="lesson-section" id="am" data-toc style="background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(37,99,235,0.04));">
+      <h2 style="border-color: var(--color-ai);">🌤 오전 · AI 콘텐츠 제작 (3H)</h2>
+      <p>"AI가 PPT를 자동으로 만들어주는" Gamma를 익히고, 30초 영상 스크립트의 황금 구조를 잡습니다.</p>
+    </div>
+
+    <div class="lesson-section" id="am-schedule" data-toc>
+      <h2>시간표</h2>
+      <div class="timetable">
+        <div class="timetable-row activity"><div class="timetable-time">09:00-09:50</div><div class="timetable-content"><strong>1교시 · 실습</strong>Gamma로 발표자료 만들기 — 30분 안에 10장</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">10:00-10:50</div><div class="timetable-content"><strong>2교시 · 실습</strong>영상 스크립트 — 유튜브 쇼츠 / 인스타 릴스</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">11:00-11:50</div><div class="timetable-content"><strong>3교시 · 발표 + 피드백</strong>결과물 공유 / 내일 발표 주제 확정</div></div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="am-goals" data-toc>
+      <h2>학습 목표</h2>
+      <ul>
+        <li>Gamma의 AI 기능으로 본인 주제의 발표자료를 처음부터 끝까지 만든다.</li>
+        <li>유튜브 쇼츠/릴스용 30-60초 영상 스크립트를 후크-본론-CTA 구조로 작성한다.</li>
+        <li>내일 발표할 미니 프로젝트의 주제와 결과물 형태를 확정한다.</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section" id="am-gamma" data-toc>
+      <h2>1️⃣ Gamma — "글로 쓰면 슬라이드가 나온다"</h2>
+
+      <h3>첫 발표자료 만들기</h3>
+      <ol>
+        <li><code>gamma.app</code> 로그인</li>
+        <li>"+ 새로 만들기" → "프레젠테이션" → "AI로 생성하기"</li>
+        <li>다음 프롬프트 중 하나로 시도:</li>
+      </ol>
+
+<pre>"한라대 학생들에게 AI 도구 사용법을 소개하는 발표.
+30분 분량, 10장 슬라이드. 친근한 톤. 이모지 활용."</pre>
+
+      <h3>Claude로 더 좋은 입력 만들기</h3>
+      <p>Gamma 결과가 평범하다면, Claude에서 먼저 구조를 잡아 오세요.</p>
+
+<pre>(Claude에서)
+나는 [주제]에 대해 30분 발표를 해야 해.
+다음 구조로 개요를 만들어줘:
+
+1. 후킹 (첫 슬라이드)
+2. 문제 제기 (왜 이 이야기를 해야 하는가)
+3. 본론 3개 챕터 (메시지 + 근거 + 예시)
+4. 실천 가이드 (오늘부터 할 수 있는 일)
+5. 마무리 (인상 깊은 한 마디)
+
+각 슬라이드의 제목과 핵심 문장을 줘.</pre>
+
+      <p>그 결과를 Gamma의 "텍스트로부터 생성하기"에 붙여 넣으면 품질이 크게 올라갑니다.</p>
+
+      <h3>디자인 다듬기</h3>
+      <ul>
+        <li>오른쪽 패널에서 <strong>테마 변경</strong></li>
+        <li>슬라이드별로 <strong>이미지 교체</strong> → "AI 생성"</li>
+        <li>발표자 노트 추가 → "이 슬라이드에서 강조할 한 마디"</li>
+        <li>내보내기 → PDF / PPT / 웹 링크</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">⏱️ 실측 비교</div>
+        예전엔 10장 슬라이드 = 2-3시간. Gamma + Claude 조합으로 <strong>20-30분</strong>에 같은 품질.
+      </div>
+    </div>
+
+    <div class="lesson-section" id="am-video" data-toc>
+      <h2>2️⃣ 영상 스크립트 — 30초가 한 편</h2>
+
+      <h3>황금 구조 - 후크 / 본론 / CTA</h3>
+      <ol>
+        <li><strong>후크 (3초)</strong>: 손가락이 멈추게 하는 첫 마디</li>
+        <li><strong>본론 (15-25초)</strong>: 정보 1개 또는 반전 1개</li>
+        <li><strong>CTA (2-5초)</strong>: "팔로우 / 댓글 / 좋아요" 유도</li>
+      </ol>
+
+      <h3>본인 전공 소개 30초 스크립트</h3>
+<pre>유튜브 쇼츠용 30초 영상 스크립트를 만들어줘.
+
+주제: 한라대 [본인 전공] 신입생에게
+       1년 차이 선배가 하는 솔직한 조언
+청중: 18-20세 새내기
+톤: 친근하고 약간 장난스러움
+형식:
+- (0-3초) 후크: 충격/호기심 자극 한 마디
+- (3-25초) 본론: 진짜 도움 되는 팁 2가지
+- (25-30초) CTA: 댓글 유도
+
+각 구간 [화면 / 자막 / 음성]을 표로.</pre>
+
+      <h3>같은 주제, 다른 길이</h3>
+      <ul>
+        <li>30초 쇼츠</li>
+        <li>3분 유튜브 영상 (정보 밀도 ↑)</li>
+        <li>10분 강의 영상 (개론 + 챕터 3개 + 정리)</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section" id="am-ethics" data-toc>
+      <h2>3️⃣ AI 콘텐츠 제작 원칙</h2>
+
+      <h3>✓ 출처와 사실 확인</h3>
+      <p>인용·통계·인명은 반드시 출처 확인. Claude는 친절히 "추정"이라고 알려주는 편이지만 100% 신뢰는 금물.</p>
+
+      <h3>✓ 저작권과 라이선스</h3>
+      <ul>
+        <li>Canva AI·Gamma·Claude 결과물은 일반적으로 상업 사용 가능 (각 약관 확인 필수)</li>
+        <li>실명·실제 브랜드명 이미지는 가급적 피하기</li>
+      </ul>
+
+      <h3>✓ AI 사용 표기</h3>
+      <p>AI 사용 비중이 높다면 어떻게 사용했는지 솔직히 밝히기. <strong>"AI를 썼다"</strong>가 아니라 <strong>"어떻게 잘 썼는가"</strong>가 평가받는 시대.</p>
+    </div>
+
+    <div class="lesson-section" id="am-topic" data-toc>
+      <h2>4️⃣ 5일차 발표 주제 확정</h2>
+      <p>금요일 미니 프로젝트 ①은 <strong>"내가 만든 AI 활용 콘텐츠"</strong>입니다. 오늘 3교시에 본인 주제 확정.</p>
+
+      <h3>주제 예시 (자유 선택)</h3>
+      <ul>
+        <li>📚 "AI로 시험기간 1주일 살아남기"</li>
+        <li>🍕 "AI 비서로 자취 1달 살아보기"</li>
+        <li>🎨 "AI로 인스타 계정 운영 1주일"</li>
+        <li>💼 "AI로 자기소개서 5번 다듬기"</li>
+        <li>🏔️ "AI가 추천한 강원도 1박 2일 여행"</li>
+        <li>📝 "내 전공에 AI가 들어왔을 때"</li>
+      </ul>
+
+      <h3>결과물 형태 (택 1)</h3>
+      <ul>
+        <li>📊 Gamma 발표 슬라이드 8-10장</li>
+        <li>📄 Claude 워크플로 문서 (PDF · 3페이지)</li>
+        <li>🎬 영상 스크립트 + 캡처 모음 (1분)</li>
+        <li>🎨 인포그래픽 1장 (Canva AI)</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section" id="am-tasks" data-toc>
+      <h2>📚 오전 과제</h2>
+      <ol>
+        <li>발표 주제 1개 확정 + 결과물 초안 90% 완성</li>
+        <li>발표 시간 5분 안에 끝낼 수 있도록 시간 체크</li>
+        <li>청중에게 던질 질문 1개 준비</li>
+      </ol>
+    </div>
+
+    <!-- =================== 오후 =================== -->
+
+    <div class="lesson-section" id="pm" data-toc style="background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(124,58,237,0.04));">
+      <h2 style="border-color: var(--color-vibe);">🌙 오후 · 웹페이지 만들기 ② (5H)</h2>
+      <p>JavaScript로 페이지가 반응하게 만들고, 다크모드·반응형까지 완성한 다음 인터넷에 공개합니다.</p>
+    </div>
+
+    <div class="lesson-section" id="pm-schedule" data-toc>
+      <h2>시간표</h2>
+      <div class="timetable">
+        <div class="timetable-row lecture"><div class="timetable-time">13:00-13:50</div><div class="timetable-content"><strong>5교시 · 강의</strong>JavaScript 동작 원리 — 변수·함수·이벤트</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">14:00-14:50</div><div class="timetable-content"><strong>6교시 · 실습</strong>버튼 클릭 → 글자 바꾸기 / 색 토글</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">15:00-15:50</div><div class="timetable-content"><strong>7교시 · 실습</strong>입력폼 다루기 — 방명록</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">16:00-16:50</div><div class="timetable-content"><strong>8교시 · 실습</strong>다크모드 토글 / 햄버거 메뉴 / 반응형</div></div>
+        <div class="timetable-row activity"><div class="timetable-time">17:00-17:50</div><div class="timetable-content"><strong>9교시 · 마무리</strong>최종 완성 / 정적 호스팅으로 배포</div></div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="pm-goals" data-toc>
+      <h2>학습 목표</h2>
+      <ul>
+        <li>JavaScript의 "이벤트"라는 개념을 이해한다.</li>
+        <li>버튼·입력폼·다크모드·햄버거 메뉴를 자연어 요청으로 추가할 수 있다.</li>
+        <li>본인의 페이지를 모바일에서도 잘 보이게 마무리하고 인터넷에 공개한다.</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section" id="pm-js" data-toc>
+      <h2>1️⃣ JavaScript는 "반응하는 뇌"</h2>
+
+      <h3>JS 1줄 맛보기</h3>
+<pre>&lt;button onclick="alert('안녕!')"&gt;클릭&lt;/button&gt;</pre>
+
+      <h3>좀 더 깔끔한 방법 (이벤트 리스너)</h3>
+<pre>&lt;button id="myBtn"&gt;클릭&lt;/button&gt;
+
+&lt;script&gt;
+  const btn = document.getElementById('myBtn');
+  btn.addEventListener('click', () =&gt; {
+    alert('안녕!');
+  });
+&lt;/script&gt;</pre>
+
+      <h3>JS의 3대 동작</h3>
+      <ol>
+        <li><strong>찾기</strong>: <code>document.getElementById('id')</code></li>
+        <li><strong>듣기</strong>: <code>.addEventListener('click', ...)</code></li>
+        <li><strong>바꾸기</strong>: <code>.textContent = '새 글자'</code></li>
+      </ol>
+    </div>
+
+    <div class="lesson-section" id="pm-button" data-toc>
+      <h2>2️⃣ 실습 ① 버튼 클릭 - 색 토글</h2>
+
+<pre>HTML 한 파일에 다음 동작을 만들어줘:
+
+- 가운데 큰 박스 (200x200, 푸른색)
+- 박스 위에 "색 바꾸기" 버튼
+- 클릭할 때마다 박스 색이 [파랑 → 빨강 → 노랑 → 초록 → 파랑] 순환
+- 박스 안에 현재 색 이름을 한글로 표시
+- 자세한 한국어 주석.</pre>
+
+      <h3>발전 요청</h3>
+      <ul>
+        <li>"색 바뀔 때 0.3초 transition 추가."</li>
+        <li>"키보드 스페이스바로도 색 바뀌게 해줘."</li>
+        <li>"다음 색 미리보기를 작은 동그라미로 옆에 표시."</li>
+      </ul>
+    </div>
+
+    <div class="lesson-section" id="pm-form" data-toc>
+      <h2>3️⃣ 실습 ② 입력폼 - 방명록</h2>
+
+<pre>방명록 페이지를 만들어줘.
+
+- 이름 입력칸 + 메시지 입력칸 + "남기기" 버튼
+- 버튼 누르면 아래 목록에 [이름: 메시지] 추가
+- 새 항목은 위에 쌓이게
+- 빈 칸은 제출 안 되게
+- 입력 후 칸은 자동으로 비워짐
+- localStorage로 새로고침해도 메시지가 남게
+
+디자인: 깔끔한 카드, 푸른색 강조.</pre>
+
+      <h3>발전 과제</h3>
+      <ul>
+        <li>"각 메시지에 작성 시간(몇 분 전) 표시."</li>
+        <li>"❤ 좋아요 버튼. 누를 때마다 카운트 증가."</li>
+        <li>"본인이 남긴 메시지는 삭제 버튼이 보이게."</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 localStorage 마법</div>
+        브라우저에 데이터를 저장. 새로고침해도 살아 있죠. 백엔드 없이도 작은 앱을 만들 수 있게 해줍니다.
+      </div>
+    </div>
+
+    <div class="lesson-section" id="pm-dark" data-toc>
+      <h2>4️⃣ 실습 ③ 다크모드 토글</h2>
+
+<pre>내 about.html에 다크모드 토글 추가해줘.
+
+- 우측 상단에 🌙 / ☀️ 아이콘 버튼
+- 클릭하면 다크 ↔ 라이트 전환
+- CSS 변수(--bg, --text)로 색 관리
+- localStorage에 선택 저장
+- 다음에 페이지 열면 이전 선택 유지
+- 전환은 0.3초 부드럽게</pre>
+
+      <h3>안 되면 디버깅 요청</h3>
+<pre>다크모드 토글이 작동 안 해.
+버튼 눌러도 색이 안 바뀌어.
+콘솔 에러:
+[브라우저 개발자도구 콘솔의 에러]
+
+뭐가 문제이고 어떻게 고쳐야 해?</pre>
+    </div>
+
+    <div class="lesson-section" id="pm-responsive" data-toc>
+      <h2>5️⃣ 반응형 - 모바일에서도 멋지게</h2>
+      <p>요즘 웹 트래픽의 60%는 모바일. 반응형이 필수입니다.</p>
+
+      <h3>Media Query</h3>
+<pre>/* 화면 너비 700px 이하일 때 */
+@media (max-width: 700px) {
+  .container { padding: 16px; }
+  h1 { font-size: 24px; }
+  .grid { grid-template-columns: 1fr; }
+}</pre>
+
+      <h3>실전 요청</h3>
+<pre>내 about.html을 다음 반응형으로:
+
+- 데스크탑(1024px+): 3컬럼 그리드, 좌우 여백 넉넉히
+- 태블릿(700-1023px): 2컬럼
+- 모바일(700px 이하): 1컬럼, 글자 살짝 작게
+- 모바일에선 상단 메뉴 → 햄버거 메뉴(☰)
+- 햄버거 클릭 시 메뉴 슬라이드 펼침</pre>
+
+      <h3>모바일 테스트</h3>
+      <ol>
+        <li>브라우저에서 페이지 열기</li>
+        <li>개발자도구 (F12) → 모바일 토글 (📱)</li>
+        <li>iPhone, iPad, Galaxy 여러 사이즈로 확인</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section" id="pm-deploy" data-toc>
+      <h2>6️⃣ 정적 호스팅으로 배포</h2>
+      <p>오늘 만든 페이지를 인터넷에 올려 봅시다. 무료로, 5분이면 됩니다.</p>
+
+      <h3>방법 ① Netlify Drop (가장 쉬움)</h3>
+      <ol>
+        <li><code>app.netlify.com/drop</code> 접속</li>
+        <li>본인 페이지 폴더를 드래그&드롭</li>
+        <li>약 30초 후 본인 URL 발급 (예: <code>amazing-name-123.netlify.app</code>)</li>
+      </ol>
+
+      <h3>방법 ② Vercel</h3>
+      <ol>
+        <li><code>vercel.com</code> 가입</li>
+        <li>"New Project" → 폴더 업로드 또는 Git 연결</li>
+        <li>자동 빌드 후 URL 제공</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <div class="callout-title">⚠️ 자주 만나는 문제</div>
+        <ul>
+          <li><strong>파일명은 반드시 <code>index.html</code></strong>이어야 메인으로 인식됩니다.</li>
+          <li>한글 파일명은 피하세요 (URL 인코딩 문제)</li>
+          <li>이미지 경로는 상대 경로 또는 외부 URL</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="pm-tasks" data-toc>
+      <h2>📚 오후 과제 - 내일 발표 준비</h2>
+      <ol>
+        <li>본인 페이지 <strong>최종본</strong> 완성. 다음 요소 포함:
+          <ul>
+            <li>이름, 학과, 자기소개</li>
+            <li>관심사 / 좋아하는 것</li>
+            <li>포트폴리오 또는 본인 작품</li>
+            <li>연락하기</li>
+            <li>다크모드 또는 인터랙션 1개 이상</li>
+            <li>모바일에서 잘 보임</li>
+          </ul>
+        </li>
+        <li>정적 호스팅 배포 완료. <strong>접속 가능한 URL</strong>이 내일 발표 자료.</li>
+        <li>"어떤 프롬프트로 어떤 결과를 얻었는지" 가장 인상 깊은 순간 1개 정하기.</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section" id="next" data-toc>
+      <h2>→ 다음 단계</h2>
+      <p>내일은 발표 날입니다. 오전에 AI 활용 콘텐츠, 오후에 본인 웹페이지를 발표합니다.</p>
+      <div class="lesson-nav" style="margin-top:20px;">
+        <a href="day3.html">
+          <div class="lesson-nav-dir">← 이전</div>
+          <div class="lesson-nav-title">Day 03 · 도구 활용 + 웹페이지 ①</div>
+        </a>
+        <a href="day5.html" class="next">
+          <div class="lesson-nav-dir">다음 →</div>
+          <div class="lesson-nav-title">Day 05 · 발표 & 회고</div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
+      <div class="footer-desc">비전공자를 위한 AI · 바이브 코딩 부트캠프.</div>
+    </div>
+    <div>
+      <div class="footer-title">학습</div>
+      <ul class="footer-links">
+        <li><a href="day1.html">Day 01</a></li>
+        <li><a href="day2.html">Day 02</a></li>
+        <li><a href="day3.html">Day 03</a></li>
+        <li><a href="day4.html">Day 04</a></li>
+        <li><a href="day5.html">Day 05</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영</div>
+      <ul class="footer-links">
+        <li>DreamIT Biz · 강사 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 한라대학교 · DreamIT Biz.</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
