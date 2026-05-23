@@ -1045,12 +1045,67 @@ pre {
   background: var(--color-code-bg);
   color: var(--color-code-text);
   padding: 20px;
+  padding-right: 80px; /* 우측 상단 복사 버튼 공간 */
   border-radius: var(--radius-md);
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 13px;
   margin: 16px 0;
   line-height: 1.5;
+  position: relative;
+}
+
+/* ---------- 코드/프롬프트 복사 버튼 ---------- */
+.code-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s;
+  user-select: none;
+  z-index: 1;
+}
+
+pre:hover .code-copy-btn,
+.code-copy-btn:focus {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.code-copy-btn.copied {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #6ee7b7;
+  opacity: 1;
+}
+
+.code-copy-btn svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  /* 모바일에선 항상 표시 (hover 없음) */
+  .code-copy-btn { opacity: 0.9; }
+  pre { padding-right: 70px; }
 }
 
 code {

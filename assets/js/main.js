@@ -71,6 +71,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 코드/프롬프트 블록 복사 버튼 자동 주입
+  // — 페이지의 모든 <pre>에 우측 상단 복사 버튼 추가
+  // — 클릭 시 navigator.clipboard로 코드/프롬프트 텍스트 복사
+  // — 성공 시 "복사됨!" 0.5초 표시 후 원래 라벨로 복원
+  const copyIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const checkIconSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  document.querySelectorAll('pre').forEach((pre) => {
+    // 이미 버튼이 있으면 skip (재실행 안전)
+    if (pre.querySelector('.code-copy-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy-btn';
+    btn.setAttribute('aria-label', '코드 복사');
+    btn.innerHTML = copyIconSVG + '<span>복사</span>';
+
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // pre 안의 텍스트만 (버튼 라벨 제외)
+      const clone = pre.cloneNode(true);
+      const btnClone = clone.querySelector('.code-copy-btn');
+      if (btnClone) btnClone.remove();
+      const text = clone.textContent.trim();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          // fallback: 보조 textarea로 execCommand
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.classList.add('copied');
+        btn.innerHTML = checkIconSVG + '<span>복사됨!</span>';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = copyIconSVG + '<span>복사</span>';
+        }, 1500);
+      } catch (err) {
+        console.warn('[copy] failed:', err);
+        btn.innerHTML = copyIconSVG + '<span>실패</span>';
+        setTimeout(() => {
+          btn.innerHTML = copyIconSVG + '<span>복사</span>';
+        }, 1500);
+      }
+    });
+
+    pre.appendChild(btn);
+  });
+
   // 스크롤 등장 애니메이션
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
