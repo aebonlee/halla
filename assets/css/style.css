@@ -937,10 +937,10 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 5 / 4;
   background: linear-gradient(135deg, #1B2A4A 0%, #3D6FE0 100%);
   color: white;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
