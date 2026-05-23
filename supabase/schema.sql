@@ -141,6 +141,12 @@ create table if not exists public.instructor_posts (
   updated_at  timestamptz default now()
 );
 
+-- 기존 테이블 호환
+alter table public.instructor_posts add column if not exists site_id    text default 'halla';
+alter table public.instructor_posts add column if not exists pinned     boolean default false;
+alter table public.instructor_posts add column if not exists view_count integer default 0;
+alter table public.instructor_posts add column if not exists updated_at timestamptz default now();
+
 comment on table public.instructor_posts is '커뮤니티 게시판 — 한라 사이트 글';
 comment on column public.instructor_posts.category is 'notice(공지) | question(질문) | showcase(결과물) | free(자유)';
 
@@ -212,8 +218,9 @@ create trigger instructor_comments_set_updated_at
   before update on public.instructor_comments
   for each row execute procedure public.instructor_set_updated_at();
 
--- 게시글에 댓글 수를 노출하는 view
-create or replace view public.instructor_posts_with_counts as
+-- 게시글에 댓글 수를 노출하는 view (이전 버전과 컬럼 차이 시 재생성 안전을 위해 drop)
+drop view if exists public.instructor_posts_with_counts;
+create view public.instructor_posts_with_counts as
 select
   p.*,
   coalesce(c.cnt, 0)::int as comment_count
@@ -242,6 +249,16 @@ create table if not exists public.instructor_testimonials (
   created_at   timestamptz default now()
 );
 
+-- 기존 테이블 호환: 누락 컬럼 추가 (42703 undefined_column 방지)
+alter table public.instructor_testimonials add column if not exists site_id      text default 'halla';
+alter table public.instructor_testimonials add column if not exists cohort       text;
+alter table public.instructor_testimonials add column if not exists cohort_year  text;
+alter table public.instructor_testimonials add column if not exists rating       smallint default 5;
+alter table public.instructor_testimonials add column if not exists avatar_color smallint default 1;
+alter table public.instructor_testimonials add column if not exists is_published boolean default true;
+alter table public.instructor_testimonials add column if not exists is_external  boolean default false;
+alter table public.instructor_testimonials add column if not exists source_note  text;
+
 comment on table public.instructor_testimonials is '수강생 후기. is_external=true는 타 대학 사례, is_published=false는 비공개';
 comment on column public.instructor_testimonials.cohort is 'am | pm | both';
 
@@ -257,22 +274,22 @@ create policy "instructor_testimonials_select_public"
 insert into public.instructor_testimonials
   (cohort, display_name, affiliation, cohort_year, quote, rating, avatar_color, is_external, source_note)
 values
-  ('am', '김O지', '경기대학교 간호학과', '23학번',
+  ('am', '김O지', '경기대학교', '23학번',
    '평생 컴퓨터를 무서워했는데 5일 만에 Canva·Gamma로 발표자료 5장을 만들었어요. 학과 발표가 두렵지 않아졌습니다.',
    5, 1, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
-  ('pm', '박O혁', '한신대학교 컴퓨터공학과', '22학번',
+  ('pm', '박O혁', '한신대학교', '22학번',
    'HTML이 뭔지도 몰랐는데 금요일에 본인 웹사이트를 인터넷에 공개했어요. URL을 부모님께 보여드리니 표정이 잊혀지지 않습니다.',
    5, 2, true, '한신대 동일 커리큘럼 시범 회차 (2025)'),
-  ('am', '이O아', '경기대학교 사회복지학과', '21학번',
+  ('am', '이O아', '경기대학교', '21학번',
    '프롬프트 3대 무기 배우고 나서 리포트 작성 시간이 절반으로 줄었어요. 이메일 답장도 30분이면 끝납니다.',
    5, 3, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
-  ('pm', '정O준', '한신대학교 정보통신학과', '24학번',
+  ('pm', '정O준', '한신대학교', '24학번',
    '"AI한테 시키면 진짜 되네"라는 게 신기했어요. 다크모드 토글까지 직접 추가해 발표 때 박수받았습니다.',
    5, 4, true, '한신대 동일 커리큘럼 시범 회차 (2025)'),
-  ('am', '최O연', '경기대학교 유아교육과', '22학번',
+  ('am', '최O연', '경기대학교', '22학번',
    'Gamma로 30분 만에 발표자료 만든 게 가장 충격적이었어요. 학기 중 다른 과목 발표에도 그대로 쓰는 중입니다.',
    4, 5, true, '경기대 동일 커리큘럼 시범 회차 (2025)'),
-  ('pm', '한O서', '한신대학교 디지털콘텐츠학과', '23학번',
+  ('pm', '한O서', '한신대학교', '23학번',
    '에러가 나서 막혔는데 Claude에게 에러 메시지 그대로 보여주니 5초 만에 해결됐어요. 디버깅이 무섭지 않아졌습니다.',
    5, 6, true, '한신대 동일 커리큘럼 시범 회차 (2025)')
 on conflict do nothing;
