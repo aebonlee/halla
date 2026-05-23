@@ -2408,3 +2408,9 @@ pre code {
 
 [data-theme="dark"] .color-chip { background: var(--color-bg); }
 [data-theme="dark"] .tone-label { background: rgba(255,255,255,0.04); }
+
+/* 데스크톱 전용 줄바꿈 — 모바일/태블릿에서는 자연 흐름 */
+.br-desktop { display: none; }
+@media (min-width: 900px) {
+  .br-desktop { display: inline; }
+}
