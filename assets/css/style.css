@@ -112,6 +112,129 @@ body {
 
 .nav-toggle { display: none; }
 
+/* ---------- 드롭다운 메뉴 ---------- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+
+.nav-dropdown-trigger::after {
+  content: '';
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 0.15s;
+}
+
+.nav-dropdown.open .nav-dropdown-trigger::after { transform: rotate(180deg); }
+
+.nav-dropdown-trigger:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+
+.nav-dropdown-trigger.cohort-am { color: var(--color-ai); }
+.nav-dropdown-trigger.cohort-pm { color: var(--color-vibe); }
+
+.nav-dropdown-trigger.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.nav-dropdown-trigger.cohort-am.active { background: var(--color-ai); }
+.nav-dropdown-trigger.cohort-pm.active { background: var(--color-vibe); }
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 220px;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  list-style: none;
+  margin: 0;
+  display: none;
+  z-index: 200;
+}
+
+.nav-dropdown.open .nav-dropdown-menu { display: block; }
+
+.nav-dropdown-menu li { margin: 0; }
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+
+.nav-dropdown-menu a.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+.nav-dropdown-menu .nav-dropdown-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--color-text-muted);
+  padding: 8px 12px 4px;
+  font-weight: 700;
+}
+
+.nav-dropdown-menu .nav-dropdown-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 6px 8px;
+}
+
+@media (max-width: 800px) {
+  .nav-dropdown { width: 100%; }
+  .nav-dropdown-trigger {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 12px;
+  }
+  .nav-dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 4px 0 4px 16px;
+    min-width: 0;
+  }
+}
+
 /* ---------- 히어로 섹션 ---------- */
 .hero {
   position: relative;

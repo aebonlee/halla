@@ -8,6 +8,33 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
   }
 
+  // 드롭다운 메뉴 — 클릭/호버 토글
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
+  dropdowns.forEach(dd => {
+    const trigger = dd.querySelector('.nav-dropdown-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      const wasOpen = dd.classList.contains('open');
+      dropdowns.forEach(d => d.classList.remove('open'));
+      if (!wasOpen) dd.classList.add('open');
+    });
+  });
+  // 데스크탑 호버 (마우스 들어오면 열기)
+  if (window.matchMedia('(min-width: 801px)').matches) {
+    dropdowns.forEach(dd => {
+      dd.addEventListener('mouseenter', () => {
+        dropdowns.forEach(d => d.classList.remove('open'));
+        dd.classList.add('open');
+      });
+      dd.addEventListener('mouseleave', () => dd.classList.remove('open'));
+    });
+  }
+  // 바깥 클릭 시 닫기
+  document.addEventListener('click', () => {
+    dropdowns.forEach(d => d.classList.remove('open'));
+  });
+
   // 현재 페이지 메뉴 활성화
   const path = window.location.pathname;
   document.querySelectorAll('.nav-menu a').forEach(a => {

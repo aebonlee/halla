@@ -22,11 +22,30 @@
     <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
     <ul class="nav-menu">
       <li><a href="about.html" class="active">About</a></li>
-      <li><a href="day1.html">Day01</a></li>
-      <li><a href="day2.html">Day02</a></li>
-      <li><a href="day3.html">Day03</a></li>
-      <li><a href="day4.html">Day04</a></li>
-      <li><a href="day5.html">Day05</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반 (AI 기초)</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+        <li><a href="ai-basic/index.html">과정 개요</a></li>
+        <li><a href="ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+        <li><a href="ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+        <li><a href="ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+        <li><a href="ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+        <li><a href="ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반 (바이브 코딩)</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
+        <li><a href="vibe-coding/index.html">과정 개요</a></li>
+        <li><a href="vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+        <li><a href="vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+        <li><a href="vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+        <li><a href="vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+        <li><a href="vibe-coding/day5.html">Day 05 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
       <li><a href="syllabus.html">강의 계획서</a></li>
       <li><a href="resources.html">참고 자료</a></li>
     </ul>
@@ -66,50 +85,83 @@
   <main class="lesson-main">
 
   <div class="lesson-section" id="what" data-toc>
-    <h2>🎯 이 과정은 무엇인가요</h2>
+    <h2>🎯 이 페이지는 무엇인가요</h2>
     <p>
-      한라대학교 AC 기초 트랙은 <strong>오전 AI 기초 실습 (15H) + 오후 바이브 코딩 (25H)</strong>으로 구성된
-      40시간 집중 부트캠프입니다. "AI를 도구로 쓰는 사람이 가장 먼저 미래를 만든다"는 관점에서,
-      비전공자가 가장 빠르게 AI 도구와 코딩 환경을 본인 것으로 만들 수 있도록 설계되었습니다.
+      한라대학교 AC 기초 트랙은 <strong>두 개의 독립된 과정</strong>으로 구성되어 있습니다.
+      한 사람이 둘 다 들을 필요는 없으며, 각자의 관심사에 맞는 과정을 선택해 신청합니다.
     </p>
 
-    <h3>핵심 메시지</h3>
+    <div class="compare-grid" style="margin-top:20px;">
+      <div class="compare-box" style="border-color:var(--color-ai); background:rgba(6,182,212,0.04);">
+        <div class="compare-label" style="color:var(--color-ai);">🌤 오전반 — AI 기초 실습</div>
+        <p style="margin-top:8px;"><strong>15시간 · 5일 · 1~3교시</strong></p>
+        <p style="font-size:14px; margin-top:8px;">AI 도구를 일상·업무에 녹여 쓰는 능력을 기릅니다. 코딩 없이 ChatGPT·Claude·Canva AI·Gamma 활용에만 집중.</p>
+      </div>
+      <div class="compare-box" style="border-color:var(--color-vibe); background:rgba(236,72,153,0.04);">
+        <div class="compare-label" style="color:var(--color-vibe);">🌙 오후반 — 바이브 코딩</div>
+        <p style="margin-top:8px;"><strong>25시간 · 5일 · 5~9교시</strong></p>
+        <p style="font-size:14px; margin-top:8px;">자연어로 AI에게 말해 본인의 웹사이트를 직접 만듭니다. HTML/CSS/JS 기초 + Claude+Cursor 워크플로.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px;">두 과정에 공통되는 핵심 메시지</h3>
     <ul>
-      <li><strong>외우는 코딩이 아닙니다</strong> — 문법을 외우는 게 아니라, 원하는 것을 정확히 묘사하는 능력을 키웁니다.</li>
+      <li><strong>외우는 학습이 아닙니다</strong> — 문법·기능을 외우는 게 아니라, 원하는 것을 정확히 묘사하는 능력을 키웁니다.</li>
       <li><strong>도구 자랑이 아닙니다</strong> — Claude·Cursor·Gamma를 다루는 본인의 의사결정이 진짜 실력입니다.</li>
-      <li><strong>이론 강의가 아닙니다</strong> — 5일 안에 발표 가능한 본인의 결과물 2개를 직접 만들어 내는 게 목표입니다.</li>
+      <li><strong>이론 강의가 아닙니다</strong> — 5일 안에 발표 가능한 본인의 결과물을 직접 만들어 내는 게 목표입니다.</li>
     </ul>
   </div>
 
   <div class="lesson-section" id="who" data-toc>
-    <h2>👥 누구를 위한 과정인가요</h2>
+    <h2>👥 어느 과정이 나에게 맞을까</h2>
 
+    <h3 style="color:var(--color-ai);">🌤 오전반 (AI 기초)에 적합한 분</h3>
     <div class="card-grid">
       <div class="card">
         <div class="card-icon ai">🎓</div>
-        <h3>비전공자 대학생</h3>
-        <p>코딩을 한 번도 해본 적 없는 1~4학년 학생. 전공 무관.</p>
+        <h3>비전공 대학생 전반</h3>
+        <p>코딩에 관심은 없지만 AI 도구는 능숙히 다루고 싶은 모든 학생.</p>
       </div>
       <div class="card">
-        <div class="card-icon">💼</div>
-        <h3>취업 준비생</h3>
-        <p>이력서·포트폴리오·발표자료에 AI를 녹여내고 싶은 분.</p>
+        <div class="card-icon ai">📊</div>
+        <h3>과제·보고서 작성자</h3>
+        <p>리포트·발표자료·이미지 제작에 AI를 녹여 시간을 줄이고 싶은 분.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon ai">✍️</div>
+        <h3>콘텐츠 제작 관심자</h3>
+        <p>SNS·블로그·인스타 운영에 AI를 활용하고 싶은 분.</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--color-vibe); margin-top:32px;">🌙 오후반 (바이브 코딩)에 적합한 분</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon vibe">💻</div>
+        <h3>"본인 결과물"을 만들고 싶은 분</h3>
+        <p>발표·포트폴리오용 본인 웹사이트를 직접 만들고 싶은 비전공자.</p>
       </div>
       <div class="card">
         <div class="card-icon vibe">🚀</div>
         <h3>아이디어 보유자</h3>
-        <p>머릿속 아이디어를 직접 만든 페이지·앱으로 보여주고 싶은 분.</p>
+        <p>머릿속 아이디어를 작동하는 웹 페이지로 보여주고 싶은 분.</p>
       </div>
       <div class="card">
-        <div class="card-icon accent">📈</div>
-        <h3>업무 효율화</h3>
-        <p>반복 업무·문서 작업을 AI로 자동화하고 싶은 직장인.</p>
+        <div class="card-icon vibe">🎯</div>
+        <h3>코딩 입문 의지자</h3>
+        <p>"코딩을 배워야 하나" 고민하지만 어디서 시작할지 모르겠던 분.</p>
       </div>
     </div>
 
     <div class="callout callout-info" style="margin-top:24px;">
       <div class="callout-title">💬 사전 지식</div>
-      필요 없습니다. 컴퓨터 켜고 끄기, 브라우저로 검색하기, 이메일 보내기 정도만 할 줄 알면 충분합니다.
+      두 과정 모두 필요 없습니다. 컴퓨터 켜고 끄기, 브라우저로 검색하기, 이메일 보내기 정도만 할 줄 알면 충분합니다.
+    </div>
+
+    <div class="callout callout-tip" style="margin-top:12px;">
+      <div class="callout-title">🤔 둘 다 듣고 싶다면?</div>
+      가능합니다. 오전반(09:00-12:00) + 오후반(13:00-18:00)이 같은 주에 진행되므로 둘 다 등록할 수 있지만,
+      한 주에 40시간은 부담이 될 수 있어 신중히 결정하세요.
     </div>
   </div>
 
@@ -142,19 +194,29 @@
   </div>
 
   <div class="lesson-section" id="info" data-toc>
-    <h2>📋 과정 기본 정보</h2>
+    <h2>📋 두 과정 기본 정보 비교</h2>
 
     <div style="overflow-x:auto;">
       <table style="width:100%; border-collapse:collapse;">
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border); width:220px;"><strong>강의명</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">AC 기초 트랙 - AI 기초 실습 + 바이브 코딩 (1주차)</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>총 학습 시간</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">40시간 (AI 기초 15H + 바이브 코딩 25H)</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>기간</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">2026년 6월 29일(월) ~ 7월 3일(금) · 5일 집중</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>장소</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">한라대학교 본관 실습실</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>대상</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">비전공자 포함 초보자 · 정원 40명</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>일일 운영</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">오전 1~3교시 (AI 기초, 3H) + 오후 5~9교시 (바이브 코딩, 5H)</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>수료 기준</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">전 일정 출석 + 미니 프로젝트 발표 2개 완료 + 종합 70점 이상</td></tr>
-        <tr><td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>필수 도구</strong></td><td style="padding:12px; border-bottom:1px solid var(--color-border);">Claude (3개월 구독 필수), Cursor, Gamma, Canva AI</td></tr>
-        <tr><td style="padding:12px;"><strong>비용</strong></td><td style="padding:12px;">한라대학교 등록 학생 무료 (도구 구독료 별도 안내)</td></tr>
+        <thead>
+          <tr style="background:var(--color-bg);">
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border); width:180px;">항목</th>
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border); color:var(--color-ai);">🌤 오전반 — AI 기초</th>
+            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border); color:var(--color-vibe);">🌙 오후반 — 바이브 코딩</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>총 학습 시간</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">15시간</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">25시간</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>일일 시간</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">3H/일 (1~3교시)</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">5H/일 (5~9교시)</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>기간</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);" colspan="2">2026년 6월 29일(월) ~ 7월 3일(금) · 5일</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>장소</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);" colspan="2">한라대학교 본관 실습실</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>대상</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">비전공자 일반 (콘텐츠·문서 활용)</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">비전공자 (본인 웹사이트 제작 의지)</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>정원</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">40명</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">40명</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>결과물</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">AI 활용 콘텐츠 1개 + 5분 발표</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">본인 웹사이트(배포 완료) + 발표</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>필수 도구</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">Claude Pro, Canva AI, Gamma</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">Claude Pro, Cursor, GitHub</td></tr>
+          <tr><td style="padding:10px; border-bottom:1px solid var(--color-border);"><strong>수료 기준</strong></td><td style="padding:10px; border-bottom:1px solid var(--color-border);">출석 + 미니 프로젝트 ① 발표</td><td style="padding:10px; border-bottom:1px solid var(--color-border);">출석 + 미니 프로젝트 ② 발표</td></tr>
+          <tr><td style="padding:10px;"><strong>비용</strong></td><td style="padding:10px;" colspan="2">한라대학교 등록 학생 무료 (도구 구독료 별도 안내)</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -243,10 +305,11 @@
 
   <div class="lesson-section" id="start" data-toc>
     <h2>🚀 시작하기</h2>
-    <p>준비가 되었다면 다음 중 하나를 클릭하세요.</p>
-    <div class="hero-actions" style="justify-content:flex-start;">
-      <a href="learn.html" class="btn btn-primary">학습 시작하기 →</a>
-      <a href="syllabus.html" class="btn btn-secondary">강의 계획서 보기</a>
+    <p>관심 있는 과정을 선택하세요.</p>
+    <div class="hero-actions" style="justify-content:flex-start; flex-wrap:wrap;">
+      <a href="ai-basic/index.html" class="btn btn-primary">🌤 오전반 (AI 기초) 보기</a>
+      <a href="vibe-coding/index.html" class="btn btn-primary">🌙 오후반 (바이브 코딩) 보기</a>
+      <a href="syllabus.html" class="btn btn-secondary">강의 계획서</a>
       <a href="resources.html" class="btn btn-ghost">참고 자료</a>
     </div>
   </div>
