@@ -1,16 +1,28 @@
-// 한라대학교 강의 사이트 - Supabase 인증 모듈
+// 한라대학교 강의 사이트 - Supabase 인증 모듈 (멀티사이트 패턴)
 // - Google · Kakao OAuth 로그인
-// - 로그인 상태에 따라 상단 nav의 #auth-slot 갱신
-// - 로그아웃
+// - 사이트 식별(signup_domain, visited_sites)로 같은 Supabase 프로젝트의
+//   다른 사이트와 데이터 분리
+// - DB 테이블 접두사는 site-config.js의 dbPrefix 사용
 //
-// 사전 조건: HTML에 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 로드
-//          그리고 <li id="auth-slot"></li>를 nav-menu 끝에 배치
+// 사전 조건:
+//   1. <script src="assets/js/site-config.js"></script>  (HallaSite 글로벌 노출)
+//   2. <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+//   3. <li id="auth-slot"></li>를 nav-menu 끝에 배치
 
 (function () {
   const SUPABASE_URL = 'https://hcmgdztsgjvzcyxyayaj.supabase.co';
   // ANON KEY는 브라우저용 공개키 (Supabase 설계상 노출 안전, RLS로 데이터 보호)
   const SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbWdkenRzZ2p2emN5eHlheWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzU4ODcsImV4cCI6MjA4NzAxMTg4N30.gznaPzY1l8qDAPsEyYNR9KS7f7VqS3xaw-_2HTSwSZw';
+
+  // 사이트 식별 (site-config.js에서 정의)
+  const SITE = (typeof window !== 'undefined' && window.HallaSite) || {
+    id: 'halla',
+    domain: 'halla.dreamitbiz.com',
+    dbPrefix: 'instructor_',
+    tables: { profiles: 'instructor_profiles' },
+  };
+  const PROFILES = SITE.tables.profiles; // 'instructor_profiles'
 
   // OAuth 후 돌아올 페이지 — 사이트 root 기준 절대 경로
   const REDIRECT_PATH = '/profile.html';
@@ -75,7 +87,7 @@
     const user = await getUser();
     if (!user) return null;
     const { data, error } = await c
-      .from('instructor_profiles')
+      .from(PROFILES)
       .select('*')
       .eq('id', user.id)
       .maybeSingle();
@@ -101,7 +113,48 @@
       cohort: patch.cohort ?? null,
       bio: patch.bio ?? null,
     };
-    return await c.from('instructor_profiles').upsert(row).select().single();
+    return await c.from(PROFILES).upsert(row).select().single();
+  }
+
+  // ───────────────────────────────────────────────────────────────
+  // 멀티사이트 식별 — 같은 Supabase 프로젝트의 다른 사이트와 분리
+  // 로그인 직후 1회 실행: signup_domain·visited_sites·site_id 자동 보강
+  // ───────────────────────────────────────────────────────────────
+  async function ensureSiteIdentity() {
+    const c = getClient();
+    if (!c) return;
+    const user = await getUser();
+    if (!user) return;
+    const currentDomain = window.location.hostname;
+    // 현재 프로필 조회
+    const { data: profile } = await c
+      .from(PROFILES)
+      .select('signup_domain, visited_sites, site_id, role')
+      .eq('id', user.id)
+      .maybeSingle();
+    if (!profile) return; // 트리거가 아직 안 만들었으면 다음 기회에
+
+    const updates = {};
+    // 최초 가입 사이트 기록 (한 번만)
+    if (!profile.signup_domain) {
+      updates.signup_domain = currentDomain;
+    }
+    // 사이트 식별자 (halla)
+    if (!profile.site_id) {
+      updates.site_id = SITE.id;
+    }
+    // 방문 사이트 누적
+    const visited = Array.isArray(profile.visited_sites) ? profile.visited_sites : [];
+    if (!visited.includes(currentDomain)) {
+      updates.visited_sites = [...visited, currentDomain];
+    }
+    // 기본 role
+    if (!profile.role) {
+      updates.role = 'student';
+    }
+    if (Object.keys(updates).length > 0) {
+      await c.from(PROFILES).update(updates).eq('id', user.id);
+    }
   }
 
   function escapeHtml(s) {
@@ -230,8 +283,9 @@
       c.auth.onAuthStateChange((event) => {
         userCache = null;
         renderNavAuth();
-        // 처음 로그인 시 환영 메일 1회 발송
+        // 로그인 시: 사이트 식별 보강 + 환영 메일 1회 발송
         if (event === 'SIGNED_IN') {
+          ensureSiteIdentity().catch(() => {});
           maybeSendWelcomeMail();
         }
       });

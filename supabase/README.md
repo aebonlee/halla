@@ -84,19 +84,79 @@ ANON KEY는 `auth.js`에 상수로 들어 있습니다. (공개해도 안전한 
 
 ## 6. 운영 점검
 
+### 한라 사이트 가입자만 조회 (멀티사이트 패턴)
+
 ```sql
--- 누적 가입자 수
-select count(*) from public.instructor_profiles;
+-- 한라 사이트 가입자만 (view 사용 — 추천)
+select * from public.instructor_halla_users
+order by created_at desc;
+
+-- 또는 직접 필터
+select * from public.instructor_profiles
+where site_id = 'halla'
+order by created_at desc;
+
+-- signup_domain으로 필터
+select * from public.instructor_profiles
+where signup_domain = 'halla.dreamitbiz.com'
+order by created_at desc;
+```
+
+### 사이트별 가입자 분포 (멀티사이트 운영자용)
+
+```sql
+-- 사이트별 가입자 수
+select site_id, count(*) from public.instructor_profiles group by site_id;
+
+-- 도메인별 가입자
+select signup_domain, count(*) from public.instructor_profiles group by signup_domain;
+
+-- 여러 사이트 방문한 사용자
+select email, visited_sites
+from public.instructor_profiles
+where array_length(visited_sites, 1) > 1;
+```
+
+### 한라 사이트 운영 통계
+
+```sql
+-- 누적 가입자
+select count(*) from public.instructor_halla_users;
 
 -- 과정별 가입자
-select cohort, count(*) from public.instructor_profiles group by cohort;
+select cohort, count(*) from public.instructor_halla_users group by cohort;
 
 -- 최근 가입자 10명
 select full_name, email, cohort, created_at
-from public.instructor_profiles
+from public.instructor_halla_users
 order by created_at desc
 limit 10;
+
+-- 가입 7일 내 미완성 프로필 (cohort 미선택)
+select email, created_at from public.instructor_halla_users
+where cohort is null and created_at > now() - interval '7 days';
 ```
+
+## 6-1. 멀티사이트 패턴 설명
+
+같은 Supabase 프로젝트(`hcmgdztsgjvzcyxyayaj`)를 여러 dreamitbiz.com 사이트가 공유합니다:
+
+| 사이트 | 도메인 | DB 접두사 | site_id |
+|---|---|---|---|
+| **halla** (본 사이트) | halla.dreamitbiz.com | `instructor_` | `halla` |
+| template_2 | template.dreamitbiz.com | `tmpl_` | `template` |
+| copilot | copilot.dreamitbiz.com | (별도) | (별도) |
+
+데이터 분리 방식:
+- **사이트 전용 테이블**: `instructor_profiles`, `instructor_progress` 등 — 접두사로 다른 사이트와 충돌 방지
+- **사용자 메타**: `signup_domain` / `site_id` / `visited_sites` 컬럼으로 사이트 식별
+- **클라이언트 측**: `assets/js/site-config.js`에서 `dbPrefix` / 테이블명 일괄 관리
+
+신규 사이트 추가 시:
+1. 새 `dbPrefix` 결정 (예: `lecture_`)
+2. 클라이언트에 site-config.js 복사·수정
+3. 동일한 schema.sql 패턴으로 테이블 생성 (접두사만 다름)
+4. signup_domain·site_id 자동 기록되어 분리 운영 가능
 
 ## 7. 보안 노트
 
