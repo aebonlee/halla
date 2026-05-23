@@ -127,6 +127,17 @@ create index if not exists instructor_profiles_site_id_idx       on public.instr
 -- =========================================================
 -- 커뮤니티 게시판 — instructor_posts + instructor_comments
 -- =========================================================
+--
+-- ⚠ 이전에 불완전하게 만들어진 instructor_posts / instructor_comments /
+--   instructor_testimonials 가 있어 42703 등 컬럼 에러가 반복된다면,
+--   아래 4줄의 주석(--)을 풀어 깨끗이 초기화 후 재실행하세요.
+--   주의: 이 4줄을 실행하면 게시판/후기 데이터가 모두 삭제됩니다
+--         (instructor_profiles는 영향 없음).
+--
+-- drop view  if exists public.instructor_posts_with_counts cascade;
+-- drop table if exists public.instructor_comments cascade;
+-- drop table if exists public.instructor_posts cascade;
+-- drop table if exists public.instructor_testimonials cascade;
 
 create table if not exists public.instructor_posts (
   id          bigserial primary key,
@@ -142,6 +153,7 @@ create table if not exists public.instructor_posts (
 );
 
 -- 기존 테이블 호환: 누락 컬럼 안전 추가 (42703 방지)
+alter table public.instructor_posts add column if not exists user_id    uuid;
 alter table public.instructor_posts add column if not exists site_id    text default 'halla';
 alter table public.instructor_posts add column if not exists category   text default 'free';
 alter table public.instructor_posts add column if not exists pinned     boolean default false;
@@ -155,6 +167,18 @@ update public.instructor_posts set site_id  = 'halla' where site_id  is null;
 -- NOT NULL 적용 (DO 블록으로 안전: 이미 NOT NULL이면 그대로)
 do $$ begin
   alter table public.instructor_posts alter column category set not null;
+exception when others then null; end $$;
+
+-- user_id 외래키 제약 안전 추가 (이미 있으면 skip)
+do $$ begin
+  alter table public.instructor_posts
+    add constraint instructor_posts_user_id_fkey
+    foreign key (user_id) references auth.users(id) on delete cascade;
+exception when duplicate_object then null; end $$;
+
+-- user_id NOT NULL — 기존 NULL 행이 없을 때만 가능 (예외 시 그대로 둠)
+do $$ begin
+  alter table public.instructor_posts alter column user_id set not null;
 exception when others then null; end $$;
 
 -- CHECK 제약 추가 (이미 있으면 skip)
@@ -200,12 +224,37 @@ create trigger instructor_posts_set_updated_at
 -- 댓글
 create table if not exists public.instructor_comments (
   id          bigserial primary key,
-  post_id     bigint    not null references public.instructor_posts(id) on delete cascade,
-  user_id     uuid      not null references auth.users(id) on delete cascade,
+  post_id     bigint,
+  user_id     uuid,
   body        text      not null,
   created_at  timestamptz default now(),
   updated_at  timestamptz default now()
 );
+
+-- 기존 테이블 호환 (42703 방지)
+alter table public.instructor_comments add column if not exists post_id    bigint;
+alter table public.instructor_comments add column if not exists user_id    uuid;
+alter table public.instructor_comments add column if not exists updated_at timestamptz default now();
+
+-- 외래키 제약 안전 추가
+do $$ begin
+  alter table public.instructor_comments
+    add constraint instructor_comments_post_id_fkey
+    foreign key (post_id) references public.instructor_posts(id) on delete cascade;
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter table public.instructor_comments
+    add constraint instructor_comments_user_id_fkey
+    foreign key (user_id) references auth.users(id) on delete cascade;
+exception when duplicate_object then null; end $$;
+
+-- NOT NULL 적용 (NULL 데이터 없을 때만 성공)
+do $$ begin
+  alter table public.instructor_comments alter column post_id set not null;
+exception when others then null; end $$;
+do $$ begin
+  alter table public.instructor_comments alter column user_id set not null;
+exception when others then null; end $$;
 
 comment on table public.instructor_comments is '게시글 댓글';
 
