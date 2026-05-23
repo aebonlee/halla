@@ -1,11 +1,58 @@
 // 한라대학교 강의 사이트 - 공통 스크립트
 
+// ── 다크/라이트 모드 토글 (FOUC 방지를 위해 DOMContentLoaded 전 즉시 실행) ──
+(function () {
+  const KEY = 'halla-theme';
+  const stored = (() => { try { return localStorage.getItem(KEY); } catch { return null; } })();
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = stored || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('halla-theme', theme); } catch {}
+  // theme-color meta도 같이 변경 (모바일 주소창 색)
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#0A1428' : '#1B2A4A');
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  setTheme(cur === 'dark' ? 'light' : 'dark');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // 모바일 네비 토글
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.querySelector('.nav-menu');
   if (toggle && menu) {
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
+  }
+
+  // 테마 토글 버튼 자동 주입 — #auth-slot 앞에
+  const navMenu = document.querySelector('.nav-menu');
+  const authSlot = document.getElementById('auth-slot');
+  if (navMenu && !document.getElementById('theme-toggle-btn')) {
+    const li = document.createElement('li');
+    li.style.cssText = 'display:flex;';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'theme-toggle-btn';
+    btn.className = 'theme-toggle';
+    btn.setAttribute('aria-label', '다크/라이트 모드 전환');
+    btn.title = '다크/라이트 모드 전환';
+    btn.innerHTML = `
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    `;
+    btn.addEventListener('click', toggleTheme);
+    li.appendChild(btn);
+    if (authSlot) {
+      navMenu.insertBefore(li, authSlot);
+    } else {
+      navMenu.appendChild(li);
+    }
   }
 
   // 드롭다운 메뉴 — 클릭/호버 토글 + 지연 close로 6px 갭 통과 허용
