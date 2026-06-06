@@ -65,7 +65,7 @@ create policy "instructor_profiles_select_own"
 drop policy if exists "instructor_profiles_select_admin" on public.instructor_profiles;
 create policy "instructor_profiles_select_admin"
   on public.instructor_profiles for select
-  using ( lower(auth.jwt() ->> 'email') in ('aebon@kyonggi.ac.kr') );
+  using ( lower(auth.jwt() ->> 'email') in ('aebon@kakao.com', 'aebon@kyonggi.ac.kr', 'radical8566@gmail.com') );
 
 -- 본인 프로필 생성
 drop policy if exists "instructor_profiles_insert_own" on public.instructor_profiles;
