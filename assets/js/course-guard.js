@@ -108,6 +108,7 @@
     try {
       const user = await window.HallaAuth.getUser();
       if (!user) { lock('guest'); return; }
+      if (isAdminEmail(user)) { unlock(); return; }   // 관리자 이메일은 전 과정 열람
       const profile = await window.HallaAuth.getProfile();
       if (hasAccess(profile)) {
         unlock();

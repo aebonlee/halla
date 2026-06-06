@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260608">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260609">
 </head>
 <body>
 
@@ -154,11 +154,11 @@
   </div>
 </footer>
 
-<script src="assets/js/site-config.js?v=20260608"></script>
+<script src="assets/js/site-config.js?v=20260609"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/notifications.js?v=20260608"></script>
-<script src="assets/js/auth.js?v=20260608"></script>
-<script src="assets/js/main.js?v=20260608"></script>
+<script src="assets/js/notifications.js?v=20260609"></script>
+<script src="assets/js/auth.js?v=20260609"></script>
+<script src="assets/js/main.js?v=20260609"></script>
 <script>
 (function () {
   const COHORT_LABEL = { am: '오전반 (AI 기초)', pm: '오후반 (바이브)', dev: '생성형 AI 개발', both: '오전+오후', all: '전체 과정' };
@@ -254,11 +254,16 @@
     $('user-search').addEventListener('input', renderTable);
     $('user-filter').addEventListener('change', renderTable);
     load();
-    // 로그인 상태 바뀌면 다시 평가
+    // 로그인/로그아웃이 "실제로" 바뀔 때만 다시 로드 (INITIAL_SESSION·중복 이벤트로 인한 새로고침 루프 방지)
+    let lastUid;
     const sub = () => {
       const c = window.HallaAuth && window.HallaAuth.getClient && window.HallaAuth.getClient();
       if (!c) return setTimeout(sub, 200);
-      c.auth.onAuthStateChange(() => location.reload());
+      c.auth.onAuthStateChange((_event, session) => {
+        const uid = session && session.user ? session.user.id : null;
+        if (lastUid === undefined) { lastUid = uid; return; } // 최초 1회는 load()가 이미 처리
+        if (uid !== lastUid) { lastUid = uid; load(); }
+      });
     };
     sub();
   });
