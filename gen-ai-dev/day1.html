@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <!-- /FAVICON -->
+  <title>1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발</title>
+  <!-- OG META -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
+  <meta property="og:url" content="https://halla.dreamitbiz.com/gen-ai-dev/day1.html">
+  <meta property="og:title" content="1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발">
+  <meta property="og:description" content="생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발">
+  <meta name="twitter:description" content="생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.">
+  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <link rel="canonical" href="https://halla.dreamitbiz.com/gen-ai-dev/day1.html">
+  <!-- /OG META -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260702">
+</head>
+<body data-course="dev">
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../syllabus.html">강의계획서</a></li>
+      <li><a href="../gen-ai.html">Gen AI활용</a></li>
+      <li><a href="../pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="../prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="../prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="../ai-basic/index.html">과정 개요</a></li>
+          <li><a href="../ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="../ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
+          <li><a href="../vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="../vibe-coding/day5.html">Day 05 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="../gen-ai-dev/day1.html" class="active">Day 01 · 개발 입문 + 환경</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & API</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
+        </ul>
+      </li>
+      <li><a href="../resources.html">참고자료</a></li>
+      <li><a href="../community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+<section class="lesson-hero dev">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb">
+      <a href="../index.html">홈</a> &nbsp;›&nbsp;
+      <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp;
+      <span>1일차</span>
+    </div>
+    <h1>1일차 · 개발 입문 + 환경 세팅</h1>
+    <p style="opacity:0.95;">생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.</p>
+    <div class="lesson-meta" style="margin-top:20px;">
+      <span class="lesson-meta-item">📅 6/29 (월)</span>
+      <span class="lesson-meta-item">⏰ 1~3교시 · 5~9교시 (8H)</span>
+      <span class="lesson-meta-item">📌 종일 · 개념 + 실습</span>
+    </div>
+  </div>
+</section>
+<div class="lesson-layout">
+
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
+      <li><a href="#학습-목표">학습 목표</a></li>
+      <li><a href="#1-개발-지형">생성형 AI 개발의 지형</a></li>
+      <li><a href="#2-환경">개발 환경 세팅</a></li>
+      <li><a href="#3-api-key">API 키 발급</a></li>
+      <li><a href="#오늘의-과제">오늘의 과제</a></li>
+    </ul>
+  </aside>
+
+  <main class="lesson-main" data-course-content>
+  <div class="lesson-section" id="오늘의-시간표" data-toc>
+    <h2>오늘의 시간표</h2>
+    <div class="timetable">
+      <div class="timetable-row lecture">
+        <div class="timetable-time">오전 · 1~3교시</div>
+        <div class="timetable-content"><strong>개념 + 라이브 데모</strong> — 생성형 AI 개발이 무엇이고 어디까지 가능한지, 도구 지형 한눈에</div>
+      </div>
+      <div class="timetable-row break">
+        <div class="timetable-time">점심</div>
+        <div class="timetable-content"><strong>점심 시간</strong></div>
+      </div>
+      <div class="timetable-row activity">
+        <div class="timetable-time">오후 · 5~9교시</div>
+        <div class="timetable-content"><strong>실습 + 빌드</strong> — Claude·Cursor 설치/로그인, API 키 발급, 첫 호출 확인</div>
+      </div>
+    </div>
+  </div>
+  <div class="lesson-section" id="학습-목표" data-toc>
+    <h2>학습 목표</h2>
+    <ul>
+      <li>"AI를 쓰는 것"과 "AI로 만드는 것"의 차이를 설명할 수 있다.</li>
+      <li>생성형 AI 개발에 쓰이는 도구 지형(노코드 → 로우코드 → 코드)을 구분할 수 있다.</li>
+      <li>Claude·Cursor 개발 환경을 세팅하고 API 키를 발급받아 첫 호출을 확인할 수 있다.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section" id="1-개발-지형" data-toc>
+    <h2>생성형 AI 개발의 지형</h2>
+    <p>이 과정은 "프롬프트를 잘 쓰는 사람"에서 한 걸음 더 나아가, <strong>AI를 부품처럼 끼워 넣어 무언가를 만드는 사람</strong>이 되는 6일입니다.</p>
+    <h3>세 가지 층위</h3>
+    <ul>
+      <li><strong>노코드</strong> — 코드 없이 화면 클릭으로 AI 앱 조립 (예: 챗봇 빌더, 자동화 도구)</li>
+      <li><strong>로우코드</strong> — 약간의 코드 + 도구 조합. 가장 가성비 좋은 구간</li>
+      <li><strong>코드</strong> — API를 직접 호출. 자유도가 가장 높음</li>
+    </ul>
+    <div class="callout callout-info">
+      <div class="callout-title">💡 이 과정의 전략</div>
+      노코드로 빠르게 감을 잡고, 필요한 곳에만 코드를 더합니다. <strong>"전부 코딩"이 아니라 "필요한 만큼"</strong>이 핵심입니다.
+    </div>
+    <h3>6일 동안 만들 것</h3>
+    <ul>
+      <li>Day 2~3: 목적이 분명한 <strong>나만의 챗봇</strong></li>
+      <li>Day 4: 내 문서로 답하는 <strong>RAG Q&amp;A</strong></li>
+      <li>Day 5: 스스로 도구를 쓰는 <strong>에이전트</strong> + 웹 배포</li>
+      <li>Day 6: 이 모두를 합친 <strong>나만의 생성형 AI 서비스</strong></li>
+    </ul>
+  </div>
+
+  <div class="lesson-section" id="2-환경" data-toc>
+    <h2>개발 환경 세팅</h2>
+    <ol>
+      <li><strong>Claude</strong> — <code>claude.ai</code> 가입 (이 과정 필수, 3개월 구독 권장)</li>
+      <li><strong>Cursor</strong> — <code>cursor.sh</code>에서 설치. AI 내장 코드 에디터</li>
+      <li><strong>계정 준비</strong> — Google 계정(로그인·배포용), GitHub 계정(코드 보관·배포용)</li>
+    </ol>
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 미리 해두면 좋아요</div>
+      설치/가입은 시간이 걸립니다. 가능하면 <a href="../pre-learning.html">사전학습 페이지</a>를 보고 1일차 전에 준비해 오세요.
+    </div>
+  </div>
+
+  <div class="lesson-section" id="3-api-key" data-toc>
+    <h2>API 키 발급 + 첫 호출</h2>
+    <p>API 키는 "프로그램이 AI에게 말 걸 수 있는 비밀번호"입니다.</p>
+    <ol>
+      <li><code>console.anthropic.com</code> 접속 → 로그인</li>
+      <li>API Keys → <strong>Create Key</strong> → 키 복사 (한 번만 보이니 안전한 곳에 보관)</li>
+      <li>Cursor에서 첫 호출 테스트 — 강사가 실습 코드를 함께 실행합니다</li>
+    </ol>
+    <div class="callout callout-warn">
+      <div class="callout-title">🔐 키 보안 — 매우 중요</div>
+      API 키는 <strong>절대 공개 코드(깃허브 등)에 올리지 않습니다.</strong> 노출되면 요금 폭탄·오남용 위험이 있습니다. 키는 환경변수/비공개 설정에만 둡니다.
+    </div>
+    <div class="callout callout-tip">
+      <div class="callout-title">💰 비용 감각</div>
+      API는 사용한 토큰만큼 과금됩니다. 실습 수준에서는 매우 적은 금액이지만, "토큰 = 돈"이라는 감각을 처음부터 가집니다.
+    </div>
+  </div>
+
+  <div class="lesson-section" id="오늘의-과제" data-toc>
+    <h2>오늘의 과제</h2>
+    <ol>
+      <li>Claude·Cursor 설치 완료 스크린샷 남기기</li>
+      <li>API 키 발급 후 안전하게 보관 (노출 금지 규칙 지키기)</li>
+      <li>"내가 만들고 싶은 생성형 AI" 아이디어 3개를 메모해 오기 — Day 6 프로젝트 씨앗</li>
+    </ol>
+  </div>
+  <div class="lesson-nav">
+    <a href="index.html">
+      <div class="lesson-nav-dir">← 이전</div>
+      <div class="lesson-nav-title">생성형 AI 개발 개요</div>
+    </a>
+    <a href="day2.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">2일차 · 프롬프트 엔지니어링 & API 기초</div>
+    </a>
+  </div>
+</main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">
+        AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>
+        도구를 다루는 본인의 판단을 키웁니다.
+      </div>
+    </div>
+    <div>
+      <div class="footer-title">사이트</div>
+      <ul class="footer-links cols-2">
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../syllabus.html">강의계획서</a></li>
+        <li><a href="../gen-ai.html">Gen AI 활용</a></li>
+        <li><a href="../pre-learning.html">사전학습</a></li>
+        <li><a href="../prompt-practice.html">프롬프트 실습</a></li>
+        <li><a href="../resources.html">참고자료</a></li>
+        <li><a href="../community.html">커뮤니티</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">운영 · 문의</div>
+      <ul class="footer-links">
+        <li>강사 · 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+        <li><a href="tel:01037000629">010-3700-0629</a></li>
+        <li style="color:#64748b; font-size:12.5px;">평일 09:00 ~ 18:00</li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">사업자 정보</div>
+      <div class="company-info">
+        <p><strong>드림아이티비즈 (DreamIT Biz)</strong></p>
+        <p>대표이사: 이애본</p>
+        <p>사업자등록번호: 601-45-20154</p>
+        <p>통신판매신고: 제2024-수원팔달-0584호</p>
+        <p>출판신고: 제2026-000026호</p>
+        <p>경기도 수원시 팔달구 매산로 45, 419호</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js?v=20260702"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/notifications.js?v=20260702"></script>
+<script src="../assets/js/auth.js?v=20260702"></script>
+<script src="../assets/js/main.js?v=20260702"></script>
+<script src="../assets/js/course-guard.js?v=20260702"></script>
+</body>
+</html>

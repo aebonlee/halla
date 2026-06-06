@@ -9,6 +9,7 @@
   --color-accent: #f59e0b;
   --color-ai: #06b6d4;
   --color-vibe: #ec4899;
+  --color-dev: #8b5cf6;
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
   --color-text: #0f172a;
@@ -41,6 +42,7 @@
   --color-accent: #fbbf24;
   --color-ai: #22d3ee;
   --color-vibe: #f472b6;
+  --color-dev: #a78bfa;
   --color-bg: #0A1428;
   --color-surface: #131D33;
   --color-text: #F1F5F9;
@@ -2413,4 +2415,210 @@ pre code {
 .br-desktop { display: none; }
 @media (min-width: 900px) {
   .br-desktop { display: inline; }
+}
+
+/* =========================================================
+   생성형 AI 개발 (dev) 트랙 — violet 테마
+   ========================================================= */
+.nav-dropdown-trigger.cohort-dev { color: var(--color-dev); }
+.nav-dropdown-trigger.cohort-dev.active { background: var(--color-dev); color: #fff; }
+
+.card-icon.dev { background: rgba(139,92,246,0.12); color: var(--color-dev); }
+.schedule-day.dev { background: var(--color-dev); }
+
+.track-card.dev::before { background: linear-gradient(90deg, var(--color-dev), var(--color-primary)); }
+.track-card.dev::after  { background: var(--color-dev); }
+.track-card.dev .track-label { background: rgba(139,92,246,0.12); color: var(--color-dev); }
+
+.gallery-card.dev { background: linear-gradient(135deg, #5B21B6 0%, #8B5CF6 100%); }
+
+.lesson-hero.dev { background: linear-gradient(135deg, var(--color-dev) 0%, var(--color-primary) 100%); }
+
+/* =========================================================
+   전체화면 포털 (portal.html) — 3박스 과정 선택
+   ========================================================= */
+.portal {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(6,182,212,0.18), transparent 60%),
+    radial-gradient(1200px 600px at 85% 110%, rgba(139,92,246,0.18), transparent 60%),
+    linear-gradient(160deg, #0A1428 0%, #131D33 60%, #1B2A4A 100%);
+  color: #F1F5F9;
+  padding: clamp(20px, 4vw, 48px);
+  box-sizing: border-box;
+}
+.portal-head {
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vh, 40px) 0 clamp(12px, 2vh, 24px);
+}
+.portal-badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #cbd5e1;
+  margin-bottom: 18px;
+}
+.portal-head h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+}
+.portal-head h1 .grad {
+  background: linear-gradient(90deg, #22d3ee, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.portal-head p {
+  font-size: clamp(14px, 2.2vw, 18px);
+  color: #94A3B8;
+  margin: 0;
+  line-height: 1.7;
+}
+.portal-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+  max-width: 1240px;
+  width: 100%;
+  margin: clamp(20px, 3vh, 40px) auto 0;
+  align-content: center;
+}
+.portal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #F1F5F9;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  padding: clamp(22px, 2.4vw, 34px);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  isolation: isolate;
+}
+.portal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  z-index: 1;
+}
+.portal-card.ai::before   { background: linear-gradient(90deg, #06b6d4, #5B8AF0); }
+.portal-card.vibe::before { background: linear-gradient(90deg, #ec4899, #a78bfa); }
+.portal-card.dev::before  { background: linear-gradient(90deg, #8b5cf6, #5B8AF0); }
+.portal-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.45);
+}
+.portal-card.ai:hover   { border-color: rgba(34,211,238,0.6); }
+.portal-card.vibe:hover { border-color: rgba(244,114,182,0.6); }
+.portal-card.dev:hover  { border-color: rgba(167,139,250,0.6); }
+.portal-card-emoji {
+  font-size: clamp(38px, 5vw, 56px);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.portal-card-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.portal-card.ai   .portal-card-tag { background: rgba(34,211,238,0.16);  color: #67e8f9; }
+.portal-card.vibe .portal-card-tag { background: rgba(244,114,182,0.16); color: #f9a8d4; }
+.portal-card.dev  .portal-card-tag { background: rgba(167,139,250,0.16); color: #c4b5fd; }
+.portal-card h2 {
+  font-size: clamp(20px, 2.4vw, 27px);
+  font-weight: 800;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+.portal-card-desc {
+  font-size: 14.5px;
+  color: #94A3B8;
+  line-height: 1.65;
+  margin: 0 0 18px;
+  flex: 1;
+}
+.portal-card-meta {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.portal-card-meta span {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+.portal-card-meta b {
+  display: block;
+  font-size: 19px;
+  font-weight: 800;
+  color: #F1F5F9;
+}
+.portal-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 15px;
+}
+.portal-card.ai   .portal-card-cta { color: #67e8f9; }
+.portal-card.vibe .portal-card-cta { color: #f9a8d4; }
+.portal-card.dev  .portal-card-cta { color: #c4b5fd; }
+.portal-foot {
+  text-align: center;
+  margin-top: clamp(20px, 3vh, 36px);
+  font-size: 13px;
+  color: #64748b;
+}
+.portal-foot a { color: #94A3B8; text-decoration: none; }
+.portal-foot a:hover { color: #cbd5e1; text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .portal-grid { grid-template-columns: 1fr; max-width: 520px; }
+  .portal { padding: 24px 18px 36px; }
+}
+
+/* =========================================================
+   과정별 조회 권한 — 상세 잠금 오버레이 (course-guard.js)
+   ========================================================= */
+.course-lock {
+  position: relative;
+  margin: 24px 0;
+  padding: 28px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.course-lock-icon { font-size: 40px; line-height: 1; margin-bottom: 12px; }
+.course-lock h3 { margin: 0 0 8px; font-size: 19px; }
+.course-lock p { margin: 0 0 18px; color: var(--color-text-muted); font-size: 14.5px; line-height: 1.7; }
+.course-lock .btn { margin: 4px; }
+.course-locked-blur {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.55;
 }

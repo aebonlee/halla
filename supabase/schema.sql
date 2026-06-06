@@ -14,7 +14,7 @@ create table if not exists public.instructor_profiles (
   avatar_url      text,
   affiliation     text        default '한라대학교',
   major           text,
-  cohort          text        check (cohort in ('am', 'pm', 'both')),
+  cohort          text        check (cohort in ('am', 'pm', 'dev', 'both', 'all')),
   bio             text,
 
   -- 멀티사이트 식별
@@ -33,8 +33,19 @@ alter table public.instructor_profiles add column if not exists signup_domain te
 alter table public.instructor_profiles add column if not exists visited_sites text[] default '{}'::text[];
 alter table public.instructor_profiles add column if not exists role          text default 'student';
 
+-- cohort CHECK 제약 갱신 — 'dev'(생성형 AI 개발), 'all'(전체) 값 추가
+-- (기존 테이블의 옛 제약을 안전하게 교체)
+do $$ begin
+  alter table public.instructor_profiles drop constraint if exists instructor_profiles_cohort_check;
+exception when others then null; end $$;
+do $$ begin
+  alter table public.instructor_profiles
+    add constraint instructor_profiles_cohort_check
+    check (cohort is null or cohort in ('am', 'pm', 'dev', 'both', 'all'));
+exception when duplicate_object then null; end $$;
+
 comment on table public.instructor_profiles is '한라대 AC 기초 트랙 학습자 프로필. site_id=halla로 다른 사이트와 분리';
-comment on column public.instructor_profiles.cohort is 'am | pm | both — 수강하는 과정';
+comment on column public.instructor_profiles.cohort is 'am(오전·AI기초) | pm(오후·바이브) | dev(생성형 AI 개발) | both(오전+오후) | all(전체) — 수강 과정 / 과정별 조회 권한 판정에 사용';
 comment on column public.instructor_profiles.site_id is '사이트 식별자 — halla (확장 시 다른 사이트 추가)';
 comment on column public.instructor_profiles.signup_domain is '최초 가입 도메인 — 사이트별 가입자 필터링용';
 comment on column public.instructor_profiles.visited_sites is '누적 방문 도메인 배열';
