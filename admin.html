@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260610">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260611">
 </head>
 <body>
 
@@ -90,7 +90,7 @@
 
 <main class="container" style="min-height: calc(100vh - 200px);">
   <h1 class="section-title" style="text-align:left;">관리자 대시보드</h1>
-  <p class="section-sub" style="text-align:left;margin-left:0;">수강생 현황과 과정별 등록을 한눈에 관리합니다.</p>
+  <p class="section-sub" style="text-align:left;margin-left:0;">한라 사이트 가입자(signup/방문 도메인 기준) 현황과 과정별 등록을 한눈에 관리합니다.<br><span style="font-size:13px;">※ 같은 Supabase를 공유하는 타 사이트 가입자는 제외됩니다.</span></p>
 
   <!-- 권한 없음 -->
   <div id="admin-denied" class="course-lock" style="display:none;">
@@ -154,11 +154,11 @@
   </div>
 </footer>
 
-<script src="assets/js/site-config.js?v=20260610"></script>
+<script src="assets/js/site-config.js?v=20260611"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/js/notifications.js?v=20260610"></script>
-<script src="assets/js/auth.js?v=20260610"></script>
-<script src="assets/js/main.js?v=20260610"></script>
+<script src="assets/js/notifications.js?v=20260611"></script>
+<script src="assets/js/auth.js?v=20260611"></script>
+<script src="assets/js/main.js?v=20260611"></script>
 <script>
 (function () {
   const COHORT_LABEL = { am: '오전반 (AI 기초)', pm: '오후반 (바이브)', dev: '생성형 AI 개발', both: '오전+오후', all: '전체 과정' };
@@ -233,9 +233,14 @@
 
     const c = window.HallaAuth.getClient();
     const table = (window.HallaSite && window.HallaSite.tables && window.HallaSite.tables.profiles) || 'instructor_profiles';
+    // ⚠ instructor_profiles는 같은 Supabase 프로젝트의 모든 사이트 가입자가 섞여 있음
+    //   (auth.users 공용 + 트리거가 site_id='halla' 일괄 stamp).
+    //   → 한라 사이트 사용자만: signup_domain 또는 visited_sites에 halla 도메인이 있는 사람만 표시.
+    const HALLA_DOMAIN = (window.HallaSite && window.HallaSite.domain) || 'halla.dreamitbiz.com';
     const { data, error } = await c
       .from(table)
-      .select('id, full_name, email, cohort, role, affiliation, major, created_at')
+      .select('id, full_name, email, cohort, role, affiliation, major, created_at, signup_domain, visited_sites')
+      .or(`signup_domain.ilike.%halla%,visited_sites.cs.{${HALLA_DOMAIN}}`)
       .order('created_at', { ascending: false });
 
     $('admin-loading').style.display = 'none';

@@ -414,6 +414,8 @@ select
   created_at,
   updated_at
 from public.instructor_profiles
-where site_id = 'halla' or signup_domain like '%halla%';
+-- site_id는 트리거가 전 사이트 가입자에게 'halla'로 일괄 stamp하므로 분리 기준으로 쓰지 않음.
+-- 실제 한라 사용자 = signup_domain 또는 visited_sites에 halla 도메인이 있는 사람.
+where signup_domain ilike '%halla%' or 'halla.dreamitbiz.com' = any(visited_sites);
 
 comment on view public.instructor_halla_users is '한라 사이트 가입자만 — 사이트별 모니터링에 사용';
