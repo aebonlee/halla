@@ -3,37 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
   <meta name="theme-color" content="#1B2A4A">
-  <!-- /FAVICON -->
-  <title>6일차 · 미니 프로젝트 ③ — 기획·구현·발표 - 생성형 AI 개발</title>
-  <!-- OG META -->
+  <title>8일차 · 개인 프로젝트 제작 - 바이브 코딩</title>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="한라대학교 하계 방학특강">
-  <meta property="og:url" content="https://halla.dreamitbiz.com/gen-ai-dev/day6.html">
-  <meta property="og:title" content="6일차 · 미니 프로젝트 ③ — 기획·구현·발표 - 생성형 AI 개발">
-  <meta property="og:description" content="6일간 배운 것을 모아 나만의 생성형 AI 서비스를 완성하고, 시연하며 발표합니다.">
+  <meta property="og:url" content="https://halla.dreamitbiz.com/vibe-coding/day8.html">
+  <meta property="og:title" content="8일차 · 개인 프로젝트 제작 - 바이브 코딩">
+  <meta property="og:description" content="지금까지 배운 것을 모아 나만의 주제로 개인 프로젝트를 기획하고 만듭니다.">
   <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="6일차 · 미니 프로젝트 ③ — 기획·구현·발표 - 생성형 AI 개발">
-  <meta name="twitter:description" content="6일간 배운 것을 모아 나만의 생성형 AI 서비스를 완성하고, 시연하며 발표합니다.">
-  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <link rel="canonical" href="https://halla.dreamitbiz.com/gen-ai-dev/day6.html">
-  <!-- /OG META -->
+  <link rel="canonical" href="https://halla.dreamitbiz.com/vibe-coding/day8.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260702">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260607">
 </head>
-<body data-course="dev">
+<body data-course="pm">
 <header class="site-header">
   <nav class="nav-container">
     <a href="../index.html" class="brand">
@@ -70,7 +61,7 @@
         </ul>
       </li>
       <li class="nav-dropdown">
-        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <button class="nav-dropdown-trigger cohort-pm active" type="button">오후반</button>
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
           <li><a href="../vibe-coding/index.html">과정 개요</a></li>
@@ -81,12 +72,12 @@
           <li><a href="../vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
           <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
           <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
-          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day8.html" class="active">Day 08 · 개인 프로젝트</a></li>
           <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
         </ul>
       </li>
       <li class="nav-dropdown">
-        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <button class="nav-dropdown-trigger cohort-dev" type="button">생성형 AI</button>
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
           <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
@@ -95,7 +86,7 @@
           <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
           <li><a href="../gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
           <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
-          <li><a href="../gen-ai-dev/day6.html" class="active">Day 06 · 미니 프로젝트 ③</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
         </ul>
       </li>
       <li><a href="../resources.html">참고자료</a></li>
@@ -104,19 +95,19 @@
     </ul>
 </nav>
 </header>
-<section class="lesson-hero dev">
+<section class="lesson-hero vibe">
   <div class="lesson-hero-inner">
     <div class="lesson-breadcrumb">
       <a href="../index.html">홈</a> &nbsp;›&nbsp;
-      <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp;
-      <span>6일차</span>
+      <a href="index.html">바이브 코딩</a> &nbsp;›&nbsp;
+      <span>8일차</span>
     </div>
-    <h1>6일차 · 미니 프로젝트 ③ — 기획·구현·발표</h1>
-    <p style="opacity:0.95;">6일간 배운 것을 모아 나만의 생성형 AI 서비스를 완성하고, 시연하며 발표합니다.</p>
+    <h1>8일차 · 개인 프로젝트 제작</h1>
+    <p style="opacity:0.95;">지금까지 배운 것을 모아 나만의 주제로 개인 프로젝트를 기획하고 만듭니다.</p>
     <div class="lesson-meta" style="margin-top:20px;">
-      <span class="lesson-meta-item">📅 7/4 (토)</span>
-      <span class="lesson-meta-item">⏰ 1~3교시 · 5~9교시 (8H)</span>
-      <span class="lesson-meta-item">📌 종일 · 개념 + 실습</span>
+      <span class="lesson-meta-item">📅 7/8 (수)</span>
+      <span class="lesson-meta-item">⏰ 5~9교시 (5H)</span>
+      <span class="lesson-meta-item">📌 실습 중심</span>
     </div>
   </div>
 </section>
@@ -128,9 +119,9 @@
       <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
       <li><a href="#학습-목표">학습 목표</a></li>
       <li><a href="#1-plan">프로젝트 기획</a></li>
-      <li><a href="#2-build">구현 체크리스트</a></li>
-      <li><a href="#3-present">발표 &amp; 피드백</a></li>
-      <li><a href="#수료">수료</a></li>
+      <li><a href="#2-build">빌드 진행</a></li>
+      <li><a href="#3-check">제출 전 체크리스트</a></li>
+      <li><a href="#오늘의-과제">오늘의 과제</a></li>
     </ul>
   </aside>
 
@@ -139,74 +130,79 @@
     <h2>오늘의 시간표</h2>
     <div class="timetable">
       <div class="timetable-row lecture">
-        <div class="timetable-time">오전 · 1~3교시</div>
-        <div class="timetable-content"><strong>개념 + 라이브 데모</strong> — 프로젝트 기획 확정, 발표 구성 가이드</div>
-      </div>
-      <div class="timetable-row break">
-        <div class="timetable-time">점심</div>
-        <div class="timetable-content"><strong>점심 시간</strong></div>
+        <div class="timetable-time">5교시</div>
+        <div class="timetable-content"><strong>기획</strong> 발표할 개인 프로젝트 주제·범위 확정</div>
       </div>
       <div class="timetable-row activity">
-        <div class="timetable-time">오후 · 5~9교시</div>
-        <div class="timetable-content"><strong>실습 + 빌드</strong> — 완성 → 시연 발표(1인 1서비스) → 피어 피드백 → 수료</div>
+        <div class="timetable-time">6~9교시</div>
+        <div class="timetable-content"><strong>빌드</strong> 1:1 코칭과 함께 제작 + 배포 갱신, 발표 리허설</div>
       </div>
     </div>
   </div>
+
   <div class="lesson-section" id="학습-목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>6일간 배운 요소(프롬프트·API·챗봇·RAG·에이전트·배포)를 하나로 합칠 수 있다.</li>
-      <li>본인의 생성형 AI 서비스를 완성해 URL로 공유할 수 있다.</li>
-      <li>문제·해결·시연을 3분 안에 설득력 있게 발표할 수 있다.</li>
+      <li>지금까지 배운 HTML·CSS·JS·배포를 하나의 결과물로 합칠 수 있다.</li>
+      <li>"작지만 끝까지 작동하는" 개인 페이지를 완성할 수 있다.</li>
+      <li>내일 발표를 위한 데모 흐름을 미리 점검할 수 있다.</li>
     </ul>
   </div>
+
   <div class="lesson-section" id="1-plan" data-toc>
     <h2>프로젝트 기획</h2>
-    <p>Day 1에 메모한 아이디어 중 하나를 골라 범위를 좁힙니다. <strong>작고 완성된 것</strong>이 크고 미완성보다 낫습니다.</p>
+    <p>주제는 자유입니다. <strong>작고 완성된 것</strong>이 크고 미완성보다 낫습니다.</p>
     <div class="callout callout-tip">
-      <div class="callout-title">📝 기획 한 장</div>
-      ① 누구의 어떤 문제 · ② 무엇으로 해결(핵심 기능 1개) · ③ 어떤 기술 요소 사용 · ④ 데모 시나리오
+      <div class="callout-title">📝 기획 한 줄</div>
+      "이 페이지는 <strong>[누구]</strong>에게 <strong>[무엇]</strong>을 보여주는 페이지다." — 예: 나를 소개하는 포트폴리오, 좋아하는 것 큐레이션, 동아리 소개.
     </div>
-  </div>
-  <div class="lesson-section" id="2-build" data-toc>
-    <h2>구현 체크리스트</h2>
+    <h3>주제 예시</h3>
     <ul>
-      <li>핵심 기능 1개가 처음부터 끝까지 동작하는가</li>
-      <li>시스템 프롬프트로 역할·가드레일이 잡혀 있는가</li>
-      <li>(선택) RAG/도구/멀티모달 중 1개 이상 결합했는가</li>
-      <li>배포되어 URL로 접속되는가</li>
-      <li>API 키가 노출되지 않았는가</li>
+      <li>자기소개 · 포트폴리오 · SNS 링크 모음</li>
+      <li>취미/관심사 큐레이션 (사진·링크·메모)</li>
+      <li>방명록·투표 같은 인터랙션이 있는 한 페이지</li>
     </ul>
   </div>
-  <div class="lesson-section" id="3-present" data-toc>
-    <h2>발표 &amp; 피드백</h2>
-    <p>1인당 3분 시연 발표 + 질의.</p>
-    <ol>
-      <li>무슨 문제를 풀었나 (30초)</li>
-      <li>라이브 데모 (1분 30초)</li>
-      <li>어떻게 만들었나 / 막힌 점 (1분)</li>
-    </ol>
+
+  <div class="lesson-section" id="2-build" data-toc>
+    <h2>빌드 진행</h2>
+    <ul>
+      <li>섹션 단위로 AI에게 요청 → 붙이고 → 확인 (한 번에 다 만들려 하지 않기)</li>
+      <li>인터랙션 1개 이상 포함 (버튼/폼/다크모드 등)</li>
+      <li>변경할 때마다 배포 갱신해 URL에서 확인</li>
+    </ul>
     <div class="callout callout-info">
-      <div class="callout-title">🎤 피어 피드백</div>
-      동료 발표마다 "좋은 점 1 · 더 해보면 좋을 점 1"을 남깁니다. 잘 듣는 것도 평가 항목입니다.
+      <div class="callout-title">💡 막히면</div>
+      에러는 메시지를 그대로 AI에게. "이 부분을 이렇게 바꾸고 싶어"는 현재 코드와 함께 요청하면 정확합니다.
     </div>
   </div>
-  <div class="lesson-section" id="수료" data-toc>
-    <h2>수료 🎉</h2>
-    <p>축하합니다. 이제 여러분은 AI를 <strong>쓰는</strong> 사람을 넘어 <strong>만드는</strong> 사람입니다. 오늘 만든 서비스는 포트폴리오의 출발점입니다 — 계속 다듬어 나가세요.</p>
-    <div class="callout callout-tip">
-      <div class="callout-title">➡️ 다음 걸음</div>
-      <a href="../resources.html">참고자료</a>에서 심화 학습 경로를 확인하고, <a href="../community.html">커뮤니티</a>에 결과물을 공유해 보세요.
-    </div>
+
+  <div class="lesson-section" id="3-check" data-toc>
+    <h2>제출 전 체크리스트</h2>
+    <ul>
+      <li>배포 URL이 실제로 열리는가 (데스크탑+모바일)</li>
+      <li>인터랙션 1개 이상이 작동하는가</li>
+      <li>색·여백·폰트가 통일되어 있는가</li>
+      <li>발표 6분 흐름(시연 포함)을 한 번 리허설했는가</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section" id="오늘의-과제" data-toc>
+    <h2>오늘의 과제</h2>
+    <ol>
+      <li>개인 프로젝트 완성 + 배포 URL 최종 확정</li>
+      <li>발표 슬라이드/대본 초안 작성 (내일 6분 발표)</li>
+      <li>"가장 좋았던 프롬프트 1~2개" 정리 — 발표 핵심 자료</li>
+    </ol>
   </div>
   <div class="lesson-nav">
-    <a href="day5.html">
+    <a href="day7.html">
       <div class="lesson-nav-dir">← 이전</div>
-      <div class="lesson-nav-title">5일차 · AI 에이전트 & 자동화 + 배포</div>
+      <div class="lesson-nav-title">7일차 · 배포 & 인터넷 공개</div>
     </a>
-    <a href="../portal.html" class="next">
-      <div class="lesson-nav-dir">완주 →</div>
-      <div class="lesson-nav-title">과정 다시 선택</div>
+    <a href="day9.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">9일차 · 미니 프로젝트 ②</div>
     </a>
   </div>
 </main>
@@ -216,10 +212,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-brand">한라대학교 하계 방학특강</div>
-      <div class="footer-desc">
-        AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>
-        도구를 다루는 본인의 판단을 키웁니다.
-      </div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>도구를 다루는 본인의 판단을 키웁니다.</div>
     </div>
     <div>
       <div class="footer-title">사이트</div>
@@ -260,11 +253,11 @@
   </div>
 </footer>
 
-<script src="../assets/js/site-config.js?v=20260702"></script>
+<script src="../assets/js/site-config.js?v=20260607"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/js/notifications.js?v=20260702"></script>
-<script src="../assets/js/auth.js?v=20260702"></script>
-<script src="../assets/js/main.js?v=20260702"></script>
-<script src="../assets/js/course-guard.js?v=20260702"></script>
+<script src="../assets/js/notifications.js?v=20260607"></script>
+<script src="../assets/js/auth.js?v=20260607"></script>
+<script src="../assets/js/main.js?v=20260607"></script>
+<script src="../assets/js/course-guard.js?v=20260607"></script>
 </body>
 </html>

@@ -255,7 +255,7 @@ body {
 
 .nav-menu {
   display: flex;
-  gap: 6px;
+  gap: 13px;
   list-style: none;
   align-items: center;
 }
@@ -1538,9 +1538,15 @@ body {
 /* ---------- 트랙 카드 (히어로 아래 핵심 카드) ---------- */
 .track-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: 40px;
+}
+@media (max-width: 980px) {
+  .track-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .track-grid { grid-template-columns: 1fr; }
 }
 
 .track-card {
@@ -2492,7 +2498,7 @@ pre code {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(16px, 2vw, 28px);
-  max-width: 1240px;
+  max-width: 1320px;
   width: 100%;
   margin: clamp(20px, 3vh, 40px) auto 0;
   align-content: center;
@@ -2594,7 +2600,10 @@ pre code {
 .portal-foot a { color: #94A3B8; text-decoration: none; }
 .portal-foot a:hover { color: #cbd5e1; text-decoration: underline; }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
+  .portal-grid { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+}
+@media (max-width: 640px) {
   .portal-grid { grid-template-columns: 1fr; max-width: 520px; }
   .portal { padding: 24px 18px 36px; }
 }
@@ -2621,4 +2630,100 @@ pre code {
   pointer-events: none;
   user-select: none;
   opacity: 0.55;
+}
+
+/* =========================================================
+   상단 우측 계정 아바타 + 풍선 팝오버 (auth.js)
+   ========================================================= */
+#auth-slot { position: relative; }
+
+.nav-user-btn {
+  width: 34px; height: 34px;
+  padding: 0; border: none; cursor: pointer;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.nav-user-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.nav-user-btn img { width: 100%; height: 100%; object-fit: cover; }
+.nav-user-btn .nav-user-initial { font-weight: 800; font-size: 14px; line-height: 1; }
+.nav-user-btn.guest {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.nav-user-btn.guest svg { width: 19px; height: 19px; }
+
+.nav-pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  z-index: 1200;
+  display: none;
+}
+.nav-pop.open { display: block; animation: navPopIn 0.14s ease; }
+@keyframes navPopIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+/* 말풍선 꼬리 */
+.nav-pop::before {
+  content: ""; position: absolute; top: -6px; right: 14px;
+  width: 12px; height: 12px; background: var(--color-surface);
+  border-left: 1px solid var(--color-border); border-top: 1px solid var(--color-border);
+  transform: rotate(45deg);
+}
+
+.nav-pop-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 10px 12px; border-bottom: 1px solid var(--color-border); margin-bottom: 6px;
+}
+.nav-pop-avatar {
+  width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); color: #fff;
+}
+.nav-pop-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.nav-pop-avatar .nav-user-initial { font-weight: 800; font-size: 16px; }
+.nav-pop-id { display: flex; flex-direction: column; min-width: 0; }
+.nav-pop-name { font-weight: 700; font-size: 14px; color: var(--color-text); display: flex; align-items: center; gap: 6px; }
+.nav-pop-email { font-size: 12px; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav-pop-badge {
+  font-size: 10.5px; font-weight: 800; color: #fff; background: var(--color-dev);
+  padding: 1px 7px; border-radius: 999px;
+}
+
+.nav-pop-section { padding: 4px; }
+.nav-pop-section + .nav-pop-section { border-top: 1px solid var(--color-border); }
+.nav-pop-label { font-size: 11px; font-weight: 700; color: var(--color-text-muted); padding: 6px 8px 4px; letter-spacing: 0.02em; }
+
+.nav-pop-link {
+  display: block; padding: 9px 10px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; color: var(--color-text); text-decoration: none;
+}
+.nav-pop-link:hover { background: var(--color-bg); }
+.nav-pop-admin { color: var(--color-dev); }
+.nav-pop-primary { color: var(--color-primary); }
+.nav-pop-danger { color: var(--color-danger); }
+
+.nav-pop-theme { display: flex; gap: 6px; padding: 2px 4px 6px; }
+.nav-pop-theme button {
+  flex: 1; cursor: pointer; font: inherit; font-size: 12.5px; font-weight: 600;
+  padding: 7px 4px; border-radius: 8px;
+  border: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text-muted);
+  transition: all 0.12s;
+}
+.nav-pop-theme button:hover { color: var(--color-text); border-color: var(--color-primary); }
+.nav-pop-theme button.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+@media (max-width: 800px) {
+  #auth-slot { position: relative; }
+  .nav-pop { right: auto; left: 0; }
 }

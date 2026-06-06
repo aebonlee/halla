@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <meta name="robots" content="noindex, nofollow">
+  <title>관리자 대시보드 - 한라대학교 하계 방학특강</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260607">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="about.html">About</a></li>
+      <li><a href="syllabus.html">강의계획서</a></li>
+      <li><a href="gen-ai.html">Gen AI활용</a></li>
+      <li><a href="pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="ai-basic/index.html">과정 개요</a></li>
+          <li><a href="ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
+          <li><a href="vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="gen-ai-dev/day1.html">Day 01 · 개발 입문 + 환경</a></li>
+          <li><a href="gen-ai-dev/day2.html">Day 02 · 프롬프트 & API</a></li>
+          <li><a href="gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
+          <li><a href="gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
+          <li><a href="gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
+        </ul>
+      </li>
+      <li><a href="resources.html">참고자료</a></li>
+      <li><a href="community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+
+<main class="container" style="min-height: calc(100vh - 200px);">
+  <h1 class="section-title" style="text-align:left;">관리자 대시보드</h1>
+  <p class="section-sub" style="text-align:left;margin-left:0;">수강생 현황과 과정별 등록을 한눈에 관리합니다.</p>
+
+  <!-- 권한 없음 -->
+  <div id="admin-denied" class="course-lock" style="display:none;">
+    <div class="course-lock-icon">🔒</div>
+    <h3>관리자 전용 페이지입니다</h3>
+    <p>관리자 계정으로 로그인해야 접근할 수 있습니다.</p>
+    <a href="/login.html" class="btn btn-primary">로그인</a>
+    <a href="/index.html" class="btn btn-secondary">홈으로</a>
+  </div>
+
+  <!-- 로딩 -->
+  <div id="admin-loading" style="display:none; padding:40px; text-align:center; color:var(--color-text-muted);">불러오는 중…</div>
+
+  <!-- 대시보드 -->
+  <div id="admin-view" style="display:none;">
+    <div class="card-grid" id="stat-cards" style="margin-top:24px;"></div>
+
+    <div style="display:flex; gap:12px; align-items:center; margin:32px 0 12px; flex-wrap:wrap;">
+      <h2 style="margin:0; font-size:20px;">수강생 목록 <span id="user-count" style="color:var(--color-text-muted); font-weight:600; font-size:15px;"></span></h2>
+      <input id="user-search" type="search" placeholder="이름·이메일 검색" style="margin-left:auto; padding:8px 12px; border:1px solid var(--color-border); border-radius:8px; background:var(--color-surface); color:var(--color-text); min-width:200px;">
+      <select id="user-filter" style="padding:8px 12px; border:1px solid var(--color-border); border-radius:8px; background:var(--color-surface); color:var(--color-text);">
+        <option value="">전체 과정</option>
+        <option value="am">오전반 (AI 기초)</option>
+        <option value="pm">오후반 (바이브)</option>
+        <option value="dev">생성형 AI 개발</option>
+        <option value="both">오전+오후</option>
+        <option value="all">전체 과정</option>
+        <option value="__none">미설정</option>
+      </select>
+    </div>
+
+    <div style="overflow-x:auto; border:1px solid var(--color-border); border-radius:12px;">
+      <table id="user-table" style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr style="background:var(--color-bg); text-align:left;">
+            <th style="padding:11px 14px;">이름</th>
+            <th style="padding:11px 14px;">이메일</th>
+            <th style="padding:11px 14px;">과정</th>
+            <th style="padding:11px 14px;">소속/전공</th>
+            <th style="padding:11px 14px;">역할</th>
+            <th style="padding:11px 14px;">가입일</th>
+          </tr>
+        </thead>
+        <tbody id="user-tbody"></tbody>
+      </table>
+    </div>
+    <p id="admin-error" style="color:var(--color-danger); margin-top:12px; display:none;"></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="assets/js/site-config.js?v=20260607"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/notifications.js?v=20260607"></script>
+<script src="assets/js/auth.js?v=20260607"></script>
+<script src="assets/js/main.js?v=20260607"></script>
+<script>
+(function () {
+  const COHORT_LABEL = { am: '오전반 (AI 기초)', pm: '오후반 (바이브)', dev: '생성형 AI 개발', both: '오전+오후', all: '전체 과정' };
+  const COHORT_COLOR = { am: 'var(--color-ai)', pm: 'var(--color-vibe)', dev: 'var(--color-dev)', both: 'var(--color-primary)', all: 'var(--color-accent)' };
+  const $ = (id) => document.getElementById(id);
+  let allUsers = [];
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function fmtDate(s) { if (!s) return '-'; return String(s).slice(0, 10); }
+
+  function show(id) { $(id).style.display = id === 'stat-cards' ? 'grid' : (id === 'admin-view' ? 'block' : 'block'); }
+
+  function renderStats(users) {
+    const counts = { total: users.length, am: 0, pm: 0, dev: 0, both: 0, all: 0, none: 0 };
+    users.forEach((u) => {
+      const c = u.cohort;
+      if (!c) counts.none++; else if (counts[c] != null) counts[c]++;
+    });
+    const cards = [
+      { n: counts.total, label: '총 수강생', cls: 'accent' },
+      { n: counts.am, label: '오전반 (AI 기초)', cls: 'ai' },
+      { n: counts.pm, label: '오후반 (바이브)', cls: 'vibe' },
+      { n: counts.dev, label: '생성형 AI 개발', cls: 'dev' },
+      { n: counts.both + counts.all, label: '복수 과정', cls: 'accent' },
+      { n: counts.none, label: '과정 미설정', cls: 'accent' },
+    ];
+    $('stat-cards').innerHTML = cards.map((c) =>
+      `<div class="card" style="text-align:center;">
+         <div class="card-icon ${c.cls}" style="margin:0 auto 10px;">${c.n}</div>
+         <h3 style="font-size:15px;">${c.label}</h3>
+       </div>`).join('');
+  }
+
+  function renderTable() {
+    const q = ($('user-search').value || '').toLowerCase().trim();
+    const f = $('user-filter').value;
+    const rows = allUsers.filter((u) => {
+      if (f === '__none' && u.cohort) return false;
+      if (f && f !== '__none' && u.cohort !== f) return false;
+      if (q) {
+        const hay = `${u.full_name || ''} ${u.email || ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    $('user-count').textContent = `(${rows.length}명)`;
+    $('user-tbody').innerHTML = rows.length ? rows.map((u) => {
+      const c = u.cohort;
+      const badge = c
+        ? `<span style="display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:700; color:#fff; background:${COHORT_COLOR[c] || 'var(--color-text-muted)'};">${esc(COHORT_LABEL[c] || c)}</span>`
+        : `<span style="color:var(--color-text-muted); font-size:12.5px;">미설정</span>`;
+      return `<tr style="border-top:1px solid var(--color-border);">
+        <td style="padding:10px 14px; font-weight:600;">${esc(u.full_name || '-')}</td>
+        <td style="padding:10px 14px; color:var(--color-text-muted);">${esc(u.email || '-')}</td>
+        <td style="padding:10px 14px;">${badge}</td>
+        <td style="padding:10px 14px;">${esc(u.affiliation || '-')}${u.major ? ' · ' + esc(u.major) : ''}</td>
+        <td style="padding:10px 14px;">${esc(u.role || 'student')}</td>
+        <td style="padding:10px 14px; color:var(--color-text-muted);">${fmtDate(u.created_at)}</td>
+      </tr>`;
+    }).join('') : `<tr><td colspan="6" style="padding:24px; text-align:center; color:var(--color-text-muted);">조건에 맞는 수강생이 없습니다.</td></tr>`;
+  }
+
+  async function load() {
+    $('admin-loading').style.display = 'block';
+    // auth.js 로드 대기
+    let tries = 0;
+    while (!window.HallaAuth && tries++ < 40) await new Promise((r) => setTimeout(r, 150));
+    if (!window.HallaAuth) { $('admin-loading').style.display = 'none'; $('admin-denied').style.display = 'block'; return; }
+
+    const admin = await window.HallaAuth.isAdmin();
+    if (!admin) { $('admin-loading').style.display = 'none'; $('admin-denied').style.display = 'block'; return; }
+
+    const c = window.HallaAuth.getClient();
+    const table = (window.HallaSite && window.HallaSite.tables && window.HallaSite.tables.profiles) || 'instructor_profiles';
+    const { data, error } = await c
+      .from(table)
+      .select('id, full_name, email, cohort, role, affiliation, major, created_at')
+      .order('created_at', { ascending: false });
+
+    $('admin-loading').style.display = 'none';
+    $('admin-view').style.display = 'block';
+
+    if (error) {
+      $('admin-error').style.display = 'block';
+      $('admin-error').textContent = '데이터를 불러오지 못했습니다: ' + error.message + ' (schema.sql의 관리자 SELECT 정책을 적용했는지 확인하세요)';
+    }
+    allUsers = data || [];
+    renderStats(allUsers);
+    renderTable();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    $('user-search').addEventListener('input', renderTable);
+    $('user-filter').addEventListener('change', renderTable);
+    load();
+    // 로그인 상태 바뀌면 다시 평가
+    const sub = () => {
+      const c = window.HallaAuth && window.HallaAuth.getClient && window.HallaAuth.getClient();
+      if (!c) return setTimeout(sub, 200);
+      c.auth.onAuthStateChange(() => location.reload());
+    };
+    sub();
+  });
+})();
+</script>
+</body>
+</html>

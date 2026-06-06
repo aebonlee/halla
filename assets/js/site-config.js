@@ -13,6 +13,10 @@ window.HallaSite = {
   domain: 'halla.dreamitbiz.com',
   url: 'https://halla.dreamitbiz.com',
 
+  // 관리자 이메일 — 이 계정으로 로그인하면 모든 과정 열람 + 관리자 대시보드(admin.html) 접근
+  // (클라이언트 게이팅용. DB 차원 권한은 schema.sql의 admin RLS 정책으로 보강)
+  adminEmails: ['aebon@kyonggi.ac.kr'],
+
   // DB 테이블 접두사 (사용자 지정: instructor_)
   // — 같은 Supabase 프로젝트의 다른 사이트와 분리
   dbPrefix: 'instructor_',

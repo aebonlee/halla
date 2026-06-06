@@ -30,30 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
   }
 
-  // 테마 토글 버튼 자동 주입 — #auth-slot 앞에
-  const navMenu = document.querySelector('.nav-menu');
-  const authSlot = document.getElementById('auth-slot');
-  if (navMenu && !document.getElementById('theme-toggle-btn')) {
-    const li = document.createElement('li');
-    li.style.cssText = 'display:flex;';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.id = 'theme-toggle-btn';
-    btn.className = 'theme-toggle';
-    btn.setAttribute('aria-label', '다크/라이트 모드 전환');
-    btn.title = '다크/라이트 모드 전환';
-    btn.innerHTML = `
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    `;
-    btn.addEventListener('click', toggleTheme);
-    li.appendChild(btn);
-    if (authSlot) {
-      navMenu.insertBefore(li, authSlot);
-    } else {
-      navMenu.appendChild(li);
-    }
-  }
+  // 테마 전환은 auth.js의 아바타 팝오버(화면 모드: 라이트/다크/시스템)로 이동했습니다.
+  // (이전의 nav 테마 토글 버튼 자동 주입 제거 — 메뉴 줄바꿈 방지 + 옵션 통합)
 
   // 드롭다운 메뉴 — 클릭/호버 토글 + 지연 close로 6px 갭 통과 허용
   const dropdowns = document.querySelectorAll('.nav-dropdown');

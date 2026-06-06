@@ -60,6 +60,13 @@ create policy "instructor_profiles_select_own"
   on public.instructor_profiles for select
   using ( auth.uid() = id );
 
+-- 관리자 전체 조회 — 관리자 대시보드(admin.html)에서 모든 수강생 열람
+-- 관리자 이메일을 늘리려면 IN 목록에 추가하세요 (site-config.js의 adminEmails와 일치 권장)
+drop policy if exists "instructor_profiles_select_admin" on public.instructor_profiles;
+create policy "instructor_profiles_select_admin"
+  on public.instructor_profiles for select
+  using ( lower(auth.jwt() ->> 'email') in ('aebon@kyonggi.ac.kr') );
+
 -- 본인 프로필 생성
 drop policy if exists "instructor_profiles_insert_own" on public.instructor_profiles;
 create policy "instructor_profiles_insert_own"

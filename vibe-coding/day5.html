@@ -3,48 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
   <meta name="theme-color" content="#1B2A4A">
-  <!-- /FAVICON -->
-  <title>5일차 · 미니 프로젝트 ② - 바이브 코딩</title>
-  <!-- OG META -->
+  <title>5일차 · 인터랙션 & 기능 추가 - 바이브 코딩</title>
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="한라대학교 AC 기초 트랙">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
   <meta property="og:url" content="https://halla.dreamitbiz.com/vibe-coding/day5.html">
-  <meta property="og:title" content="5일차 · 미니 프로젝트 ② - 바이브 코딩">
-  <meta property="og:description" content="비전공자를 위한 AI · 바이브 코딩 부트캠프">
+  <meta property="og:title" content="5일차 · 인터랙션 & 기능 추가 - 바이브 코딩">
+  <meta property="og:description" content="버튼·폼·저장 — 자바스크립트로 페이지에 '움직임'을 더합니다. AI에게 동작을 자연어로 요청해 붙여 봅니다.">
   <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="5일차 · 미니 프로젝트 ② - 바이브 코딩">
-  <meta name="twitter:description" content="비전공자를 위한 AI · 바이브 코딩 부트캠프">
-  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
   <link rel="canonical" href="https://halla.dreamitbiz.com/vibe-coding/day5.html">
-  <!-- /OG META -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260702">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260607">
 </head>
 <body data-course="pm">
-
 <header class="site-header">
   <nav class="nav-container">
     <a href="../index.html" class="brand">
       <div class="brand-logo">한</div>
       <div class="brand-text">
         <span class="brand-title">한라대학교</span>
-        <span class="brand-sub">AC 기초 트랙</span>
+        <span class="brand-sub">하계 방학특강</span>
       </div>
     </a>
-    <button class="nav-toggle">☰</button>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
     <ul class="nav-menu">
       <li><a href="../about.html">About</a></li>
       <li><a href="../syllabus.html">강의계획서</a></li>
@@ -73,13 +63,17 @@
       <li class="nav-dropdown">
         <button class="nav-dropdown-trigger cohort-pm active" type="button">오후반</button>
         <ul class="nav-dropdown-menu">
-          <li class="nav-dropdown-label">25H · 비전공자 · 5~9교시</li>
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
           <li><a href="../vibe-coding/index.html">과정 개요</a></li>
           <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
           <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
           <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
           <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
-          <li><a href="../vibe-coding/day5.html" class="active">Day 05 · 미니 프로젝트 ②</a></li>
+          <li><a href="../vibe-coding/day5.html" class="active">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
         </ul>
       </li>
       <li class="nav-dropdown">
@@ -101,7 +95,6 @@
     </ul>
 </nav>
 </header>
-
 <section class="lesson-hero vibe">
   <div class="lesson-hero-inner">
     <div class="lesson-breadcrumb">
@@ -109,308 +102,105 @@
       <a href="index.html">바이브 코딩</a> &nbsp;›&nbsp;
       <span>5일차</span>
     </div>
-    <h1>5일차 · 미니 프로젝트 ②</h1>
-    <p style="opacity:0.95;">개인 소개 웹페이지 발표 — AI에게 어떻게 요청했는가가 핵심입니다.</p>
+    <h1>5일차 · 인터랙션 & 기능 추가</h1>
+    <p style="opacity:0.95;">버튼·폼·저장 — 자바스크립트로 페이지에 '움직임'을 더합니다. AI에게 동작을 자연어로 요청해 붙여 봅니다.</p>
     <div class="lesson-meta" style="margin-top:20px;">
-      <span class="lesson-meta-item">📅 7/9 (목)</span>
+      <span class="lesson-meta-item">📅 7/3 (금)</span>
       <span class="lesson-meta-item">⏰ 5~9교시 (5H)</span>
-      <span class="lesson-meta-item">📌 발표 + 회고</span>
+      <span class="lesson-meta-item">📌 실습 중심</span>
     </div>
   </div>
 </section>
-
 <div class="lesson-layout">
 
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
       <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
-      <li><a href="#오늘의-목표">오늘의 목표</a></li>
-      <li><a href="#1-발표-구성---6분-안에-들어가야-할-6가지">발표 구성 - 6분 안에 들어가야 할 6가지</a></li>
-      <li><a href="#2-평가-루브릭">평가 루브릭</a></li>
-      <li><a href="#3-우수상---베스트-시상">우수상 - 베스트 시상</a></li>
-      <li><a href="#4-1주일을-마치며---본인-회고">1주일을 마치며 - 본인 회고</a></li>
-      <li><a href="#강의-종료-후---본인-페이지-계속-키우기">강의 종료 후 - 본인 페이지 계속 키우기</a></li>
+      <li><a href="#학습-목표">학습 목표</a></li>
+      <li><a href="#1-js">자바스크립트가 하는 일</a></li>
+      <li><a href="#2-events">버튼·폼 다루기</a></li>
+      <li><a href="#3-storage">브라우저에 저장하기</a></li>
+      <li><a href="#오늘의-과제">오늘의 과제</a></li>
     </ul>
   </aside>
 
   <main class="lesson-main" data-course-content>
-
-
   <div class="lesson-section" id="오늘의-시간표" data-toc>
     <h2>오늘의 시간표</h2>
     <div class="timetable">
-      <div class="timetable-row break">
-        <div class="timetable-time">13:00–13:30</div>
-        <div class="timetable-content">
-          <strong>최종 점검 + 발표 순서 추첨</strong>
-          배포 URL 작동 확인, 모바일 동작 확인
-        </div>
+      <div class="timetable-row lecture">
+        <div class="timetable-time">5~6교시</div>
+        <div class="timetable-content"><strong>개념 + 데모</strong> 자바스크립트가 페이지에서 하는 일 / 이벤트의 개념</div>
       </div>
       <div class="timetable-row activity">
-        <div class="timetable-time">13:30–15:00</div>
-        <div class="timetable-content">
-          <strong>1부 발표 (1~20번)</strong>
-          1인 6분 발표 + 2분 Q&A · 중간 휴식 10분
-        </div>
-      </div>
-      <div class="timetable-row activity">
-        <div class="timetable-time">15:10–16:40</div>
-        <div class="timetable-content">
-          <strong>2부 발표 (21~40번)</strong>
-          1인 6분 발표 + 2분 Q&A
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">16:50–17:30</div>
-        <div class="timetable-content">
-          <strong>전체 회고 + 우수상 시상</strong>
-          베스트 페이지 / 베스트 프롬프트 / 베스트 발표 시상
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">17:30–17:50</div>
-        <div class="timetable-content">
-          <strong>다음 단계 안내 + 클로징</strong>
-          심화 트랙 안내, 수료증 전달
-        </div>
+        <div class="timetable-time">7~9교시</div>
+        <div class="timetable-content"><strong>실습</strong> 버튼·폼·저장 기능을 AI에게 요청해 내 페이지에 붙이기</div>
       </div>
     </div>
   </div>
 
-  <div class="lesson-section" id="오늘의-목표" data-toc>
-    <h2>오늘의 목표</h2>
+  <div class="lesson-section" id="학습-목표" data-toc>
+    <h2>학습 목표</h2>
     <ul>
-      <li>실제로 작동하는 개인 소개 웹페이지를 인터넷에 공개한다.</li>
-      <li>구현 과정에서 <strong>AI에게 어떻게 요청했는지</strong>를 발표의 중심에 둔다.</li>
-      <li>1주일의 학습을 본인 말로 정리해 다음 단계 방향을 잡는다.</li>
+      <li>HTML/CSS는 "겉모습", 자바스크립트는 "움직임"이라는 역할 차이를 설명할 수 있다.</li>
+      <li>버튼 클릭·폼 입력 같은 사용자 동작에 반응하는 기능을 붙일 수 있다.</li>
+      <li>localStorage로 입력 내용을 브라우저에 저장해 재방문 시 유지할 수 있다.</li>
     </ul>
   </div>
 
-  <div class="lesson-section" id="1-발표-구성---6분-안에-들어가야-할-6가지" data-toc>
-    <h2>발표 구성 - 6분 안에 들어가야 할 6가지</h2>
-
-    <div class="timetable">
-      <div class="timetable-row lecture">
-        <div class="timetable-time">0:00 - 0:30</div>
-        <div class="timetable-content">
-          <strong>① 인사 + URL 공개</strong>
-          "안녕하세요, 제 페이지는 [URL]입니다.<br>QR 코드 띄워서 청중이 바로 접속 가능하게."
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">0:30 - 1:30</div>
-        <div class="timetable-content">
-          <strong>② 페이지 라이브 시연</strong>
-          실제 페이지를 스크롤하며 어떤 섹션이 있는지 보여줌.<br>다크모드 토글 등 인터랙션 시연.
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">1:30 - 3:30</div>
-        <div class="timetable-content">
-          <strong>③ "AI에게 어떻게 요청했는가" (핵심!)</strong>
-          가장 좋은 결과를 만든 프롬프트 1-2개를 화면에 띄우고 설명.<br>
-          "처음엔 ___라고 요청 → 결과가 별로 → ___로 다듬으니 잘 됨"
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">3:30 - 4:30</div>
-        <div class="timetable-content">
-          <strong>④ 가장 막혔던 순간 + 해결법</strong>
-          어떤 에러를 만났고, AI와 어떻게 풀었는지. (실패 공유가 청중에게 가장 도움됩니다)
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">4:30 - 5:30</div>
-        <div class="timetable-content">
-          <strong>⑤ 5일 전과 후</strong>
-          "5일 전엔 HTML이 뭔지도 몰랐는데 지금은 ___ 할 수 있다." 본인 변화 한 줄.
-        </div>
-      </div>
-      <div class="timetable-row lecture">
-        <div class="timetable-time">5:30 - 6:00</div>
-        <div class="timetable-content">
-          <strong>⑥ 마무리 + 청중 질문</strong>
-          "이 페이지에 추가하고 싶은 다음 기능은 ___입니다.<br>여러분이라면?"
-        </div>
-      </div>
-    </div>
-
-    <div class="callout callout-warn">
-      <div class="callout-title">⚠️ 발표 흔한 실수</div>
-      <ul>
-        <li><strong>코드만 보여주기</strong> — 청중은 코드 자체보다 "어떻게 만들었는가"가 궁금합니다.</li>
-        <li><strong>AI가 다 해줬다고 말하기</strong> — 본인이 어떤 의사결정을 했는지가 핵심입니다.</li>
-        <li><strong>완벽한 척하기</strong> — "막혔던 순간"이 발표의 꽃입니다.</li>
-        <li><strong>6분 넘기기</strong> — 5분 30초 안에 끝낼 수 있게 미리 한 번 리허설.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="lesson-section" id="2-평가-루브릭" data-toc>
-    <h2>평가 루브릭</h2>
-
-    <p>강사 60% + 동료 평가 40%로 합산합니다.</p>
-
-    <div style="overflow-x:auto;">
-      <table style="width:100%; border-collapse:collapse; margin-top:16px;">
-        <thead>
-          <tr style="background:var(--color-bg);">
-            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">평가 항목</th>
-            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">배점</th>
-            <th style="padding:12px; text-align:left; border-bottom:2px solid var(--color-border);">평가 기준</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>실제 작동</strong></td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">25점</td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">배포 URL이 실제로 작동하는가, 데스크탑·모바일 모두 잘 보이는가</td>
-          </tr>
-          <tr>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>구현 깊이</strong></td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">25점</td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">JavaScript 인터랙션 1개 이상, 반응형, 다크모드 등 다양한 요소</td>
-          </tr>
-          <tr>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>AI 활용 과정 설명</strong></td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">25점</td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">"어떻게 요청했는지"를 구체적으로 보여주는가, 프롬프트 튜닝 흔적</td>
-          </tr>
-          <tr>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>디자인 완성도</strong></td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">15점</td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">색·여백·폰트의 통일감, 본인 개성이 드러나는가</td>
-          </tr>
-          <tr>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);"><strong>발표 전달력</strong></td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">10점</td>
-            <td style="padding:12px; border-bottom:1px solid var(--color-border);">시간 준수, 명확한 전달, 청중 시선 잡기</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="lesson-section" id="3-우수상---베스트-시상" data-toc>
-    <h2>우수상 - 베스트 시상</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon vibe">🏆</div>
-        <h3>베스트 페이지</h3>
-        <p>가장 완성도 높고 매력적인 페이지</p>
-      </div>
-      <div class="card">
-        <div class="card-icon ai">💎</div>
-        <h3>베스트 프롬프트</h3>
-        <p>가장 영리하게 AI를 다룬 프롬프트 사례</p>
-      </div>
-      <div class="card">
-        <div class="card-icon accent">🎨</div>
-        <h3>베스트 디자인</h3>
-        <p>본인만의 색깔이 가장 잘 드러난 페이지</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎤</div>
-        <h3>베스트 발표</h3>
-        <p>가장 명확하고 인상 깊었던 발표</p>
-      </div>
-    </div>
-
-    <div class="callout callout-info" style="margin-top:20px;">
-      <div class="callout-title">🎁 시상</div>
-      각 부문 1위 + 종합 1위에게 <strong>Claude Pro 추가 3개월 구독권</strong>, 한라대 굿즈, 수료증 + 특별 메달.
-    </div>
-  </div>
-
-  <div class="lesson-section" id="4-1주일을-마치며---본인-회고" data-toc>
-    <h2>1주일을 마치며 - 본인 회고</h2>
-
-    <p>발표가 끝나면 다음 양식에 회고를 작성해 제출합니다.</p>
-
-    <pre>=== 한라대학교 AC 기초 트랙 1주차 회고 ===
-
-이름:
-배포 URL:
-
-1. 5일 전 vs 지금 - 가장 큰 변화 (3줄)
-
-
-2. 가장 자랑스러운 결과물 (1개)
-
-
-3. 가장 어려웠던 순간 + 어떻게 넘었는가
-
-
-4. AI를 잘 다루는 사람이 되기 위해 본인이 더 키워야 할 것
-
-
-5. 다음 1주일에 만들어 보고 싶은 것 (자유)
-
-
-6. 후배에게 한 마디
-
-
-</pre>
-
-    <h3>다음 단계 - 어디로 가야 할까</h3>
-    <p>이번 주는 입문이었습니다.<br>다음 단계는 본인 관심사에 따라 갈라집니다.</p>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon vibe">🎯</div>
-        <h3>심화 웹개발</h3>
-        <p>React, Next.js로 진짜 앱 만들기.<br>본인 아이디어를 실제 서비스로.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon ai">🤖</div>
-        <h3>AI 응용</h3>
-        <p>Claude API로 AI가 들어간 서비스 직접 만들기.<br>챗봇, 분석 도구 등.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon accent">📱</div>
-        <h3>모바일 앱</h3>
-        <p>React Native, Flutter로 안드로이드·iOS 앱 만들기.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <h3>데이터 분석</h3>
-        <p>Python + AI로 데이터 분석.<br>본인 전공 분야와 연결.</p>
-      </div>
-    </div>
-
-    <div class="callout callout-tip">
-      <div class="callout-title">💡 마지막 한 마디</div>
-      <strong>"AI를 잘 쓰는 사람이 가장 먼저 미래를 만듭니다."</strong><br>
-      이번 주 배운 능력은 시간이 지날수록 더 강력해집니다.<br>도구는 계속 진화하지만, <strong>"원하는 것을 정확히 묘사하는 능력"</strong>은 그대로 본인의 자산입니다.<br>자신감 가지세요.<br>여러분은 이미 1주일 전 본인보다 훨씬 강해졌습니다.
-    </div>
-  </div>
-
-  <div class="lesson-section" id="강의-종료-후---본인-페이지-계속-키우기" data-toc>
-    <h2>강의 종료 후 - 본인 페이지 계속 키우기</h2>
-    <ol>
-      <li>한 달 안에 본인 페이지에 새 섹션 1개 추가하기</li>
-      <li>이번에 만든 GitHub 리포지토리 README에 본인 소개 정리하기 (포트폴리오 시작)</li>
-      <li>강의에서 만든 발표 슬라이드를 SNS / 노션 / 블로그에 올리기</li>
-      <li>다음 강의 또는 심화 트랙 신청은 강사에게 별도 문의</li>
-    </ol>
-
+  <div class="lesson-section" id="1-js" data-toc>
+    <h2>자바스크립트가 하는 일</h2>
+    <p>지금까지 만든 페이지는 "보이기만" 했습니다. 자바스크립트(JS)는 여기에 <strong>"누르면 반응하는" 움직임</strong>을 더합니다.</p>
     <div class="callout callout-info">
-      <div class="callout-title">🙌 수고하셨습니다</div>
-      한라대학교 AC 기초 트랙 40시간을 완주하신 모든 분들께 박수를 보냅니다.<br>여러분의 다음 페이지가 어떻게 자라날지 정말 궁금합니다.<br>종종 소식 들려 주세요.<br><br>
-      — 강사 일동
+      <div class="callout-title">💡 한 줄 비유</div>
+      HTML은 뼈대, CSS는 옷, <strong>JS는 근육</strong> — 실제로 움직이게 하는 부분입니다.
+    </div>
+    <ul>
+      <li>버튼을 누르면 글자가 바뀐다</li>
+      <li>폼에 입력하면 화면에 목록이 추가된다</li>
+      <li>토글을 누르면 다크모드로 바뀐다</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section" id="2-events" data-toc>
+    <h2>버튼·폼 다루기</h2>
+    <p>핵심 개념은 <strong>이벤트</strong>입니다 — "무슨 일이 일어나면(클릭/입력) → 무엇을 해라".</p>
+    <pre><code>// "버튼을 누르면 인사말을 보여줘" 를 AI에게 요청하면 이런 코드를 만들어 줍니다
+버튼.addEventListener("click", () => {
+  화면.textContent = "환영합니다!";
+});</code></pre>
+    <div class="callout callout-tip">
+      <div class="callout-title">📝 바이브 코딩 방식</div>
+      코드를 외우지 않습니다. "이름을 입력하고 버튼을 누르면 인사하는 기능 만들어줘"처럼 <strong>원하는 동작을 자연어로</strong> 요청하고, 나온 코드를 붙여 동작을 확인합니다.
     </div>
   </div>
 
+  <div class="lesson-section" id="3-storage" data-toc>
+    <h2>브라우저에 저장하기</h2>
+    <p>새로고침해도 입력이 사라지지 않게 하려면 <strong>localStorage</strong>에 저장합니다. 방명록·메모·할 일 목록 같은 기능의 토대입니다.</p>
+    <div class="callout callout-warn">
+      <div class="callout-title">⚠️ 알아둘 점</div>
+      localStorage는 그 브라우저에만 저장됩니다(서버 X). "내 컴퓨터 메모장"이라고 생각하면 됩니다.
+    </div>
+  </div>
+
+  <div class="lesson-section" id="오늘의-과제" data-toc>
+    <h2>오늘의 과제</h2>
+    <ol>
+      <li>내 페이지에 버튼 동작 1개 추가 (예: 좋아요 카운터, 인사 토글)</li>
+      <li>입력 폼 + 저장 기능 1개 추가 (예: 방명록 한 줄 남기기)</li>
+      <li>막힌 부분의 에러 메시지를 AI에게 그대로 보여주고 해결하기</li>
+    </ol>
+  </div>
   <div class="lesson-nav">
     <a href="day4.html">
       <div class="lesson-nav-dir">← 이전</div>
-      <div class="lesson-nav-title">4일차 · 웹페이지 ②</div>
+      <div class="lesson-nav-title">4일차 · 웹페이지 만들기 ②</div>
     </a>
-    <a href="../index.html" class="next">
-      <div class="lesson-nav-dir">처음으로 →</div>
-      <div class="lesson-nav-title">강의 메인으로</div>
+    <a href="day6.html" class="next">
+      <div class="lesson-nav-dir">다음 →</div>
+      <div class="lesson-nav-title">6일차 · 디자인 다듬기 & 다크모드</div>
     </a>
   </div>
 </main>
@@ -418,16 +208,10 @@
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <!-- ① 브랜드 -->
     <div>
-      <div class="footer-brand">한라대학교 AC 기초 트랙</div>
-      <div class="footer-desc">
-        비전공자를 위한 AI · 바이브 코딩 부트캠프.<br>
-        도구를 다루는 본인의 판단을 키웁니다.
-      </div>
+      <div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>도구를 다루는 본인의 판단을 키웁니다.</div>
     </div>
-
-    <!-- ② 사이트 메뉴 -->
     <div>
       <div class="footer-title">사이트</div>
       <ul class="footer-links cols-2">
@@ -440,8 +224,6 @@
         <li><a href="../community.html">커뮤니티</a></li>
       </ul>
     </div>
-
-    <!-- ③ 운영 · 문의 -->
     <div>
       <div class="footer-title">운영 · 문의</div>
       <ul class="footer-links">
@@ -451,8 +233,6 @@
         <li style="color:#64748b; font-size:12.5px;">평일 09:00 ~ 18:00</li>
       </ul>
     </div>
-
-    <!-- ④ 사업자 정보 -->
     <div>
       <div class="footer-title">사업자 정보</div>
       <div class="company-info">
@@ -471,11 +251,11 @@
   </div>
 </footer>
 
-<script src="../assets/js/site-config.js?v=20260702"></script>
+<script src="../assets/js/site-config.js?v=20260607"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/js/notifications.js?v=20260702"></script>
-<script src="../assets/js/auth.js?v=20260702"></script>
-<script src="../assets/js/main.js?v=20260702"></script>
-<script src="../assets/js/course-guard.js?v=20260702"></script>
+<script src="../assets/js/notifications.js?v=20260607"></script>
+<script src="../assets/js/auth.js?v=20260607"></script>
+<script src="../assets/js/main.js?v=20260607"></script>
+<script src="../assets/js/course-guard.js?v=20260607"></script>
 </body>
 </html>

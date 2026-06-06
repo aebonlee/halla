@@ -26,6 +26,14 @@
 
   const courseInfo = COURSES[required];
 
+  const ADMIN_EMAILS = ((window.HallaSite && window.HallaSite.adminEmails) || [])
+    .map((e) => String(e).toLowerCase());
+
+  function isAdminEmail(user) {
+    const email = (user && user.email ? user.email : '').toLowerCase();
+    return !!email && ADMIN_EMAILS.includes(email);
+  }
+
   // 등록 과정이 본 페이지를 열람할 수 있는가
   function hasAccess(profile) {
     if (!profile) return false;

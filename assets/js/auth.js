@@ -23,6 +23,7 @@
     tables: { profiles: 'instructor_profiles' },
   };
   const PROFILES = SITE.tables.profiles; // 'instructor_profiles'
+  const ADMIN_EMAILS = (SITE.adminEmails || []).map((e) => String(e).toLowerCase());
 
   // OAuth 후 돌아올 페이지 — 사이트 root 기준 절대 경로
   const REDIRECT_PATH = '/profile.html';
@@ -166,27 +167,135 @@
       .replace(/'/g, '&#39;');
   }
 
+  // 관리자 여부 — site-config의 adminEmails 또는 프로필 role 기준
+  function isAdminUser(user, profile) {
+    const email = (user && user.email ? user.email : '').toLowerCase();
+    if (email && ADMIN_EMAILS.includes(email)) return true;
+    if (profile && (profile.role === 'admin' || profile.role === 'instructor')) return true;
+    return false;
+  }
+
+  async function isAdmin() {
+    const user = await getUser();
+    if (!user) return false;
+    if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) return true;
+    const profile = await getProfile();
+    return isAdminUser(user, profile);
+  }
+
+  // ── 외형(테마) 옵션 — 라이트 / 다크 / 시스템 ──
+  function applyTheme(mode) {
+    const root = document.documentElement;
+    if (mode === 'system') {
+      try { localStorage.removeItem('halla-theme'); } catch {}
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    } else {
+      root.setAttribute('data-theme', mode);
+      try { localStorage.setItem('halla-theme', mode); } catch {}
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#0A1428' : '#1B2A4A');
+    markActiveTheme();
+  }
+  function currentThemeMode() {
+    let stored = null;
+    try { stored = localStorage.getItem('halla-theme'); } catch {}
+    return stored || 'system';
+  }
+  function markActiveTheme() {
+    const mode = currentThemeMode();
+    document.querySelectorAll('.nav-pop-theme [data-theme-mode]').forEach((b) => {
+      b.classList.toggle('active', b.getAttribute('data-theme-mode') === mode);
+    });
+  }
+
+  function appearanceSectionHtml() {
+    return `
+      <div class="nav-pop-section">
+        <div class="nav-pop-label">화면 모드</div>
+        <div class="nav-pop-theme">
+          <button type="button" data-theme-mode="light">라이트</button>
+          <button type="button" data-theme-mode="dark">다크</button>
+          <button type="button" data-theme-mode="system">시스템</button>
+        </div>
+      </div>`;
+  }
+
+  function wirePopover() {
+    const btn = document.getElementById('nav-user-btn');
+    const pop = document.getElementById('nav-pop');
+    if (!btn || !pop) return;
+    const close = () => { pop.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = pop.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) markActiveTheme();
+    });
+    pop.addEventListener('click', (e) => e.stopPropagation());
+    document.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    pop.querySelectorAll('[data-theme-mode]').forEach((b) => {
+      b.addEventListener('click', () => applyTheme(b.getAttribute('data-theme-mode')));
+    });
+    const logoutBtn = document.getElementById('nav-pop-logout');
+    if (logoutBtn) logoutBtn.addEventListener('click', (e) => { e.preventDefault(); signOut(); });
+  }
+
   async function renderNavAuth() {
     const slot = document.getElementById('auth-slot');
     if (!slot) return;
     const user = await getUser();
+
     if (user) {
       const name =
         user.user_metadata?.name ||
         user.user_metadata?.full_name ||
         (user.email ? user.email.split('@')[0] : '사용자');
+      const email = user.email || '';
       const avatar = user.user_metadata?.avatar_url;
+      const admin = await isAdmin();
+      const avatarInner = avatar
+        ? `<img src="${escapeHtml(avatar)}" alt="">`
+        : `<span class="nav-user-initial">${escapeHtml((name[0] || '?').toUpperCase())}</span>`;
       slot.innerHTML = `
-        <a href="/profile.html" class="auth-user" title="${escapeHtml(name)} · 프로필">
-          ${avatar
-            ? `<img src="${escapeHtml(avatar)}" alt="" class="auth-avatar">`
-            : `<span class="auth-avatar auth-avatar-fallback">${escapeHtml(name[0] || '?')}</span>`}
-          <span class="auth-user-name">${escapeHtml(name)}</span>
-        </a>
+        <button class="nav-user-btn" id="nav-user-btn" aria-haspopup="true" aria-expanded="false" title="${escapeHtml(name)}">
+          ${avatarInner}
+        </button>
+        <div class="nav-pop" id="nav-pop" role="menu">
+          <div class="nav-pop-head">
+            <span class="nav-pop-avatar">${avatarInner}</span>
+            <span class="nav-pop-id">
+              <span class="nav-pop-name">${escapeHtml(name)}${admin ? ' <span class="nav-pop-badge">관리자</span>' : ''}</span>
+              <span class="nav-pop-email">${escapeHtml(email)}</span>
+            </span>
+          </div>
+          <div class="nav-pop-section">
+            <a href="/profile.html" class="nav-pop-link">🙋 마이페이지</a>
+            ${admin ? '<a href="/admin.html" class="nav-pop-link nav-pop-admin">🛠️ 관리자 대시보드</a>' : ''}
+          </div>
+          ${appearanceSectionHtml()}
+          <div class="nav-pop-section">
+            <a href="#" class="nav-pop-link nav-pop-danger" id="nav-pop-logout">↩ 로그아웃</a>
+          </div>
+        </div>
       `;
     } else {
-      slot.innerHTML = `<a href="/login.html" class="auth-login-btn">로그인</a>`;
+      slot.innerHTML = `
+        <button class="nav-user-btn guest" id="nav-user-btn" aria-haspopup="true" aria-expanded="false" title="계정">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </button>
+        <div class="nav-pop" id="nav-pop" role="menu">
+          <div class="nav-pop-section">
+            <a href="/login.html" class="nav-pop-link nav-pop-primary">→ 로그인 / 회원가입</a>
+          </div>
+          ${appearanceSectionHtml()}
+        </div>
+      `;
     }
+    wirePopover();
+    markActiveTheme();
   }
 
   // ───────────────────────────────────────────────────────────────
@@ -263,6 +372,7 @@
     signOut,
     renderNavAuth,
     sendEmail,
+    isAdmin,
   };
 
   // 로드 시 자동으로 nav 갱신 + auth 상태 변화 구독
