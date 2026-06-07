@@ -721,9 +721,13 @@ body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.7px;
-  color: var(--color-text-muted);
+  color: #1B2A4A;            /* 하위 구분 라벨 — 다크블루(브랜드 네이비) */
   padding: 8px 12px 4px;
   font-weight: 700;
+}
+/* 다크모드에선 어두운 배경 위 가독성 위해 밝은 블루로 */
+[data-theme="dark"] .nav-dropdown-menu .nav-dropdown-label {
+  color: #8FB3F5;
 }
 
 .nav-dropdown-menu .nav-dropdown-divider {
