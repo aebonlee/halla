@@ -178,28 +178,30 @@
   </div>
   <div class="lesson-section" id="prompt" data-toc>
     <h2>감성분석 프롬프트</h2>
-    <p>System 메시지로 "분류기" 역할과 출력 형식을 못박습니다. (lang_04 원본)</p>
+    <p>System 메시지로 "분류기" 역할과 출력 형식을 못박습니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
+# system 으로 "역할 + 출력 규칙"을 강하게 고정 → 모델이 군말 없이 0/1만 답하게
 chat_prompt = ChatPromptTemplate.from_messages([
     ("system",
-     "Act as a classifier of comment sentiment. "
-     "Write '1' if positive, '0' if negative. "
-     "Output the integer '1' or '0' only, without any other text."),
-    ("human", "{input_text}"),
+     "Act as a classifier of comment sentiment. "       # 역할: 감성 분류기
+     "Write '1' if positive, '0' if negative. "         # 규칙: 긍정=1, 부정=0
+     "Output the integer '1' or '0' only, without any other text."),  # 숫자만!
+    ("human", "{input_text}"),                           # 분류할 댓글이 들어갈 자리
 ])
-chat_model = ChatOpenAI(temperature=0)   # 분류는 흔들리면 안 됨 → 0</code></pre>
+chat_model = ChatOpenAI(temperature=0)   # 분류는 흔들리면 안 됨 → temperature=0</code></pre>
 
   </div>
   <div class="lesson-section" id="parser" data-toc>
     <h2>정수 출력 파서</h2>
     <p>모델은 "1" 같은 <strong>문자열</strong>을 줍니다. 이후 계산(정확도)을 하려면 <strong>정수</strong>로 바꿔야 합니다 — 커스텀 파서로 처리.</p>
-<pre><code>from langchain_core.output_parsers import BaseOutputParser
+<pre><code>from langchain_core.output_parsers import BaseOutputParser  # 파서의 기본 뼈대
 
+# BaseOutputParser 를 상속받아 parse() 만 우리 식으로 구현
 class classificationOutputParser(BaseOutputParser):
-    def parse(self, text: str):
-        # 답에 '1'이 들어있으면 1, 아니면 0 (모델이 군말을 붙여도 견고)
+    def parse(self, text: str):          # text : 모델이 돌려준 답(문자열 "1"/"0")
+        # 답에 '1'이 들어있으면 정수 1, 아니면 0 (모델이 군말을 붙여도 견고)
         if "1" in text:
             return 1
         return 0</code></pre>
@@ -208,57 +210,63 @@ class classificationOutputParser(BaseOutputParser):
   <div class="lesson-section" id="chain" data-toc>
     <h2>분류 체인 조립</h2>
     <p>프롬프트 → 모델 → 정수 파서를 <code>|</code>로 잇고, 함수로 감쌉니다.</p>
-<pre><code>chain = chat_prompt | chat_model | classificationOutputParser()
+<pre><code># | 로 연결: 프롬프트 → 모델 → 정수 파서 (왼쪽→오른쪽으로 데이터가 흐름)
+chain = chat_prompt | chat_model | classificationOutputParser()
 
+# 체인을 쓰기 편하게 함수로 감쌈 (문장 하나 넣으면 1/0 반환)
 def classify_text(input_text):
     return chain.invoke({"input_text": input_text})   # 1 또는 0 반환
 
-print(classify_text("이 영화 정말 최고였어요!"))   # 1
-print(classify_text("최악이에요. 환불해주세요."))   # 0</code></pre>
+print(classify_text("이 영화 정말 최고였어요!"))   # → 1 (긍정)
+print(classify_text("최악이에요. 환불해주세요."))   # → 0 (부정)</code></pre>
 
   </div>
   <div class="lesson-section" id="data" data-toc>
     <h2>데이터 로드</h2>
     <p>실제 댓글 데이터셋을 내려받아 pandas로 읽습니다.</p>
-<pre><code>import urllib.request
-import pandas as pd
+<pre><code>import urllib.request          # 인터넷에서 파일 내려받기
+import pandas as pd            # 표(데이터프레임) 다루기
 
+# urlretrieve(주소, filename=저장이름) : 웹의 파일을 내 작업폴더로 저장
 urllib.request.urlretrieve(
     "https://raw.githubusercontent.com/tykimos/tykimos.github.io/master/warehouse/dataset/tarr_train.txt",
     filename="tarr_train.txt",
 )
-df = pd.read_csv("tarr_train.txt", sep="\t")   # 탭 구분 파일
-df.head()    # comment(댓글), label(정답 0/1) 컬럼 확인</code></pre>
+df = pd.read_csv("tarr_train.txt", sep="\t")   # 탭(\t)으로 나뉜 파일을 표로 읽기
+df.head()    # 앞 5줄 미리보기 → comment(댓글), label(정답 0/1) 컬럼 확인</code></pre>
 
   </div>
   <div class="lesson-section" id="batch" data-toc>
     <h2>일괄 분류 루프</h2>
-    <p>데이터의 각 댓글을 분류해 예측값을 모읍니다 (lang_04 원본, 처음 12개만).</p>
-<pre><code>actual_labels = []
-predicted_labels = []
+    <p>데이터의 각 댓글을 분류해 예측값을 모읍니다 (비용 절약 위해 처음 12개만).</p>
+<pre><code>actual_labels = []        # 정답(데이터에 적힌 라벨)을 담을 빈 리스트
+predicted_labels = []     # 모델 예측을 담을 빈 리스트
 
+# iterrows() : 표를 한 줄씩 (행번호, 행데이터) 로 돌려줌
 for index, row in df.iterrows():
-    comment = row["comment"]
-    actual  = row["label"]
-    pred    = classify_text(comment)        # LLM 분류
+    comment = row["comment"]                # 이 줄의 댓글 글
+    actual  = row["label"]                  # 이 줄의 정답(0/1)
+    pred    = classify_text(comment)        # LLM으로 분류한 예측(0/1)
 
-    actual_labels.append(actual)
-    predicted_labels.append(pred)
+    actual_labels.append(actual)            # 리스트에 정답 누적
+    predicted_labels.append(pred)           # 리스트에 예측 누적
 
-    print(f"[{index+1}] {comment}")
+    print(f"[{index+1}] {comment}")         # f-string : {} 안 값을 글에 끼움
     print(f"   정답={actual}  예측={pred}")
-    if index &gt; 10:                          # 비용/시간 절약: 12개만
+    if index &gt; 10:                          # 비용/시간 절약: 12개(0~11)만 보고 멈춤
         break</code></pre>
 
   </div>
   <div class="lesson-section" id="eval" data-toc>
     <h2>정확도·혼동행렬</h2>
     <p>"느낌"이 아니라 <strong>숫자로</strong> 성능을 확인합니다. 정확도 + 혼동행렬(무엇을 자주 틀리나).</p>
-<pre><code>from sklearn.metrics import accuracy_score, confusion_matrix
+<pre><code>from sklearn.metrics import accuracy_score, confusion_matrix  # 성능 지표 도구
 
+# accuracy_score(정답들, 예측들) : 맞춘 비율(0~1)을 계산
 acc = accuracy_score(actual_labels, predicted_labels)
-print(f"정확도: {acc*100:.2f}%")
+print(f"정확도: {acc*100:.2f}%")          # .2f : 소수점 둘째 자리까지
 
+# confusion_matrix : 무엇을 무엇으로 봤는지 표로 정리 (labels 순서대로 행/열)
 cm = confusion_matrix(actual_labels, predicted_labels, labels=[1, 0])
 print("            예측:긍정  예측:부정")
 print(f"실제:긍정     {cm[0][0]:&lt;6} {cm[0][1]}")
@@ -283,11 +291,12 @@ print(clf.invoke({"q": "사이즈가 안 맞아 반품하고 싶어요"}).conten
   </div>
   <div class="lesson-section" id="chat" data-toc>
     <h2>챗봇 기초</h2>
-    <p>이제 분류를 넘어 <strong>대화</strong>입니다. system으로 페르소나를 잡고, <code>MessagesPlaceholder</code>로 이전 대화를 끼워 넣습니다 (lang_05 원본).</p>
+    <p>이제 분류를 넘어 <strong>대화</strong>입니다. system으로 페르소나를 잡고, <code>MessagesPlaceholder</code>로 이전 대화를 끼워 넣습니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser  # 응답에서 문자열만 뽑기
 from langchain_openai import ChatOpenAI
 
+# MessagesPlaceholder : "과거 대화"가 통째로 들어갈 빈 자리를 만들어 둠
 chat_prompt = ChatPromptTemplate.from_messages([
     ("system",
      "당신은 친절한 음식점 사장입니다. 이전 대화를 참고해 리뷰에 정중히 답하세요. "
@@ -295,25 +304,25 @@ chat_prompt = ChatPromptTemplate.from_messages([
     MessagesPlaceholder(variable_name="chat_history"),   # ← 여기에 과거 대화가 들어감
     ("human", "{input_text}"),
 ])
-chat_model = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
-chain = chat_prompt | chat_model | StrOutputParser()</code></pre>
+chat_model = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)  # 약간의 자연스러움만
+chain = chat_prompt | chat_model | StrOutputParser()   # 프롬프트→모델→문자열</code></pre>
 
   </div>
   <div class="lesson-section" id="mem" data-toc>
     <h2>대화 기억 유지</h2>
     <p>이전 user/ai 메시지를 저장했다가 매번 함께 보내면 맥락이 이어집니다. 길어지면 최근 N개만 사용해 비용을 줄입니다.</p>
-<pre><code>from langchain_core.chat_history import InMemoryChatMessageHistory
+<pre><code>from langchain_core.chat_history import InMemoryChatMessageHistory  # 메모리 속 대화창고
 
-chat_history = InMemoryChatMessageHistory()
+chat_history = InMemoryChatMessageHistory()   # 빈 대화 기록 만들기
 
 # 최근 6개(=3쌍)만 불러오는 함수 — 대화가 길어도 토큰 폭증 방지
-def load_memory(_):
-    return chat_history.messages[-6:]</code></pre>
+def load_memory(_):                    # _ : 입력값을 안 쓴다는 관례 이름
+    return chat_history.messages[-6:]  # 리스트 뒤에서 6개([-6:])만 잘라 반환</code></pre>
 
   </div>
   <div class="lesson-section" id="save" data-toc>
     <h2>직접 저장형 챗봇</h2>
-    <p>가장 직관적인 형태 — 답을 받은 뒤 직접 history에 user/ai 메시지를 추가합니다 (lang_05 "친구" 봇 원본).</p>
+    <p>가장 직관적인 형태 — 답을 받은 뒤 직접 history에 user/ai 메시지를 추가합니다 ("친구" 말투 봇).</p>
 <pre><code>from langchain_core.runnables import RunnablePassthrough
 
 system = """You act like a friend to me. Write casually with emojis. Write in Korean."""
@@ -329,24 +338,25 @@ chain = (
 )
 
 def chat(user_input):
-    output = chain.invoke(user_input)
-    chat_history.add_user_message(user_input)   # 직접 저장
-    chat_history.add_ai_message(output)
+    output = chain.invoke(user_input)           # 모델 답 받기
+    chat_history.add_user_message(user_input)   # 내 말을 기록에 직접 저장
+    chat_history.add_ai_message(output)         # AI 답도 기록에 저장
     return output
 
 print(chat("오늘 너무 힘들었어요"))
-print(chat("아까 말한 그 일 때문에..."))   # 앞 대화를 기억함</code></pre>
+print(chat("아까 말한 그 일 때문에..."))   # 저장해 둔 앞 대화를 기억함</code></pre>
 
   </div>
   <div class="lesson-section" id="session" data-toc>
     <h2>세션별 기록 (RunnableWithMessageHistory)</h2>
-    <p>여러 사용자를 다루려면 <strong>세션 ID별</strong>로 기록을 분리해야 합니다. LangChain이 자동 관리해주는 표준 방식입니다 (lang_05 원본).</p>
+    <p>여러 사용자를 다루려면 <strong>세션 ID별</strong>로 기록을 분리해야 합니다. LangChain이 자동 관리해주는 표준 방식입니다.</p>
 <pre><code>from langchain_core.runnables.history import RunnableWithMessageHistory
 
-store = {}                                   # 세션ID → 대화기록
+store = {}                                   # 딕셔너리: 세션ID → 그 사람의 대화기록
+# 세션ID를 주면 그 사람 기록을 돌려줌(없으면 새로 만들어 줌)
 def get_session_history(session_id: str):
-    if session_id not in store:
-        store[session_id] = InMemoryChatMessageHistory()
+    if session_id not in store:              # 처음 보는 세션이면
+        store[session_id] = InMemoryChatMessageHistory()  # 새 기록창 생성
     return store[session_id]
 
 chain = chat_prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0.1) | StrOutputParser()
@@ -365,26 +375,28 @@ bot.invoke({"user_input": "내 이름 기억해?"}, config={"configurable": {"se
   <div class="lesson-section" id="persona" data-toc>
     <h2>확장 — 페르소나 챗봇</h2>
     <p>system 프롬프트만 바꾸면 완전히 다른 챗봇이 됩니다. 같은 구조로 여러 봇을 찍어낼 수 있습니다.</p>
-<pre><code>def make_bot(system_text):
+<pre><code># system 문장만 받아서 그 성격의 챗봇 체인을 찍어내는 "공장" 함수
+def make_bot(system_text):
     prompt = ChatPromptTemplate.from_messages([
-        ("system", system_text),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{user_input}"),
+        ("system", system_text),                          # 성격을 정하는 자리
+        MessagesPlaceholder(variable_name="chat_history"),# 과거 대화 자리
+        ("human", "{user_input}"),                        # 사용자 입력 자리
     ])
     return prompt | ChatOpenAI(temperature=0.3) | StrOutputParser()
 
+# 같은 함수에 다른 성격만 넣으면 전혀 다른 봇이 만들어짐
 tutor = make_bot("너는 친절한 코딩 튜터다. 초등학생도 알아듣게 비유로 설명한다.")
 coach = make_bot("너는 단호하지만 따뜻한 운동 코치다. 짧고 강하게 동기부여한다.")</code></pre>
 
   </div>
   <div class="lesson-section" id="loop" data-toc>
     <h2>대화 루프</h2>
-    <p>터미널에서 계속 대화하는 간단한 루프 (lang_05 원본).</p>
-<pre><code>while True:
-    user_message = input("USER &gt; ")
-    if user_message.lower() == "quit":     # quit 입력 시 종료
-        break
-    print("AI &gt;", chat(user_message))</code></pre>
+    <p>터미널에서 계속 대화하는 간단한 루프입니다.</p>
+<pre><code>while True:                                # True 동안 무한 반복
+    user_message = input("USER &gt; ")        # 사용자 입력 받기
+    if user_message.lower() == "quit":     # quit(대소문자 무관) 입력 시 종료
+        break                              # 반복 빠져나가기
+    print("AI &gt;", chat(user_message))      # 답 출력(앞서 만든 chat 함수)</code></pre>
     <div class="callout callout-tip"><div class="callout-title">📝 화면 붙이기</div>내일 이후 Gradio로 이 루프를 웹 채팅창으로 바꿉니다(Day 5). 지금은 로직에 집중.</div>
 
   </div>
