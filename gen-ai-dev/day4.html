@@ -3,30 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
   <meta name="theme-color" content="#1B2A4A">
-  <!-- /FAVICON -->
-  <title>4일차 · 내 데이터로 똑똑한 AI — RAG & 멀티모달 - 생성형 AI 개발</title>
-  <!-- OG META -->
+  <title>4일차 · 임베딩 & 벡터스토어 - 생성형 AI 개발</title>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="한라대학교 하계 방학특강">
   <meta property="og:url" content="https://halla.dreamitbiz.com/gen-ai-dev/day4.html">
-  <meta property="og:title" content="4일차 · 내 데이터로 똑똑한 AI — RAG & 멀티모달 - 생성형 AI 개발">
-  <meta property="og:description" content="내 문서를 근거로 답하는 RAG의 원리를 이해하고, 이미지·멀티모달까지 다뤄 'AI를 내 데이터로' 똑똑하게 만듭니다.">
+  <meta property="og:title" content="4일차 · 임베딩 & 벡터스토어 - 생성형 AI 개발">
+  <meta property="og:description" content="임베딩으로 의미를 벡터로 바꾸고, 문서를 벡터스토어에 저장해 검색(retriever)하는 RAG의 토대를 만듭니다.">
   <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="4일차 · 내 데이터로 똑똑한 AI — RAG & 멀티모달 - 생성형 AI 개발">
-  <meta name="twitter:description" content="내 문서를 근거로 답하는 RAG의 원리를 이해하고, 이미지·멀티모달까지 다뤄 'AI를 내 데이터로' 똑똑하게 만듭니다.">
-  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
   <link rel="canonical" href="https://halla.dreamitbiz.com/gen-ai-dev/day4.html">
-  <!-- /OG META -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
@@ -90,11 +81,11 @@
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
           <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
-          <li><a href="../gen-ai-dev/day1.html">Day 01 · 개발 입문 + 환경</a></li>
-          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & API</a></li>
-          <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
-          <li><a href="../gen-ai-dev/day4.html" class="active">Day 04 · RAG & 멀티모달</a></li>
-          <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html" class="active">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
           <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
         </ul>
       </li>
@@ -111,8 +102,8 @@
       <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp;
       <span>4일차</span>
     </div>
-    <h1>4일차 · 내 데이터로 똑똑한 AI — RAG & 멀티모달</h1>
-    <p style="opacity:0.95;">내 문서를 근거로 답하는 RAG의 원리를 이해하고, 이미지·멀티모달까지 다뤄 'AI를 내 데이터로' 똑똑하게 만듭니다.</p>
+    <h1>4일차 · 임베딩 & 벡터스토어</h1>
+    <p style="opacity:0.95;">임베딩으로 의미를 벡터로 바꾸고, 문서를 벡터스토어에 저장해 검색(retriever)하는 RAG의 토대를 만듭니다.</p>
     <div class="lesson-meta" style="margin-top:20px;">
       <span class="lesson-meta-item">📅 7/2 (목)</span>
       <span class="lesson-meta-item">⏰ 1~3교시 · 5~9교시 (8H)</span>
@@ -121,104 +112,99 @@
   </div>
 </section>
 <div class="lesson-layout">
-
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
-      <li><a href="#학습-목표">학습 목표</a></li>
-      <li><a href="#1-why-rag">왜 RAG인가</a></li>
-      <li><a href="#2-how-rag">RAG의 동작 원리</a></li>
-      <li><a href="#3-build-rag">내 문서로 Q&A 만들기</a></li>
-      <li><a href="#4-multimodal">멀티모달 — 이미지</a></li>
-      <li><a href="#오늘의-과제">오늘의 과제</a></li>
+      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#목표">학습 목표</a></li>
+      <li><a href="#emb">임베딩 이해</a></li>
+      <li><a href="#load">문서 로드 → 분할</a></li>
+      <li><a href="#store">벡터스토어 저장 & 검색</a></li>
+      <li><a href="#custom">직접 구현 · 한글 · 튜닝</a></li>
+      <li><a href="#노트북">오늘의 노트북</a></li>
+      <li><a href="#과제">오늘의 과제</a></li>
     </ul>
   </aside>
-
   <main class="lesson-main" data-course-content>
-  <div class="lesson-section" id="오늘의-시간표" data-toc>
+  <div class="lesson-section" id="시간표" data-toc>
     <h2>오늘의 시간표</h2>
     <div class="timetable">
-      <div class="timetable-row lecture">
-        <div class="timetable-time">오전 · 1~3교시</div>
-        <div class="timetable-content"><strong>개념 + 라이브 데모</strong> — 환각의 한계와 RAG의 원리, 멀티모달 개념</div>
-      </div>
-      <div class="timetable-row break">
-        <div class="timetable-time">점심</div>
-        <div class="timetable-content"><strong>점심 시간</strong></div>
-      </div>
-      <div class="timetable-row activity">
-        <div class="timetable-time">오후 · 5~9교시</div>
-        <div class="timetable-content"><strong>실습 + 빌드</strong> — 내 문서를 넣어 답하는 Q&A 구성, 이미지 생성·분석 실습</div>
-      </div>
+      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> 임베딩·벡터·유사도 개념</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
+      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> 문서 → 청크 → 임베딩 → Chroma 검색</div></div>
     </div>
   </div>
-  <div class="lesson-section" id="학습-목표" data-toc>
+
+  <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>모델이 "모르는 것"과 "지어내는 것(환각)"의 한계를 설명할 수 있다.</li>
-      <li>RAG가 내 문서를 근거로 답하게 만드는 원리를 설명할 수 있다.</li>
-      <li>내 자료(PDF·노트)를 넣어 그 안에서 답하는 Q&amp;A를 구성할 수 있다.</li>
-      <li>이미지 생성·이미지 이해(멀티모달)를 실습에 활용할 수 있다.</li>
+      <li>임베딩이 "의미를 숫자 벡터로" 바꾸는 것임을 설명할 수 있다.</li>
+      <li>문서를 분할·임베딩해 벡터스토어에 저장하고 유사 문서를 검색할 수 있다.</li>
     </ul>
   </div>
-  <div class="lesson-section" id="1-why-rag" data-toc>
-    <h2>왜 RAG인가</h2>
-    <p>모델은 학습 시점 이후나 <strong>우리 학교 내부 자료</strong>를 모릅니다. 모르면 그럴듯하게 지어내기도 합니다(환각).</p>
-    <div class="callout callout-info">
-      <div class="callout-title">💡 RAG 한 줄 정의</div>
-      <strong>RAG</strong> = "답하기 전에 관련 문서를 찾아서(Retrieval), 그걸 근거로 답하기(Generation)". 즉 <strong>오픈북 시험</strong>처럼 만드는 것.
-    </div>
+
+  <div class="lesson-section" id="emb" data-toc>
+    <h2>임베딩 이해</h2>
+    <p>임베딩은 텍스트를 <strong>의미가 담긴 숫자 벡터</strong>로 바꿉니다. 의미가 비슷하면 벡터도 가깝습니다(코사인 유사도).</p>
+    <pre><code>from openai import OpenAI
+client = OpenAI()
+resp = client.embeddings.create(model="text-embedding-3-small", input="안녕하세요")
+vec = resp.data[0].embedding
+print(len(vec))   # 벡터 차원 수</code></pre>
   </div>
-  <div class="lesson-section" id="2-how-rag" data-toc>
-    <h2>RAG의 동작 원리</h2>
-    <ol>
-      <li><strong>나누기</strong> — 문서를 잘게 쪼갠다(청크)</li>
-      <li><strong>색인</strong> — 각 조각을 검색 가능하게 저장한다</li>
-      <li><strong>검색</strong> — 질문과 비슷한 조각을 찾아온다</li>
-      <li><strong>답변</strong> — 찾아온 조각을 근거로 AI가 답한다</li>
-    </ol>
-    <div class="callout callout-tip">
-      <div class="callout-title">📝 핵심 감각</div>
-      AI를 "더 똑똑하게" 만드는 게 아니라 <strong>"좋은 자료를 손에 쥐여 주는"</strong> 것입니다. 자료 품질이 답 품질을 결정합니다.
-    </div>
+
+  <div class="lesson-section" id="load" data-toc>
+    <h2>문서 로드 → 분할</h2>
+    <p>긴 문서는 검색·전달이 쉽도록 <strong>청크(chunk)</strong>로 잘게 나눕니다.</p>
+    <pre><code>from langchain_community.document_loaders import TextLoader
+from langchain_text_splitters import CharacterTextSplitter
+
+docs = TextLoader("state_of_the_union.txt").load()
+chunks = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100).split_documents(docs)</code></pre>
   </div>
-  <div class="lesson-section" id="3-build-rag" data-toc>
-    <h2>내 문서로 Q&amp;A 만들기</h2>
-    <p>본인 자료(강의노트·학칙·동아리 규정 등)를 넣고, 그 안에서만 답하는 Q&amp;A를 구성합니다. 노코드 도구 또는 로우코드로 진행합니다.</p>
+
+  <div class="lesson-section" id="store" data-toc>
+    <h2>벡터스토어 저장 & 검색</h2>
+    <p>청크를 임베딩해 <strong>Chroma</strong>에 저장하면, 질문과 비슷한 청크를 즉시 찾아옵니다 — RAG의 핵심.</p>
+    <pre><code>from langchain_openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
+
+db = Chroma.from_documents(chunks, OpenAIEmbeddings())
+retriever = db.as_retriever()
+hits = retriever.invoke("대통령이 말한 핵심은?")   # 유사 청크들</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 핵심 감각</div>AI를 더 똑똑하게 만드는 게 아니라 <strong>"좋은 자료를 손에 쥐여 주는"</strong> 것. 자료·청킹 품질이 답 품질을 결정합니다.</div>
+  </div>
+
+  <div class="lesson-section" id="custom" data-toc>
+    <h2>직접 구현 · 한글 · 튜닝</h2>
     <ul>
-      <li>근거가 된 문장을 함께 보여줘 "왜 그렇게 답했는지" 확인하기</li>
-      <li>자료에 없으면 "모른다"고 답하게 가드레일 걸기</li>
+      <li><strong>직접 구현</strong>: SimpleTextLoader·SimpleVectorStore로 내부 동작(코사인 유사도) 체험</li>
+      <li><strong>한글 임베딩</strong>: HuggingFace 임베딩으로 한국어 문서 품질 비교</li>
+      <li><strong>튜닝</strong>: chunk_size·overlap·검색 개수(k)를 바꿔 검색 품질 개선</li>
     </ul>
   </div>
-  <div class="lesson-section" id="4-multimodal" data-toc>
-    <h2>멀티모달 — 이미지</h2>
-    <ul>
-      <li><strong>이미지 생성</strong> — 텍스트로 이미지 만들기 (홍보물·썸네일)</li>
-      <li><strong>이미지 이해</strong> — 사진/표를 AI에게 보여주고 설명·추출 요청</li>
-    </ul>
-    <div class="callout callout-info">
-      <div class="callout-title">💡 결합</div>
-      "사진 속 시간표를 읽어 표로 정리"처럼, 이미지 이해 + 구조화 출력을 합치면 실용 도구가 됩니다.
-    </div>
-  </div>
-  <div class="lesson-section" id="오늘의-과제" data-toc>
+
+  <div class="lesson-section" id="과제" data-toc>
     <h2>오늘의 과제</h2>
     <ol>
-      <li>내 문서 1개로 Q&amp;A 구성 후 5개 질문 테스트</li>
-      <li>자료에 없는 질문에 "모른다"고 답하는지 확인</li>
-      <li>이미지 생성/이해 중 하나로 결과물 1개 만들기</li>
+      <li>내 문서(txt/노트)로 벡터스토어 만들고 5개 질문 검색 테스트</li>
+      <li>chunk_size를 바꿔 검색 결과가 어떻게 달라지는지 비교</li>
     </ol>
   </div>
+
+  <div class="lesson-section" id="노트북" data-toc>
+    <h2>오늘의 노트북 (실습 자료)</h2>
+    <p>아래 노트북을 <strong>Colab에서 열어</strong> 따라가며 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <ul>
+      <li><strong>lang_06_Embedding 이해.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_06_Embedding%20%EC%9D%B4%ED%95%B4.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_06_Embedding%20%EC%9D%B4%ED%95%B4.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+      <li><strong>lang_07_getting_started_with_vectorstore.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_07_getting_started_with_vectorstore.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_07_getting_started_with_vectorstore.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+      <li><strong>lang_08_MyVectorStore.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_08_MyVectorStore.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_08_MyVectorStore.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+    </ul>
+    <div class="callout callout-warn"><div class="callout-title">🔑 API 키 (공통)</div>Colab에서 <code>from google.colab import userdata</code> 로 키를 불러옵니다. 키는 노트북에 직접 쓰지 말고 <strong>Colab 보안 비밀(🔑 Secrets)</strong>에 저장하세요.</div>
+  </div>
   <div class="lesson-nav">
-    <a href="day3.html">
-      <div class="lesson-nav-dir">← 이전</div>
-      <div class="lesson-nav-title">3일차 · 나만의 AI 챗봇 만들기</div>
-    </a>
-    <a href="day5.html" class="next">
-      <div class="lesson-nav-dir">다음 →</div>
-      <div class="lesson-nav-title">5일차 · AI 에이전트 & 자동화 + 배포</div>
-    </a>
+    <a href="day3.html"><div class="lesson-nav-dir">← 이전</div><div class="lesson-nav-title">3일차 · 분류·감성분석 & 대화형 챗봇</div></a>
+    <a href="day5.html" class="next"><div class="lesson-nav-dir">다음 →</div><div class="lesson-nav-title">5일차 · 문서기반 RAG 챗봇 & 배포</div></a>
   </div>
 </main>
 </div>
@@ -227,10 +213,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-brand">한라대학교 하계 방학특강</div>
-      <div class="footer-desc">
-        AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>
-        도구를 다루는 본인의 판단을 키웁니다.
-      </div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>도구를 다루는 본인의 판단을 키웁니다.</div>
     </div>
     <div>
       <div class="footer-title">사이트</div>
@@ -239,7 +222,6 @@
         <li><a href="../syllabus.html">강의계획서</a></li>
         <li><a href="../gen-ai.html">Gen AI 활용</a></li>
         <li><a href="../pre-learning.html">사전학습</a></li>
-        <li><a href="../prompt-practice.html">프롬프트 실습</a></li>
         <li><a href="../resources.html">참고자료</a></li>
         <li><a href="../community.html">커뮤니티</a></li>
       </ul>
@@ -250,7 +232,6 @@
         <li>강사 · 이애본</li>
         <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
         <li><a href="tel:01037000629">010-3700-0629</a></li>
-        <li style="color:#64748b; font-size:12.5px;">평일 09:00 ~ 18:00</li>
       </ul>
     </div>
     <div>
@@ -258,9 +239,6 @@
       <div class="company-info">
         <p><strong>드림아이티비즈 (DreamIT Biz)</strong></p>
         <p>대표이사: 이애본</p>
-        <p>사업자등록번호: 601-45-20154</p>
-        <p>통신판매신고: 제2024-수원팔달-0584호</p>
-        <p>출판신고: 제2026-000026호</p>
         <p>경기도 수원시 팔달구 매산로 45, 419호</p>
       </div>
     </div>

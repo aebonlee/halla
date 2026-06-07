@@ -3,30 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
   <meta name="theme-color" content="#1B2A4A">
-  <!-- /FAVICON -->
-  <title>1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발</title>
-  <!-- OG META -->
+  <title>1일차 · 바이브 코딩 + LangChain 입문 - 생성형 AI 개발</title>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="한라대학교 하계 방학특강">
   <meta property="og:url" content="https://halla.dreamitbiz.com/gen-ai-dev/day1.html">
-  <meta property="og:title" content="1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발">
-  <meta property="og:description" content="생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.">
+  <meta property="og:title" content="1일차 · 바이브 코딩 + LangChain 입문 - 생성형 AI 개발">
+  <meta property="og:description" content="AI에게 시켜서 만드는 바이브 코딩으로 출발 — Colab·API 키 세팅 후 LangChain으로 첫 LLM 체인을 만듭니다.">
   <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="1일차 · 개발 입문 + 환경 세팅 - 생성형 AI 개발">
-  <meta name="twitter:description" content="생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.">
-  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
   <link rel="canonical" href="https://halla.dreamitbiz.com/gen-ai-dev/day1.html">
-  <!-- /OG META -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
@@ -90,11 +81,11 @@
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
           <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
-          <li><a href="../gen-ai-dev/day1.html" class="active">Day 01 · 개발 입문 + 환경</a></li>
-          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & API</a></li>
-          <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
-          <li><a href="../gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
-          <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="../gen-ai-dev/day1.html" class="active">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
           <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
         </ul>
       </li>
@@ -111,8 +102,8 @@
       <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp;
       <span>1일차</span>
     </div>
-    <h1>1일차 · 개발 입문 + 환경 세팅</h1>
-    <p style="opacity:0.95;">생성형 AI 개발의 전체 지형을 잡고, Claude·Cursor 개발 환경과 API 키까지 한 번에 세팅합니다.</p>
+    <h1>1일차 · 바이브 코딩 + LangChain 입문</h1>
+    <p style="opacity:0.95;">AI에게 시켜서 만드는 바이브 코딩으로 출발 — Colab·API 키 세팅 후 LangChain으로 첫 LLM 체인을 만듭니다.</p>
     <div class="lesson-meta" style="margin-top:20px;">
       <span class="lesson-meta-item">📅 6/29 (월)</span>
       <span class="lesson-meta-item">⏰ 1~3교시 · 5~9교시 (8H)</span>
@@ -121,116 +112,121 @@
   </div>
 </section>
 <div class="lesson-layout">
-
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
-      <li><a href="#학습-목표">학습 목표</a></li>
-      <li><a href="#1-개발-지형">생성형 AI 개발의 지형</a></li>
-      <li><a href="#2-환경">개발 환경 세팅</a></li>
-      <li><a href="#3-api-key">API 키 발급</a></li>
-      <li><a href="#오늘의-과제">오늘의 과제</a></li>
+      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#목표">학습 목표</a></li>
+      <li><a href="#vibe">바이브 코딩으로 시작</a></li>
+      <li><a href="#env">개발 환경 — Colab + API 키</a></li>
+      <li><a href="#first">첫 LLM 호출</a></li>
+      <li><a href="#msg">메시지 & 프롬프트 템플릿</a></li>
+      <li><a href="#chain">LLM 체인 (Prompt + LLM)</a></li>
+      <li><a href="#노트북">오늘의 노트북</a></li>
+      <li><a href="#과제">오늘의 과제</a></li>
     </ul>
   </aside>
-
   <main class="lesson-main" data-course-content>
-  <div class="lesson-section" id="오늘의-시간표" data-toc>
+  <div class="lesson-section" id="시간표" data-toc>
     <h2>오늘의 시간표</h2>
     <div class="timetable">
-      <div class="timetable-row lecture">
-        <div class="timetable-time">오전 · 1~3교시</div>
-        <div class="timetable-content"><strong>개념 + 라이브 데모</strong> — 생성형 AI 개발이 무엇이고 어디까지 가능한지, 도구 지형 한눈에</div>
-      </div>
-      <div class="timetable-row break">
-        <div class="timetable-time">점심</div>
-        <div class="timetable-content"><strong>점심 시간</strong></div>
-      </div>
-      <div class="timetable-row activity">
-        <div class="timetable-time">오후 · 5~9교시</div>
-        <div class="timetable-content"><strong>실습 + 빌드</strong> — Claude·Cursor 설치/로그인, API 키 발급, 첫 호출 확인</div>
-      </div>
+      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> 바이브 코딩 개념 · 개발 환경 · LangChain 소개</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
+      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> Colab에서 첫 LLM 체인 직접 실행</div></div>
     </div>
   </div>
-  <div class="lesson-section" id="학습-목표" data-toc>
+
+  <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>"AI를 쓰는 것"과 "AI로 만드는 것"의 차이를 설명할 수 있다.</li>
-      <li>생성형 AI 개발에 쓰이는 도구 지형(노코드 → 로우코드 → 코드)을 구분할 수 있다.</li>
-      <li>Claude·Cursor 개발 환경을 세팅하고 API 키를 발급받아 첫 호출을 확인할 수 있다.</li>
+      <li>"AI에게 시켜서 만든다"는 바이브 코딩 방식으로 개발을 시작할 수 있다.</li>
+      <li>Colab + OpenAI API 키 환경을 세팅하고 LangChain을 설치할 수 있다.</li>
+      <li>LangChain으로 LLM을 호출하고, 프롬프트 템플릿으로 첫 LLM 체인을 만들 수 있다.</li>
     </ul>
   </div>
 
-  <div class="lesson-section" id="1-개발-지형" data-toc>
-    <h2>생성형 AI 개발의 지형</h2>
-    <p>이 과정은 "프롬프트를 잘 쓰는 사람"에서 한 걸음 더 나아가, <strong>AI를 부품처럼 끼워 넣어 무언가를 만드는 사람</strong>이 되는 6일입니다.</p>
-    <h3>세 가지 층위</h3>
-    <ul>
-      <li><strong>노코드</strong> — 코드 없이 화면 클릭으로 AI 앱 조립 (예: 챗봇 빌더, 자동화 도구)</li>
-      <li><strong>로우코드</strong> — 약간의 코드 + 도구 조합. 가장 가성비 좋은 구간</li>
-      <li><strong>코드</strong> — API를 직접 호출. 자유도가 가장 높음</li>
-    </ul>
-    <div class="callout callout-info">
-      <div class="callout-title">💡 이 과정의 전략</div>
-      노코드로 빠르게 감을 잡고, 필요한 곳에만 코드를 더합니다. <strong>"전부 코딩"이 아니라 "필요한 만큼"</strong>이 핵심입니다.
-    </div>
-    <h3>6일 동안 만들 것</h3>
-    <ul>
-      <li>Day 2~3: 목적이 분명한 <strong>나만의 챗봇</strong></li>
-      <li>Day 4: 내 문서로 답하는 <strong>RAG Q&amp;A</strong></li>
-      <li>Day 5: 스스로 도구를 쓰는 <strong>에이전트</strong> + 웹 배포</li>
-      <li>Day 6: 이 모두를 합친 <strong>나만의 생성형 AI 서비스</strong></li>
-    </ul>
+  <div class="lesson-section" id="vibe" data-toc>
+    <h2>바이브 코딩으로 시작</h2>
+    <p>이 과정은 코드를 외워서 치는 게 아니라, <strong>AI에게 자연어로 시켜서 만드는</strong> 바이브 코딩으로 시작합니다. 막히면 Claude·Cursor에게 코드를 설명·수정·디버깅하도록 요청하세요.</p>
+    <div class="callout callout-tip"><div class="callout-title">📝 오늘의 마음가짐</div>
+      "이 코드가 무슨 뜻이야?", "이 에러 고쳐줘", "이걸 ○○하게 바꿔줘" — <strong>정확히 묘사하는 능력</strong>이 새로운 코딩 실력입니다.</div>
   </div>
 
-  <div class="lesson-section" id="2-환경" data-toc>
-    <h2>개발 환경 세팅</h2>
-    <ol>
-      <li><strong>Claude</strong> — <code>claude.ai</code> 가입 (이 과정 필수, 3개월 구독 권장)</li>
-      <li><strong>Cursor</strong> — <code>cursor.sh</code>에서 설치. AI 내장 코드 에디터</li>
-      <li><strong>계정 준비</strong> — Google 계정(로그인·배포용), GitHub 계정(코드 보관·배포용)</li>
-    </ol>
-    <div class="callout callout-warn">
-      <div class="callout-title">⚠️ 미리 해두면 좋아요</div>
-      설치/가입은 시간이 걸립니다. 가능하면 <a href="../pre-learning.html">사전학습 페이지</a>를 보고 1일차 전에 준비해 오세요.
-    </div>
+  <div class="lesson-section" id="env" data-toc>
+    <h2>개발 환경 — Colab + API 키</h2>
+    <p>설치 없이 브라우저에서 바로 쓰는 <strong>Google Colab</strong>으로 실습합니다. 첫 셀에서 LangChain을 설치합니다.</p>
+    <pre><code>!pip install langchain&gt;=0.3.0 langchain-openai langchain-community langchain-text-splitters
+!pip install faiss-cpu tiktoken   # 벡터 검색·토큰 계산(이후 사용)
+
+import langchain
+print("LangChain 버전 :", langchain.__version__)</code></pre>
+    <p>API 키는 코드에 직접 쓰지 않고 Colab <strong>보안 비밀(🔑)</strong>에 저장한 뒤 불러옵니다.</p>
+    <pre><code>import os
+from google.colab import userdata
+os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">⚠️ 키 보안</div>API 키는 절대 공개 코드/깃허브에 올리지 않습니다. 노출 시 요금 폭탄·오남용 위험이 있습니다.</div>
   </div>
 
-  <div class="lesson-section" id="3-api-key" data-toc>
-    <h2>API 키 발급 + 첫 호출</h2>
-    <p>API 키는 "프로그램이 AI에게 말 걸 수 있는 비밀번호"입니다.</p>
-    <ol>
-      <li><code>console.anthropic.com</code> 접속 → 로그인</li>
-      <li>API Keys → <strong>Create Key</strong> → 키 복사 (한 번만 보이니 안전한 곳에 보관)</li>
-      <li>Cursor에서 첫 호출 테스트 — 강사가 실습 코드를 함께 실행합니다</li>
-    </ol>
-    <div class="callout callout-warn">
-      <div class="callout-title">🔐 키 보안 — 매우 중요</div>
-      API 키는 <strong>절대 공개 코드(깃허브 등)에 올리지 않습니다.</strong> 노출되면 요금 폭탄·오남용 위험이 있습니다. 키는 환경변수/비공개 설정에만 둡니다.
-    </div>
-    <div class="callout callout-tip">
-      <div class="callout-title">💰 비용 감각</div>
-      API는 사용한 토큰만큼 과금됩니다. 실습 수준에서는 매우 적은 금액이지만, "토큰 = 돈"이라는 감각을 처음부터 가집니다.
-    </div>
+  <div class="lesson-section" id="first" data-toc>
+    <h2>첫 LLM 호출</h2>
+    <p><code>ChatOpenAI</code> 모델을 만들고 <code>invoke()</code>로 질문하면 끝입니다.</p>
+    <pre><code>from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+response = llm.invoke("지구의 윤년 주기는?")
+print(response.content)</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 temperature</div>
+      <code>ChatOpenAI(model="gpt-4o-mini", temperature=0)</code> 은 일관된 답, <code>temperature=1</code> 은 창의적이고 매번 달라지는 답을 줍니다. 사실 질문은 낮게, 아이디어는 높게.</div>
   </div>
 
-  <div class="lesson-section" id="오늘의-과제" data-toc>
+  <div class="lesson-section" id="msg" data-toc>
+    <h2>메시지 & 프롬프트 템플릿</h2>
+    <p>대화는 <strong>역할(role)</strong>이 있는 메시지로 구성됩니다 — system(규칙)·human(사용자)·ai(응답).</p>
+    <pre><code>from langchain_core.messages import SystemMessage, HumanMessage
+
+messages = [
+    SystemMessage(content="너는 한라대 학생을 돕는 친절한 학습 도우미야."),
+    HumanMessage(content="오늘 배운 LangChain을 3줄로 요약해줘"),
+]
+print(llm.invoke(messages).content)</code></pre>
+    <p>반복되는 프롬프트는 <strong>템플릿</strong>으로 만들어 값만 바꿔 끼웁니다.</p>
+    <pre><code>from langchain_core.prompts import ChatPromptTemplate
+
+prompt = ChatPromptTemplate.from_template("{topic}에 대해 한 문장으로 설명해줘")
+print(prompt.format(topic="머신러닝"))</code></pre>
+  </div>
+
+  <div class="lesson-section" id="chain" data-toc>
+    <h2>LLM 체인 (Prompt + LLM)</h2>
+    <p>LangChain의 핵심은 <strong>체인</strong> — 프롬프트와 모델을 이어 "입력 → 처리 → 출력"의 흐름을 만드는 것입니다. (내일 배울 LCEL의 맛보기)</p>
+    <pre><code>chain = prompt | llm          # 프롬프트 → 모델 연결
+result = chain.invoke({"topic": "딥러닝"})
+print(result.content)</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">🔭 오늘의 한 줄</div>
+      <strong>LangChain = LLM 애플리케이션을 "블록 조립"처럼 만드는 프레임워크.</strong> 오늘은 블록 1개(LLM 체인)를 만들었습니다.</div>
+  </div>
+
+  <div class="lesson-section" id="과제" data-toc>
     <h2>오늘의 과제</h2>
     <ol>
-      <li>Claude·Cursor 설치 완료 스크린샷 남기기</li>
-      <li>API 키 발급 후 안전하게 보관 (노출 금지 규칙 지키기)</li>
-      <li>"내가 만들고 싶은 생성형 AI" 아이디어 3개를 메모해 오기 — Day 6 프로젝트 씨앗</li>
+      <li>Colab에서 첫 LLM 호출 성공 + 스크린샷</li>
+      <li>나만의 system 프롬프트(역할·말투·규칙)로 도우미 1개 만들기</li>
+      <li>temperature 0 / 0.7 / 1.0 으로 같은 질문 호출해 차이 비교</li>
     </ol>
   </div>
+
+  <div class="lesson-section" id="노트북" data-toc>
+    <h2>오늘의 노트북 (실습 자료)</h2>
+    <p>아래 노트북을 <strong>Colab에서 열어</strong> 따라가며 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <ul>
+      <li><strong>lang_01_랭체인기초.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_01_%EB%9E%AD%EC%B2%B4%EC%9D%B8%EA%B8%B0%EC%B4%88.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_01_%EB%9E%AD%EC%B2%B4%EC%9D%B8%EA%B8%B0%EC%B4%88.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+      <li><strong>adv_01_LLM_LLM체인_20260517.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/adv_01_LLM_LLM%EC%B2%B4%EC%9D%B8_20260517.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/adv_01_LLM_LLM%EC%B2%B4%EC%9D%B8_20260517.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+    </ul>
+    <div class="callout callout-warn"><div class="callout-title">🔑 API 키 (공통)</div>Colab에서 <code>from google.colab import userdata</code> 로 키를 불러옵니다. 키는 노트북에 직접 쓰지 말고 <strong>Colab 보안 비밀(🔑 Secrets)</strong>에 저장하세요.</div>
+  </div>
   <div class="lesson-nav">
-    <a href="index.html">
-      <div class="lesson-nav-dir">← 이전</div>
-      <div class="lesson-nav-title">생성형 AI 개발 개요</div>
-    </a>
-    <a href="day2.html" class="next">
-      <div class="lesson-nav-dir">다음 →</div>
-      <div class="lesson-nav-title">2일차 · 프롬프트 엔지니어링 & API 기초</div>
-    </a>
+    <a href="index.html"><div class="lesson-nav-dir">← 이전</div><div class="lesson-nav-title">생성형 AI 개발 개요</div></a>
+    <a href="day2.html" class="next"><div class="lesson-nav-dir">다음 →</div><div class="lesson-nav-title">2일차 · 프롬프트 & 표현언어(LCEL)</div></a>
   </div>
 </main>
 </div>
@@ -239,10 +235,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-brand">한라대학교 하계 방학특강</div>
-      <div class="footer-desc">
-        AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>
-        도구를 다루는 본인의 판단을 키웁니다.
-      </div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>도구를 다루는 본인의 판단을 키웁니다.</div>
     </div>
     <div>
       <div class="footer-title">사이트</div>
@@ -251,7 +244,6 @@
         <li><a href="../syllabus.html">강의계획서</a></li>
         <li><a href="../gen-ai.html">Gen AI 활용</a></li>
         <li><a href="../pre-learning.html">사전학습</a></li>
-        <li><a href="../prompt-practice.html">프롬프트 실습</a></li>
         <li><a href="../resources.html">참고자료</a></li>
         <li><a href="../community.html">커뮤니티</a></li>
       </ul>
@@ -262,7 +254,6 @@
         <li>강사 · 이애본</li>
         <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
         <li><a href="tel:01037000629">010-3700-0629</a></li>
-        <li style="color:#64748b; font-size:12.5px;">평일 09:00 ~ 18:00</li>
       </ul>
     </div>
     <div>
@@ -270,9 +261,6 @@
       <div class="company-info">
         <p><strong>드림아이티비즈 (DreamIT Biz)</strong></p>
         <p>대표이사: 이애본</p>
-        <p>사업자등록번호: 601-45-20154</p>
-        <p>통신판매신고: 제2024-수원팔달-0584호</p>
-        <p>출판신고: 제2026-000026호</p>
         <p>경기도 수원시 팔달구 매산로 45, 419호</p>
       </div>
     </div>

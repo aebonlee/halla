@@ -3,30 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
   <meta name="theme-color" content="#1B2A4A">
-  <!-- /FAVICON -->
-  <title>2일차 · 프롬프트 엔지니어링 & API 기초 - 생성형 AI 개발</title>
-  <!-- OG META -->
+  <title>2일차 · 프롬프트 & 표현언어(LCEL) - 생성형 AI 개발</title>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="한라대학교 하계 방학특강">
   <meta property="og:url" content="https://halla.dreamitbiz.com/gen-ai-dev/day2.html">
-  <meta property="og:title" content="2일차 · 프롬프트 엔지니어링 & API 기초 - 생성형 AI 개발">
-  <meta property="og:description" content="같은 모델도 프롬프트 설계와 파라미터에 따라 결과가 달라집니다. 코드에서 직접 Claude API를 호출해 봅니다.">
+  <meta property="og:title" content="2일차 · 프롬프트 & 표현언어(LCEL) - 생성형 AI 개발">
+  <meta property="og:description" content="좋은 프롬프트의 원칙과 템플릿, 그리고 LangChain의 핵심 표현언어(LCEL) " | " 파이프로 체인을 조립합니다.">
   <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="2일차 · 프롬프트 엔지니어링 & API 기초 - 생성형 AI 개발">
-  <meta name="twitter:description" content="같은 모델도 프롬프트 설계와 파라미터에 따라 결과가 달라집니다. 코드에서 직접 Claude API를 호출해 봅니다.">
-  <meta name="twitter:image" content="https://halla.dreamitbiz.com/og-image.png">
   <link rel="canonical" href="https://halla.dreamitbiz.com/gen-ai-dev/day2.html">
-  <!-- /OG META -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
@@ -90,11 +81,11 @@
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
           <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
-          <li><a href="../gen-ai-dev/day1.html">Day 01 · 개발 입문 + 환경</a></li>
-          <li><a href="../gen-ai-dev/day2.html" class="active">Day 02 · 프롬프트 & API</a></li>
-          <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
-          <li><a href="../gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
-          <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html" class="active">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
           <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
         </ul>
       </li>
@@ -111,8 +102,8 @@
       <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp;
       <span>2일차</span>
     </div>
-    <h1>2일차 · 프롬프트 엔지니어링 & API 기초</h1>
-    <p style="opacity:0.95;">같은 모델도 프롬프트 설계와 파라미터에 따라 결과가 달라집니다. 코드에서 직접 Claude API를 호출해 봅니다.</p>
+    <h1>2일차 · 프롬프트 & 표현언어(LCEL)</h1>
+    <p style="opacity:0.95;">좋은 프롬프트의 원칙과 템플릿, 그리고 LangChain의 핵심 표현언어(LCEL) " | " 파이프로 체인을 조립합니다.</p>
     <div class="lesson-meta" style="margin-top:20px;">
       <span class="lesson-meta-item">📅 6/30 (화)</span>
       <span class="lesson-meta-item">⏰ 1~3교시 · 5~9교시 (8H)</span>
@@ -121,119 +112,115 @@
   </div>
 </section>
 <div class="lesson-layout">
-
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#오늘의-시간표">오늘의 시간표</a></li>
-      <li><a href="#학습-목표">학습 목표</a></li>
-      <li><a href="#1-system-prompt">시스템 프롬프트 설계</a></li>
-      <li><a href="#2-api-call">API로 호출하기</a></li>
-      <li><a href="#3-params">파라미터 다루기</a></li>
-      <li><a href="#4-structured">구조화된 출력</a></li>
-      <li><a href="#오늘의-과제">오늘의 과제</a></li>
+      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#목표">학습 목표</a></li>
+      <li><a href="#rules">프롬프트 작성 원칙</a></li>
+      <li><a href="#tmpl">프롬프트 템플릿</a></li>
+      <li><a href="#lcel">표현언어(LCEL)</a></li>
+      <li><a href="#runnable">Runnable 조합</a></li>
+      <li><a href="#parser">커스텀 출력 파서</a></li>
+      <li><a href="#노트북">오늘의 노트북</a></li>
+      <li><a href="#과제">오늘의 과제</a></li>
     </ul>
   </aside>
-
   <main class="lesson-main" data-course-content>
-  <div class="lesson-section" id="오늘의-시간표" data-toc>
+  <div class="lesson-section" id="시간표" data-toc>
     <h2>오늘의 시간표</h2>
     <div class="timetable">
-      <div class="timetable-row lecture">
-        <div class="timetable-time">오전 · 1~3교시</div>
-        <div class="timetable-content"><strong>개념 + 라이브 데모</strong> — 시스템 프롬프트와 메시지 구조, 파라미터의 의미</div>
-      </div>
-      <div class="timetable-row break">
-        <div class="timetable-time">점심</div>
-        <div class="timetable-content"><strong>점심 시간</strong></div>
-      </div>
-      <div class="timetable-row activity">
-        <div class="timetable-time">오후 · 5~9교시</div>
-        <div class="timetable-content"><strong>실습 + 빌드</strong> — Cursor에서 Claude API를 직접 호출하고 출력 형식 다듬기</div>
-      </div>
+      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> 프롬프트 원칙 · 템플릿 · LCEL 개념</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
+      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> LCEL 파이프로 체인 조립 + 커스텀 파서</div></div>
     </div>
   </div>
-  <div class="lesson-section" id="학습-목표" data-toc>
+
+  <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>시스템 프롬프트로 AI의 역할·말투·규칙을 고정할 수 있다.</li>
-      <li>코드에서 Claude API를 호출하고 응답을 받아 화면에 쓸 수 있다.</li>
-      <li>temperature·max_tokens 등 파라미터가 결과에 주는 영향을 설명할 수 있다.</li>
-      <li>JSON 등 구조화된 형식으로 답을 받아 프로그램에서 처리할 수 있다.</li>
+      <li>명확·구체·맥락 있는 프롬프트 작성 원칙을 적용할 수 있다.</li>
+      <li>PromptTemplate / ChatPromptTemplate / few-shot을 사용할 수 있다.</li>
+      <li>LCEL " | "로 prompt·model·parser를 연결하고 Runnable로 입력을 다룰 수 있다.</li>
     </ul>
   </div>
-  <div class="lesson-section" id="1-system-prompt" data-toc>
-    <h2>시스템 프롬프트 설계</h2>
-    <p>같은 모델도 <strong>시스템 프롬프트</strong>에 따라 완전히 다른 비서가 됩니다. 역할·맥락·출력 형식 — 어제 배운 SCORE의 연장입니다.</p>
-    <div class="callout callout-tip">
-      <div class="callout-title">📝 좋은 시스템 프롬프트 4요소</div>
-      ① 너는 누구인가(역할) · ② 무엇을 돕는가(목표) · ③ 어떻게 말하는가(말투/길이) · ④ 하지 말아야 할 것(가드레일)
-    </div>
-    <h3>메시지 구조</h3>
+
+  <div class="lesson-section" id="rules" data-toc>
+    <h2>프롬프트 작성 원칙</h2>
     <ul>
-      <li><strong>system</strong> — AI의 정체성·규칙 (대화 내내 유지)</li>
-      <li><strong>user</strong> — 사용자가 보낸 말</li>
-      <li><strong>assistant</strong> — AI가 답한 말 (대화 이력으로 다시 전달)</li>
+      <li><strong>명확성·구체성</strong> — 무엇을, 어떤 형식으로 원하는지 분명히</li>
+      <li><strong>맥락 제공</strong> — 배경 정보를 주면 환각이 줄고 관련성이 높아짐</li>
+      <li><strong>간결함</strong> — 핵심에 집중, 불필요한 정보 배제</li>
+      <li><strong>예시(few-shot)</strong> — 원하는 결과의 예를 1~2개 보여주기</li>
     </ul>
   </div>
-  <div class="lesson-section" id="2-api-call" data-toc>
-    <h2>API로 호출하기</h2>
-    <p>핵심 흐름은 어떤 언어든 똑같습니다: <strong>키 준비 → 메시지 구성 → 호출 → 응답 처리</strong>.</p>
-    <pre><code>// 개념 흐름 (실제 코드는 강사와 함께 작성)
-요청 = {
-  model: "claude-opus-4-8",
-  system: "너는 한라대 학생을 돕는 친절한 학습 도우미야.",
-  messages: [ { role: "user", content: "오늘 배운 내용 3줄 요약해줘" } ],
-  max_tokens: 500
-}
-응답 = AI에게_보내기(요청)
-화면에_출력(응답.text)</code></pre>
-    <div class="callout callout-warn">
-      <div class="callout-title">⚠️ 키는 코드에 직접 넣지 않기</div>
-      API 키는 환경변수로 불러옵니다. 깃허브에 올라가는 코드에 키 문자열을 박지 않습니다.
-    </div>
+
+  <div class="lesson-section" id="tmpl" data-toc>
+    <h2>프롬프트 템플릿</h2>
+    <pre><code>from langchain_core.prompts import PromptTemplate
+
+tmpl = PromptTemplate.from_template("{name}님은 {age}살입니다. {language}로 인사해줘")
+print(tmpl.format(name="홍길동", age=20, language="영어"))</code></pre>
+    <p>대화형은 <code>ChatPromptTemplate.from_messages([...])</code> 로 system/human 메시지를 함께 구성합니다.</p>
   </div>
-  <div class="lesson-section" id="3-params" data-toc>
-    <h2>파라미터 다루기</h2>
-    <ul>
-      <li><strong>temperature</strong> — 0에 가까우면 일관·딱딱, 1에 가까우면 다양·창의. 사실 답변은 낮게, 아이디어는 높게.</li>
-      <li><strong>max_tokens</strong> — 답변 최대 길이. 너무 작으면 잘리고, 크면 비용↑.</li>
-      <li><strong>stop / 시스템 규칙</strong> — 형식을 강제하거나 특정 지점에서 멈추기.</li>
-    </ul>
-    <h3>실습</h3>
-    <p>같은 질문을 temperature 0 / 0.7 / 1.0으로 3번 호출해 결과를 비교합니다.</p>
+
+  <div class="lesson-section" id="lcel" data-toc>
+    <h2>표현언어(LCEL) — 핵심</h2>
+    <p>LangChain의 정수는 <strong>" | " 파이프</strong>로 구성요소를 잇는 것입니다. 데이터가 왼쪽 → 오른쪽으로 흐릅니다.</p>
+    <pre><code>from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+
+prompt = ChatPromptTemplate.from_template("{topic}에 대한 짧은 농담 하나")
+chain  = prompt | ChatOpenAI() | StrOutputParser()
+print(chain.invoke({"topic": "아이스크림"}))</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 StrOutputParser</div>
+      모델 응답 객체에서 <strong>문자열만</strong> 깔끔히 뽑아줍니다. 체인 끝에 붙이면 <code>.content</code> 없이 바로 문자열.</div>
   </div>
-  <div class="lesson-section" id="4-structured" data-toc>
-    <h2>구조화된 출력</h2>
-    <p>프로그램이 답을 "읽으려면" 형식이 일정해야 합니다. 자유 문장 대신 <strong>JSON</strong> 같은 구조로 받습니다.</p>
-    <pre><code>// "제목, 요약, 태그 3개를 JSON으로 줘" 라고 형식을 지정
-{
-  "title": "...",
-  "summary": "...",
-  "tags": ["...", "...", "..."]
-}</code></pre>
-    <div class="callout callout-info">
-      <div class="callout-title">💡 왜 중요한가</div>
-      구조화 출력이 되면 AI의 답을 <strong>다른 기능에 자동으로 연결</strong>할 수 있습니다 — 내일 챗봇·모레 RAG의 토대.
-    </div>
+
+  <div class="lesson-section" id="runnable" data-toc>
+    <h2>Runnable 조합</h2>
+    <p>입력을 그대로 넘기거나(Passthrough), 병렬 실행(Parallel), 함수 끼우기(Lambda)로 흐름을 유연하게 만듭니다.</p>
+    <pre><code>from langchain_core.runnables import RunnablePassthrough
+
+chain = {"topic": RunnablePassthrough()} | prompt | ChatOpenAI() | StrOutputParser()
+print(chain.invoke("커피"))   # 문자열 하나만 넣어도 동작</code></pre>
   </div>
-  <div class="lesson-section" id="오늘의-과제" data-toc>
+
+  <div class="lesson-section" id="parser" data-toc>
+    <h2>커스텀 출력 파서</h2>
+    <p>모델 답에서 원하는 부분만 추출하도록 파서를 직접 만들 수 있습니다 (예: 수학 체인에서 코드만 뽑기).</p>
+    <pre><code>from langchain_core.output_parsers import BaseOutputParser
+
+class CodeOutputParser(BaseOutputParser):
+    def parse(self, text):
+        return text.split("```")[1] if "```" in text else text
+
+chain = chat_prompt | ChatOpenAI(temperature=0) | CodeOutputParser()</code></pre>
+  </div>
+
+  <div class="lesson-section" id="과제" data-toc>
     <h2>오늘의 과제</h2>
     <ol>
-      <li>나만의 시스템 프롬프트 1개 작성 (역할·말투·가드레일 포함)</li>
-      <li>같은 질문을 temperature 3종으로 호출해 차이 캡처</li>
-      <li>"제목·요약·태그"를 JSON으로 받는 호출 성공시키기</li>
+      <li>few-shot 예시를 넣은 프롬프트로 일정한 형식의 답 받기</li>
+      <li>LCEL <code>prompt | model | StrOutputParser()</code> 체인 1개 완성</li>
+      <li>커스텀 파서로 답에서 원하는 부분만 추출해 보기</li>
     </ol>
   </div>
+
+  <div class="lesson-section" id="노트북" data-toc>
+    <h2>오늘의 노트북 (실습 자료)</h2>
+    <p>아래 노트북을 <strong>Colab에서 열어</strong> 따라가며 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <ul>
+      <li><strong>adv_02_LangChain_프롬프트_배포.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/adv_02_LangChain_%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8_%EB%B0%B0%ED%8F%AC.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/adv_02_LangChain_%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8_%EB%B0%B0%ED%8F%AC.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+      <li><strong>lang_02_랭체인 표현언어.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_02_%EB%9E%AD%EC%B2%B4%EC%9D%B8%20%ED%91%9C%ED%98%84%EC%96%B8%EC%96%B4.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_02_%EB%9E%AD%EC%B2%B4%EC%9D%B8%20%ED%91%9C%ED%98%84%EC%96%B8%EC%96%B4.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+      <li><strong>lang_03_랭체인_표현언어기반_수학_체인.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_03_%EB%9E%AD%EC%B2%B4%EC%9D%B8_%ED%91%9C%ED%98%84%EC%96%B8%EC%96%B4%EA%B8%B0%EB%B0%98_%EC%88%98%ED%95%99_%EC%B2%B4%EC%9D%B8.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a> &nbsp;·&nbsp; <a href="https://github.com/aebonlee/halla/blob/main/gen-ai-dev/lang_03_%EB%9E%AD%EC%B2%B4%EC%9D%B8_%ED%91%9C%ED%98%84%EC%96%B8%EC%96%B4%EA%B8%B0%EB%B0%98_%EC%88%98%ED%95%99_%EC%B2%B4%EC%9D%B8.ipynb" target="_blank" rel="noopener">GitHub에서 보기</a></li>
+    </ul>
+    <div class="callout callout-warn"><div class="callout-title">🔑 API 키 (공통)</div>Colab에서 <code>from google.colab import userdata</code> 로 키를 불러옵니다. 키는 노트북에 직접 쓰지 말고 <strong>Colab 보안 비밀(🔑 Secrets)</strong>에 저장하세요.</div>
+  </div>
   <div class="lesson-nav">
-    <a href="day1.html">
-      <div class="lesson-nav-dir">← 이전</div>
-      <div class="lesson-nav-title">1일차 · 개발 입문 + 환경 세팅</div>
-    </a>
-    <a href="day3.html" class="next">
-      <div class="lesson-nav-dir">다음 →</div>
-      <div class="lesson-nav-title">3일차 · 나만의 AI 챗봇 만들기</div>
-    </a>
+    <a href="day1.html"><div class="lesson-nav-dir">← 이전</div><div class="lesson-nav-title">1일차 · 바이브 코딩 + LangChain 입문</div></a>
+    <a href="day3.html" class="next"><div class="lesson-nav-dir">다음 →</div><div class="lesson-nav-title">3일차 · 분류·감성분석 & 대화형 챗봇</div></a>
   </div>
 </main>
 </div>
@@ -242,10 +229,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-brand">한라대학교 하계 방학특강</div>
-      <div class="footer-desc">
-        AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>
-        도구를 다루는 본인의 판단을 키웁니다.
-      </div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.<br>도구를 다루는 본인의 판단을 키웁니다.</div>
     </div>
     <div>
       <div class="footer-title">사이트</div>
@@ -254,7 +238,6 @@
         <li><a href="../syllabus.html">강의계획서</a></li>
         <li><a href="../gen-ai.html">Gen AI 활용</a></li>
         <li><a href="../pre-learning.html">사전학습</a></li>
-        <li><a href="../prompt-practice.html">프롬프트 실습</a></li>
         <li><a href="../resources.html">참고자료</a></li>
         <li><a href="../community.html">커뮤니티</a></li>
       </ul>
@@ -265,7 +248,6 @@
         <li>강사 · 이애본</li>
         <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
         <li><a href="tel:01037000629">010-3700-0629</a></li>
-        <li style="color:#64748b; font-size:12.5px;">평일 09:00 ~ 18:00</li>
       </ul>
     </div>
     <div>
@@ -273,9 +255,6 @@
       <div class="company-info">
         <p><strong>드림아이티비즈 (DreamIT Biz)</strong></p>
         <p>대표이사: 이애본</p>
-        <p>사업자등록번호: 601-45-20154</p>
-        <p>통신판매신고: 제2024-수원팔달-0584호</p>
-        <p>출판신고: 제2026-000026호</p>
         <p>경기도 수원시 팔달구 매산로 45, 419호</p>
       </div>
     </div>

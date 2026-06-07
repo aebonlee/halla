@@ -92,11 +92,11 @@
         <ul class="nav-dropdown-menu">
           <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
           <li><a href="../gen-ai-dev/index.html" class="active">과정 개요</a></li>
-          <li><a href="../gen-ai-dev/day1.html">Day 01 · 개발 입문 + 환경</a></li>
-          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & API</a></li>
-          <li><a href="../gen-ai-dev/day3.html">Day 03 · AI 챗봇 만들기</a></li>
-          <li><a href="../gen-ai-dev/day4.html">Day 04 · RAG & 멀티모달</a></li>
-          <li><a href="../gen-ai-dev/day5.html">Day 05 · 에이전트 & 배포</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
           <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트 ③</a></li>
         </ul>
       </li>
@@ -185,7 +185,13 @@
 
 <section class="container" style="padding-top:0;">
   <h2 class="section-title">6일 커리큘럼</h2>
-  <p class="section-sub">각 일차를 클릭하면 상세 강의 노트를 볼 수 있습니다. (상세 노트는 등록 수강생에게 열립니다)</p>
+  <p class="section-sub">LangChain(랭체인) 실전 — 각 일차를 클릭하면 상세 강의 노트(+Colab 실습 노트북)를 볼 수 있습니다. (상세 노트는 등록 수강생에게 열립니다)</p>
+  <div class="callout callout-info" style="max-width:820px;margin:0 auto 8px;">
+    <div class="callout-title">📓 실습 노트북</div>
+    모든 실습은 <strong>Google Colab</strong>에서 진행합니다(설치 불필요 · OpenAI API 키 필요).
+    각 일차 페이지의 "오늘의 노트북"에서 <strong>Colab 바로 열기</strong>로 시작하세요 —
+    <a href="https://github.com/aebonlee/halla/tree/main/gen-ai-dev" target="_blank" rel="noopener">전체 노트북 보기 →</a>
+  </div>
 
   <div class="schedule">
     <div class="schedule-header">
@@ -195,8 +201,8 @@
       <span class="schedule-day dev">1</span>
       <span class="schedule-date">6/29 (월)</span>
       <span>
-        <div class="schedule-title">생성형 AI 개발 입문 + 환경 세팅</div>
-        <div class="schedule-detail">생성형 AI 개발의 지형 / Claude·Cursor 세팅 / API 키 발급 / 노코드 도구 둘러보기</div>
+        <div class="schedule-title">바이브 코딩 + LangChain 입문</div>
+        <div class="schedule-detail">바이브 코딩으로 시작 / Colab·OpenAI API 키 / LangChain 첫 LLM 체인 (lang_01·adv_01)</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
@@ -204,8 +210,8 @@
       <span class="schedule-day dev">2</span>
       <span class="schedule-date">6/30 (화)</span>
       <span>
-        <div class="schedule-title">프롬프트 엔지니어링 & API 기초</div>
-        <div class="schedule-detail">시스템 프롬프트 설계 / Claude API 호출 / 파라미터(temperature·max_tokens) / 구조화 출력</div>
+        <div class="schedule-title">프롬프트 & 표현언어(LCEL)</div>
+        <div class="schedule-detail">프롬프트 원칙·템플릿 / LCEL " | " 파이프 / Runnable·커스텀 파서 (adv_02·lang_02·lang_03)</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
@@ -213,8 +219,8 @@
       <span class="schedule-day dev">3</span>
       <span class="schedule-date">7/1 (수)</span>
       <span>
-        <div class="schedule-title">나만의 AI 챗봇 만들기</div>
-        <div class="schedule-detail">대화 흐름 설계 / 페르소나 챗봇 / 노코드+로우코드 조합 / 화면 붙이기</div>
+        <div class="schedule-title">분류·감성분석 & 대화형 챗봇</div>
+        <div class="schedule-detail">댓글 감성분석 분류 체인·성능평가 / 대화를 기억하는 챗봇 (lang_04·lang_05)</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
@@ -222,8 +228,8 @@
       <span class="schedule-day dev">4</span>
       <span class="schedule-date">7/2 (목)</span>
       <span>
-        <div class="schedule-title">내 데이터로 똑똑한 AI — RAG & 멀티모달</div>
-        <div class="schedule-detail">RAG 원리 / 내 문서 기반 Q&A / 이미지 생성·분석 / 멀티모달 활용</div>
+        <div class="schedule-title">임베딩 & 벡터스토어</div>
+        <div class="schedule-detail">임베딩·유사도 / 문서 분할·Chroma 저장·retriever 검색 (lang_06·07·08)</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
@@ -231,8 +237,8 @@
       <span class="schedule-day dev">5</span>
       <span class="schedule-date">7/3 (금)</span>
       <span>
-        <div class="schedule-title">AI 에이전트 & 자동화 + 배포</div>
-        <div class="schedule-detail">도구 사용(tool use) / 작업 자동화 워크플로 / 웹에 배포해 서비스로 공개</div>
+        <div class="schedule-title">문서기반 RAG 챗봇 & 배포</div>
+        <div class="schedule-detail">내 PDF로 RAG 체인 완성 / Gradio·LangServe 배포 (lang_9·adv_02)</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
@@ -240,8 +246,8 @@
       <span class="schedule-day dev">6</span>
       <span class="schedule-date">7/4 (토)</span>
       <span>
-        <div class="schedule-title">미니 프로젝트 ③ — 기획·구현·발표</div>
-        <div class="schedule-detail">나만의 생성형 AI 서비스 완성 / 시연 발표(1인 1서비스) / 피어 피드백</div>
+        <div class="schedule-title">미니 프로젝트 ③ — 나만의 AI 서비스</div>
+        <div class="schedule-detail">LangChain 요소를 합친 나만의 서비스 완성 / 시연 발표 / 피어 피드백</div>
       </span>
       <span class="schedule-hours">8H</span>
     </a>
