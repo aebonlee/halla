@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <title>실습 소스 모음 - 생성형 AI 개발</title>
+  <meta name="description" content="바로 복사해 쓰는 LangChain 실습 레시피 12종 — 요약·번역·분류·RAG·구조화 출력·도구 호출까지, 줄마다 한국어 주석.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
+  <meta property="og:title" content="실습 소스 모음 - 생성형 AI 개발">
+  <meta property="og:description" content="바로 복사해 쓰는 LangChain 실습 레시피 12종 — 줄마다 한국어 주석.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260614">
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../syllabus.html">강의계획서</a></li>
+      <li><a href="../gen-ai.html">Gen AI활용</a></li>
+      <li><a href="../pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="../prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="../prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="../ai-basic/index.html">과정 개요</a></li>
+          <li><a href="../ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="../ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
+          <li><a href="../vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="../vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li class="nav-dropdown-label">실습 소스</li>
+          <li><a href="../gen-ai-dev/code-recipes.html" class="active">실습 소스 모음</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li class="nav-dropdown-label">도구 Tip</li>
+          <li><a href="../gen-ai-dev/python-atoz.html">파이썬 A to Z</a></li>
+          <li><a href="../gen-ai-dev/gradio-tip.html">그라디오 Tip!</a></li>
+          <li><a href="../gen-ai-dev/streamlit-tip.html">스트림릿 Tip!</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li class="nav-dropdown-label">프로젝트</li>
+          <li><a href="../gen-ai-dev/project-ideas.html">프로젝트 아이디어</a></li>
+          <li><a href="../gen-ai-dev/project-build.html">프로젝트 설계 & 구현</a></li>
+        </ul>
+      </li>
+      <li><a href="../resources.html">참고자료</a></li>
+      <li><a href="../community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+<section class="lesson-hero dev">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="../index.html">홈</a> &nbsp;›&nbsp; <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp; <span>실습 소스 모음</span></div>
+    <h1>실습 소스 모음</h1>
+    <p style="opacity:0.95; max-width:760px;">Day 1~6에서 배운 조각들을 합친 <strong>바로 쓰는 실습 레시피 12종</strong>입니다. 셀에 그대로 붙여 넣고, 한국어 주석을 따라 본인 데이터로 바꿔 보세요.</p>
+  </div>
+</section>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#준비">0. 공통 준비</a></li>
+      <li><a href="#요약">1. 한 줄 요약봇</a></li>
+      <li><a href="#번역">2. 다국어 번역기</a></li>
+      <li><a href="#분류">3. 감성·주제 분류기</a></li>
+      <li><a href="#추출">4. 키워드·해시태그 추출(JSON)</a></li>
+      <li><a href="#작성">5. 이메일·공지 작성기</a></li>
+      <li><a href="#csv">6. 표(CSV) 데이터 Q&amp;A</a></li>
+      <li><a href="#faq">7. FAQ 챗봇 — 미니 RAG</a></li>
+      <li><a href="#youtube">8. 유튜브 자막 요약</a></li>
+      <li><a href="#memory">9. 멀티턴 기억 챗봇</a></li>
+      <li><a href="#구조화">10. 구조화 출력(Pydantic)</a></li>
+      <li><a href="#스트리밍">11. 스트리밍 + Gradio 배포</a></li>
+      <li><a href="#도구">12. 도구 호출 맛보기</a></li>
+    </ul>
+  </aside>
+  <main class="lesson-main">
+  <div class="lesson-section" id="준비" data-toc>
+    <h2>0. 공통 준비 (한 번만)</h2>
+    <p>아래 레시피들은 모두 이 준비를 마쳤다고 가정합니다. Colab 새 노트북에서 가장 먼저 실행하세요.</p>
+<pre><code># 필요한 패키지 설치 (맨 앞 ! 는 "터미널 명령" 이라는 뜻)
+!pip install langchain langchain-openai langchain-community langchain-chroma pypdf
+
+import os
+from google.colab import userdata                 # Colab '보안 비밀' 읽기
+os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")  # 키를 환경변수로
+
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+# 거의 모든 레시피가 쓰는 기본 모델 (빠르고 저렴)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">⚠️ 키 보안</div>API 키는 코드에 직접 쓰지 말고 Colab 🔑(보안 비밀)에 넣어 불러옵니다. 노출되면 타인이 내 요금으로 씁니다 — "키 = 돈".</div>
+
+  </div>
+
+  <div class="lesson-section" id="요약" data-toc>
+    <h2>1. 한 줄 요약봇</h2>
+    <p>긴 글을 넣으면 한 문장으로 줄여 줍니다. <strong>프롬프트 → 모델 → 문자열</strong>의 가장 기본 체인.</p>
+<pre><code># {text} 빈칸 하나를 가진 프롬프트
+prompt = ChatPromptTemplate.from_template("다음 글을 한국어 한 문장으로 요약해줘:\n\n{text}")
+
+# | (파이프)로 연결: 프롬프트 → 모델 → 문자열만 뽑기
+chain = prompt | llm | StrOutputParser()
+
+글 = "랭체인은 여러 AI 부품을 파이프로 이어 하나의 흐름을 만드는 도구다. ..."
+print(chain.invoke({"text": 글}))   # invoke 에는 빈칸 값을 딕셔너리로</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="번역" data-toc>
+    <h2>2. 다국어 번역기</h2>
+    <p>도착 언어를 입력값으로 받아 어떤 언어로든 번역합니다. <code>system</code>으로 "번역가" 역할을 고정.</p>
+<pre><code>prompt = ChatPromptTemplate.from_messages([
+    ("system", "너는 번역가야. 입력 문장을 {target}로만 자연스럽게 번역하고 다른 말은 하지 마."),
+    ("human", "{text}"),
+])
+translator = prompt | llm | StrOutputParser()
+
+# target 만 바꾸면 어떤 언어로든 번역
+print(translator.invoke({"text": "좋은 아침이에요", "target": "English"}))
+print(translator.invoke({"text": "좋은 아침이에요", "target": "일본어"}))</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="분류" data-toc>
+    <h2>3. 감성·주제 분류기</h2>
+    <p>문장을 정해진 라벨 중 하나로 분류합니다. "라벨 단어 하나만 출력"이 핵심 규칙.</p>
+<pre><code>labels = ["긍정", "부정", "중립"]      # 원하는 라벨로 자유롭게 바꾸기
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", f"다음 문장의 감정을 {labels} 중 하나로만 분류해. 라벨 단어 하나만 출력."),
+    ("human", "{text}"),
+])
+classify = prompt | llm | StrOutputParser()
+
+print(classify.invoke({"text": "배송도 빠르고 품질도 최고예요!"}))   # 긍정
+print(classify.invoke({"text": "그냥 그래요. 무난합니다."}))         # 중립</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 응용</div><code>labels</code>를 ["배송","환불","상품문의","기타"]처럼 바꾸면 문의 유형 분류기가 됩니다.</div>
+
+  </div>
+
+  <div class="lesson-section" id="추출" data-toc>
+    <h2>4. 키워드·해시태그 추출 (JSON)</h2>
+    <p>결과를 <strong>JSON</strong>으로 받으면 파이썬에서 바로 다룰 수 있습니다. <code>JsonOutputParser</code>가 문자열을 딕셔너리로 바꿔 줍니다.</p>
+<pre><code>from langchain_core.output_parsers import JsonOutputParser   # 답을 dict로 변환
+
+prompt = ChatPromptTemplate.from_template(
+    "다음 글의 핵심 키워드 5개와 해시태그 3개를 뽑아줘.\n"
+    '반드시 JSON으로만: {{"keywords": [...], "hashtags": [...]}}\n\n{text}'
+)
+# JSON 출력엔 흔들림 0이 좋음 → 위 공통 llm(temperature=0) 사용
+extract = prompt | llm | JsonOutputParser()
+
+result = extract.invoke({"text": "제주 한라산 트레킹 코스와 준비물 안내..."})
+print(result["keywords"])   # 파이썬 리스트로 바로 접근 가능
+print(result["hashtags"])</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 중괄호 주의</div>프롬프트 안에서 진짜 중괄호를 쓰려면 <code>{{ }}</code>처럼 두 번 씁니다(템플릿 변수 <code>{ }</code>와 구분).</div>
+
+  </div>
+
+  <div class="lesson-section" id="작성" data-toc>
+    <h2>5. 이메일·공지 작성기</h2>
+    <p>변수 여러 개를 받아 격식 있는 초안을 만듭니다. 받는사람·목적·톤만 바꿔 재사용.</p>
+<pre><code>prompt = ChatPromptTemplate.from_messages([
+    ("system", "너는 비즈니스 글쓰기 도우미야. 정중하고 간결하게 한국어로 써."),
+    ("human", "받는사람: {to}\n목적: {purpose}\n톤: {tone}\n위 내용으로 이메일 초안을 써줘."),
+])
+# 작성물은 약간의 자연스러움 → temperature 0.4 짜리 모델을 따로 지정
+writer = prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0.4) | StrOutputParser()
+
+print(writer.invoke({
+    "to": "교수님",
+    "purpose": "과제 기한 3일 연장 요청",
+    "tone": "아주 공손하게",
+}))</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="csv" data-toc>
+    <h2>6. 표(CSV) 데이터 Q&amp;A</h2>
+    <p>표 데이터를 글로 바꿔 프롬프트에 넣으면, 표에 대해 자연어로 물어볼 수 있습니다.</p>
+<pre><code>import pandas as pd
+
+# 예시 표 (실제로는 pd.read_csv("파일.csv") 로 불러오기)
+df = pd.DataFrame({
+    "이름": ["김철수", "이영희", "박민수"],
+    "점수": [88, 95, 72],
+})
+
+prompt = ChatPromptTemplate.from_template(
+    "아래 표를 보고 질문에 한국어로 답해줘.\n\n[표]\n{table}\n\n[질문]\n{question}"
+)
+qa = prompt | llm | StrOutputParser()
+
+# df.to_markdown(): 표를 모델이 읽기 좋은 글자표로 변환
+print(qa.invoke({"table": df.to_markdown(index=False),
+                 "question": "가장 점수가 높은 사람은 누구야?"}))</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 큰 표는?</div>수천 행이면 통째로 넣지 말고, 먼저 pandas로 필요한 행·열만 추린 뒤 넣으세요(토큰=비용).</div>
+
+  </div>
+
+  <div class="lesson-section" id="faq" data-toc>
+    <h2>7. FAQ 챗봇 — 미니 RAG</h2>
+    <p>PDF 없이도, 질문/답 목록만으로 작은 <strong>RAG</strong>(검색 후 답변)를 만들 수 있습니다. Day 4~5의 축소판.</p>
+<pre><code>from langchain_chroma import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_core.runnables import RunnablePassthrough
+
+# 우리 서비스 FAQ (원하는 만큼 추가)
+faqs = [
+    "환불은 구매 후 7일 이내 가능합니다.",
+    "배송은 보통 2~3일 걸립니다.",
+    "회원 등급은 누적 구매액으로 자동 산정됩니다.",
+]
+# FAQ 문장들을 임베딩해 벡터DB로 → 질문과 가까운 1개를 찾는 검색기
+db = Chroma.from_texts(faqs, OpenAIEmbeddings())
+retriever = db.as_retriever(search_kwargs={"k": 1})
+
+prompt = ChatPromptTemplate.from_template(
+    "아래 FAQ만 근거로 한국어로 답하라. 없으면 '잘 모르겠어요'라고 답하라.\n[FAQ]\n{context}\n\n[질문]\n{question}"
+)
+def join_docs(docs):                       # 찾은 문서들의 본문을 한 덩어리로
+    return "\n".join(d.page_content for d in docs)
+
+rag = ({"context": retriever | join_docs, "question": RunnablePassthrough()}
+       | prompt | llm | StrOutputParser())
+
+print(rag.invoke("환불 며칠 안에 돼요?"))   # FAQ에서 근거를 찾아 답함</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="youtube" data-toc>
+    <h2>8. 유튜브 자막 요약</h2>
+    <p>영상 자막을 받아 핵심만 요약합니다. 긴 영상도 3줄로.</p>
+<pre><code>!pip install youtube-transcript-api
+
+from youtube_transcript_api import YouTubeTranscriptApi
+
+video_id = "동영상ID"      # youtube.com/watch?v=여기 부분
+# 한국어(ko) 우선, 없으면 영어(en) 자막 가져오기
+parts = YouTubeTranscriptApi.get_transcript(video_id, languages=["ko", "en"])
+script = " ".join(p["text"] for p in parts)   # 자막 조각들을 한 글로 합침
+
+prompt = ChatPromptTemplate.from_template(
+    "다음 영상 자막을 한국어 3줄로 요약하고, 키워드 5개를 덧붙여줘.\n\n{script}"
+)
+summarize = prompt | llm | StrOutputParser()
+print(summarize.invoke({"script": script[:6000]}))   # 너무 길면 앞부분만(토큰 절약)</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="memory" data-toc>
+    <h2>9. 멀티턴 기억 챗봇</h2>
+    <p>앞의 대화를 기억하는 챗봇입니다. <code>RunnableWithMessageHistory</code>가 세션별 기록을 자동 관리합니다.</p>
+<pre><code>from langchain_core.prompts import MessagesPlaceholder
+from langchain_core.chat_history import InMemoryChatMessageHistory
+from langchain_core.runnables.history import RunnableWithMessageHistory
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "너는 친절한 한국어 비서야."),
+    MessagesPlaceholder(variable_name="history"),   # 과거 대화가 들어갈 자리
+    ("human", "{input}"),
+])
+chain = prompt | llm | StrOutputParser()
+
+store = {}                                   # 세션ID → 대화기록
+def get_history(session_id):
+    if session_id not in store:
+        store[session_id] = InMemoryChatMessageHistory()
+    return store[session_id]
+
+bot = RunnableWithMessageHistory(
+    chain, get_history,
+    input_messages_key="input",      # 입력 키
+    history_messages_key="history",  # 과거 대화 자리 이름(Placeholder와 일치)
+)
+
+cfg = {"configurable": {"session_id": "userA"}}   # 같은 세션이면 대화가 이어짐
+print(bot.invoke({"input": "내 이름은 민수야."}, config=cfg))
+print(bot.invoke({"input": "내 이름 기억해?"}, config=cfg))   # 민수를 기억함</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="구조화" data-toc>
+    <h2>10. 구조화 출력 (Pydantic)</h2>
+    <p>정해진 형태(필드)로 안전하게 받고 싶을 때. <code>with_structured_output</code>이 결과를 객체로 채워 줍니다.</p>
+<pre><code>from pydantic import BaseModel, Field   # 데이터 형태를 정의하는 도구
+
+# 받고 싶은 결과의 "틀"을 클래스로 정의
+class 후기분석(BaseModel):
+    감정: str = Field(description="긍정/부정/중립 중 하나")
+    별점: int = Field(description="1~5 사이 정수")
+    한줄평: str = Field(description="핵심을 담은 한 문장")
+
+# 모델에게 이 틀대로 답하라고 지정 → 결과가 후기분석 객체로 옴
+structured = llm.with_structured_output(후기분석)
+
+r = structured.invoke("음식은 맛있는데 너무 오래 기다렸어요.")
+print(r.감정, r.별점)   # 점 표기로 필드 접근
+print(r.한줄평)</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 왜 좋나</div>문자열을 직접 파싱할 필요 없이 <code>r.별점 + 1</code>처럼 바로 계산·저장할 수 있어 실수가 줄어듭니다.</div>
+
+  </div>
+
+  <div class="lesson-section" id="스트리밍" data-toc>
+    <h2>11. 스트리밍 + Gradio 한 줄 배포</h2>
+    <p>ChatGPT처럼 답이 실시간으로 흐르게 하고, 웹 화면까지 한 번에 붙입니다.</p>
+<pre><code>!pip install gradio
+import gradio as gr
+
+# 화면에서 메시지를 보낼 때마다 실행 — yield 로 부분 답을 계속 흘려보냄(스트리밍)
+def respond(message, history):
+    partial = ""
+    for chunk in llm.stream(message):    # 답을 조각으로 받아
+        partial += chunk.content         # 누적하며
+        yield partial                    # 화면에 계속 갱신
+
+# ChatInterface : 채팅 UI 한 줄. share=True → 외부 공유 URL 생성
+gr.ChatInterface(respond, title="내 스트리밍 챗봇").launch(share=True)</code></pre>
+
+  </div>
+
+  <div class="lesson-section" id="도구" data-toc>
+    <h2>12. 도구 호출 맛보기 (Tool calling)</h2>
+    <p>모델이 필요할 때 <strong>내가 만든 함수</strong>를 직접 부르게 합니다. 계산·검색처럼 LLM이 약한 일을 함수에 맡기는 방식.</p>
+<pre><code>from langchain_core.tools import tool
+
+# @tool 을 붙이면 일반 함수가 "모델이 부를 수 있는 도구"가 됨
+@tool
+def add(a: int, b: int) -> int:
+    """두 정수를 더한다."""      # 설명(docstring) — 모델이 언제 쓸지 판단하는 근거
+    return a + b
+
+# 모델에게 도구 목록을 알려줌
+llm_with_tools = llm.bind_tools([add])
+
+# 모델이 "add(3, 5)를 부르자"고 판단하면 그 요청이 tool_calls 에 담겨 옴
+msg = llm_with_tools.invoke("3 더하기 5는?")
+print(msg.tool_calls)   # [{'name': 'add', 'args': {'a': 3, 'b': 5}, ...}]
+
+# 실제 실행은 우리가: 요청된 인자로 함수를 호출
+call = msg.tool_calls[0]
+print(add.invoke(call["args"]))   # 8</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 다음 단계</div>도구를 여러 개 묶고 결과를 다시 모델에 돌려주면 "스스로 도구를 골라 일하는" 에이전트(agent)가 됩니다.</div>
+
+  </div>
+
+  <div class="lesson-section" id="마무리" data-toc>
+    <h2>마무리 — 내 프로젝트로</h2>
+    <p>이 레시피들은 <strong>레고 블록</strong>입니다. 2개 이상을 이으면 바로 작품이 됩니다.</p>
+    <ul>
+      <li><strong>요약 + 번역</strong> → 해외 기사 한국어 요약봇</li>
+      <li><strong>분류 + 작성</strong> → 문의 자동 분류 후 답장 초안 생성</li>
+      <li><strong>FAQ RAG + 스트리밍 UI</strong> → 우리 서비스 상담 챗봇</li>
+      <li><strong>CSV Q&amp;A + 구조화 출력</strong> → 데이터 리포트 자동화</li>
+    </ul>
+    <div class="callout callout-tip"><div class="callout-title">🚀 다음</div>마음에 드는 레시피를 골라 <a href="project-build.html">프로젝트 설계 &amp; 구현</a>으로, 아이디어가 필요하면 <a href="project-ideas.html">프로젝트 아이디어</a>로 이어가세요.</div>
+
+  </div>
+
+  <div class="lesson-nav">
+    <a href="day6.html"><div class="lesson-nav-dir">← 이전</div><div class="lesson-nav-title">Day 06 · 미니 프로젝트</div></a>
+    <a href="project-ideas.html" class="next"><div class="lesson-nav-dir">다음 →</div><div class="lesson-nav-title">프로젝트 아이디어</div></a>
+  </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.</div></div>
+    <div><div class="footer-title">생성형 AI</div>
+      <ul class="footer-links">
+        <li><a href="index.html">과정 개요</a></li>
+        <li><a href="code-recipes.html">실습 소스 모음</a></li>
+        <li><a href="project-ideas.html">프로젝트 아이디어</a></li>
+        <li><a href="project-build.html">프로젝트 설계 & 구현</a></li>
+      </ul></div>
+    <div><div class="footer-title">운영 · 문의</div>
+      <ul class="footer-links">
+        <li>강사 · 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js?v=20260614"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/notifications.js?v=20260614"></script>
+<script src="../assets/js/auth.js?v=20260614"></script>
+<script src="../assets/js/main.js?v=20260614"></script>
+</body>
+</html>
