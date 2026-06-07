@@ -115,9 +115,10 @@
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
       <li><a href="#plan">프로젝트 기획</a></li>
+      <li><a href="#stack">LangChain 구성 선택</a></li>
       <li><a href="#build">구현 체크리스트</a></li>
       <li><a href="#present">발표 & 피드백</a></li>
       <li><a href="#노트북">오늘의 노트북</a></li>
@@ -126,14 +127,17 @@
   </aside>
   <main class="lesson-main" data-course-content>
   <div class="lesson-section" id="시간표" data-toc>
-    <h2>오늘의 시간표</h2>
+    <h2>오늘의 시간표 (종일 8H)</h2>
+    <p style="color:var(--color-text-muted);font-size:14px;margin-bottom:12px;">오전 1~3교시 개념·데모 · 오후 5~9교시 실습·빌드</p>
     <div class="timetable">
-      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> 프로젝트 기획 확정 · 발표 구성</div></div>
-      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
-      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> 완성 → 시연 발표 → 피어 피드백 → 수료</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>기획 확정</strong> 주제·범위·데이터 정하기</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>구성 설계</strong> 어떤 LangChain 블록을 쓸지</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">3~7교시</div><div class="timetable-content"><strong>구현 + 코칭</strong> 1:1 코칭과 함께 빌드·배포</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8교시</div><div class="timetable-content"><strong>리허설</strong> 발표 흐름 점검</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">9교시</div><div class="timetable-content"><strong>발표 & 시상</strong> 시연 발표·피어 피드백·수료</div></div>
     </div>
   </div>
-
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
@@ -141,7 +145,6 @@
       <li>나만의 생성형 AI 서비스를 완성해 시연 발표할 수 있다.</li>
     </ul>
   </div>
-
   <div class="lesson-section" id="plan" data-toc>
     <h2>프로젝트 기획</h2>
     <p><strong>작고 완성된 것</strong>이 크고 미완성보다 낫습니다. 한 줄 기획으로 범위를 좁히세요.</p>
@@ -149,11 +152,20 @@
     <h3>예시</h3>
     <ul>
       <li>학과 규정 PDF로 답하는 신입생 안내 RAG 챗봇</li>
-      <li>동아리 FAQ 문서 기반 Q&amp;A 봇</li>
-      <li>리뷰 자동 분류 + 요약 도구</li>
+      <li>동아리 FAQ 기반 Q&amp;A 봇</li>
+      <li>리뷰 자동 분류 + 요약 대시보드</li>
     </ul>
   </div>
-
+  <div class="lesson-section" id="stack" data-toc>
+    <h2>LangChain 구성 선택</h2>
+    <ul>
+      <li>단순 응답 → <strong>LLM 체인</strong>(Day1~2)</li>
+      <li>분류/태깅 → <strong>분류 체인 + 파서</strong>(Day3)</li>
+      <li>대화 → <strong>챗봇 + 기록</strong>(Day3)</li>
+      <li>내 문서 기반 → <strong>임베딩 + 벡터스토어 + RAG</strong>(Day4~5)</li>
+      <li>공개 → <strong>Gradio / LangServe</strong>(Day5)</li>
+    </ul>
+  </div>
   <div class="lesson-section" id="build" data-toc>
     <h2>구현 체크리스트</h2>
     <ul>
@@ -164,7 +176,6 @@
       <li>API 키가 노출되지 않았는가</li>
     </ul>
   </div>
-
   <div class="lesson-section" id="present" data-toc>
     <h2>발표 & 피드백</h2>
     <p>1인 3~5분 시연 발표 + 질의.</p>
@@ -175,11 +186,10 @@
     </ol>
     <div class="callout callout-info"><div class="callout-title">🎤 피어 피드백</div>동료 발표마다 "좋은 점 1 · 더 해보면 좋을 점 1"을 남깁니다.</div>
   </div>
-
   <div class="lesson-section" id="수료" data-toc>
     <h2>수료 🎉</h2>
     <p>축하합니다. 이제 여러분은 AI를 <strong>쓰는</strong> 사람을 넘어 LangChain으로 <strong>만드는</strong> 사람입니다. 오늘 만든 서비스는 포트폴리오의 출발점입니다.</p>
-    <div class="callout callout-tip"><div class="callout-title">➡️ 다음 걸음</div><a href="../resources.html">참고자료</a>에서 심화 경로를 확인하고, <a href="../community.html">커뮤니티</a>에 결과물을 공유해 보세요.</div>
+    <div class="callout callout-tip"><div class="callout-title">➡️ 다음 걸음</div><a href="../resources.html">참고자료</a>에서 심화 경로(LangGraph·LangServe·평가)를 확인하고, <a href="../community.html">커뮤니티</a>에 결과물을 공유하세요.</div>
   </div>
 
   <div class="lesson-section" id="노트북" data-toc>

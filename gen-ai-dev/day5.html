@@ -115,85 +115,131 @@
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
-      <li><a href="#pdf">PDF 문서 적재</a></li>
+      <li><a href="#pdf">PDF 적재 → 청크</a></li>
+      <li><a href="#build">벡터스토어 + retriever</a></li>
       <li><a href="#rag">RAG 체인 완성</a></li>
-      <li><a href="#guard">근거 표시 · 환각 방지</a></li>
-      <li><a href="#deploy">배포 — Gradio · LangServe</a></li>
+      <li><a href="#meta">근거(metadata) 표시</a></li>
+      <li><a href="#loop">대화형으로 묶기</a></li>
+      <li><a href="#deploy">배포 — Gradio</a></li>
+      <li><a href="#serve">LangServe / LangGraph</a></li>
       <li><a href="#노트북">오늘의 노트북</a></li>
-      <li><a href="#과제">오늘의 과제</a></li>
+      <li><a href="#실습">오늘의 실습 미션</a></li>
+      <li><a href="#과제">과제</a></li>
     </ul>
   </aside>
   <main class="lesson-main" data-course-content>
   <div class="lesson-section" id="시간표" data-toc>
-    <h2>오늘의 시간표</h2>
+    <h2>오늘의 시간표 (종일 8H)</h2>
+    <p style="color:var(--color-text-muted);font-size:14px;margin-bottom:12px;">오전 1~3교시 개념·데모 · 오후 5~9교시 실습·빌드</p>
     <div class="timetable">
-      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> RAG 전체 파이프라인 · 배포 개념</div></div>
-      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
-      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> 내 PDF로 RAG 챗봇 완성 + 웹 배포</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>PDF 적재</strong> PyPDFLoader·디렉터리 로드</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>벡터스토어</strong> 청크→임베딩→Chroma·retriever</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>RAG 체인</strong> context+question 프롬프트</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
+      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>근거 표시</strong> metadata로 출처 보여주기</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>대화 루프</strong> 질문-답변 반복 챗봇</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>배포 Gradio</strong> 공유 URL 만들기</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>LangServe/마무리</strong> REST API·발표 준비</div></div>
     </div>
   </div>
-
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
       <li>내 PDF를 근거로 답하는 RAG 챗봇을 처음부터 끝까지 만들 수 있다.</li>
-      <li>만든 챗봇을 Gradio/LangServe로 배포해 URL로 공유할 수 있다.</li>
+      <li>답변에 근거(metadata)를 함께 보여줘 신뢰도를 높일 수 있다.</li>
+      <li>Gradio/LangServe로 배포해 URL로 공유할 수 있다.</li>
     </ul>
   </div>
-
   <div class="lesson-section" id="pdf" data-toc>
-    <h2>PDF 문서 적재</h2>
-    <pre><code>from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
+    <h2>PDF 적재 → 청크</h2>
+    <p>폴더의 PDF들을 읽어 청크로 나눕니다.</p>
+<pre><code>from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
-from langchain_chroma import Chroma
+import os
 
-docs = PyPDFDirectoryLoader("my_pdfs/").load()
-chunks = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100).split_documents(docs)
-db = Chroma.from_documents(chunks, OpenAIEmbeddings())
-retriever = db.as_retriever(search_kwargs={"k": 4})</code></pre>
+splitter = CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=50)
+texts = []
+for f in os.listdir("./pdfs"):
+    if f.endswith(".pdf"):
+        raw = PyPDFLoader(f"./pdfs/{f}").load()
+        texts.extend(splitter.split_documents(raw))
+print("총 청크 수:", len(texts))</code></pre>
   </div>
-
+  <div class="lesson-section" id="build" data-toc>
+    <h2>벡터스토어 + retriever</h2>
+<pre><code>from langchain_openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
+db = Chroma.from_documents(texts, OpenAIEmbeddings())
+retriever = db.as_retriever(search_kwargs={"k": 5})</code></pre>
+  </div>
   <div class="lesson-section" id="rag" data-toc>
     <h2>RAG 체인 완성</h2>
-    <p>검색한 근거(context)와 질문을 함께 프롬프트에 넣어 답을 만듭니다 — <strong>오픈북 시험</strong>처럼.</p>
-    <pre><code>from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough
+    <p>검색한 근거(context)와 질문을 함께 넣어 답을 만듭니다 — <strong>오픈북 시험</strong>처럼.</p>
+<pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import ChatOpenAI
 
-prompt = ChatPromptTemplate.from_template(
-  "아래 context만 근거로 답해. 모르면 모른다고 해.\n\ncontext: {context}\n\n질문: {question}")
+template = ("너는 훌륭한 비서다. 아래 [내용]만 참고해 한국어로 답하라.\n"
+            "[내용]\n{context}\n\n[질문]\n{question}")
+prompt = ChatPromptTemplate.from_template(template)
+def format_docs(ds): return "\n\n".join(d.page_content for d in ds)
 
-rag = ({"context": retriever, "question": RunnablePassthrough()}
-       | prompt | ChatOpenAI(model="gpt-4o-mini") | StrOutputParser())
-print(rag.invoke("이 문서의 핵심 3가지는?"))</code></pre>
+chain = ({"context": retriever | format_docs, "question": RunnablePassthrough()}
+         | prompt | ChatOpenAI(model="gpt-4o", temperature=0.1) | StrOutputParser())
+print(chain.invoke("이 문서의 핵심은?"))</code></pre>
   </div>
-
-  <div class="lesson-section" id="guard" data-toc>
-    <h2>근거 표시 · 환각 방지</h2>
-    <ul>
-      <li>"context에 없으면 모른다고 답하라"는 가드레일을 프롬프트에 명시</li>
-      <li>답과 함께 <strong>근거가 된 청크</strong>를 보여줘 신뢰도 확인</li>
-    </ul>
+  <div class="lesson-section" id="meta" data-toc>
+    <h2>근거(metadata) 표시</h2>
+    <p>"모르면 모른다"는 가드레일 + 출처(metadata)를 함께 보여주면 신뢰도가 올라갑니다.</p>
+<pre><code>def format_docs(ds):
+    return "\n\n".join(f"내용:\n{d.page_content}\n메타데이터:\n{d.metadata}" for d in ds)</code></pre>
   </div>
-
+  <div class="lesson-section" id="loop" data-toc>
+    <h2>대화형으로 묶기</h2>
+<pre><code>def ask(q): return chain.invoke(q)
+while True:
+    q = input("user &gt;&gt; ")
+    if q.lower() == "quit": break
+    print("ai &gt;&gt;", ask(q))</code></pre>
+  </div>
   <div class="lesson-section" id="deploy" data-toc>
-    <h2>배포 — Gradio · LangServe</h2>
-    <p>완성한 체인에 화면을 붙이거나 API로 공개해 "서비스"로 만듭니다.</p>
-    <pre><code>import gradio as gr
-def chat(msg, history): return rag.invoke(msg)
-gr.ChatInterface(chat).launch(share=True)   # 공유 가능한 URL 생성</code></pre>
+    <h2>배포 — Gradio</h2>
+    <p>완성한 체인에 채팅 화면을 붙여 공유 가능한 URL을 만듭니다.</p>
+<pre><code>import gradio as gr
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+
+def respond(message, history):
+    msgs = [SystemMessage(content="너는 친절한 한국어 AI assistant야.")]
+    for u, a in history:
+        msgs += [HumanMessage(content=u), AIMessage(content=a)]
+    msgs.append(HumanMessage(content=message))
+    return llm.invoke(msgs).content
+
+gr.ChatInterface(respond).launch(share=True)   # 공유 URL 생성</code></pre>
+  </div>
+  <div class="lesson-section" id="serve" data-toc>
+    <h2>LangServe / LangGraph</h2>
+    <p>체인을 REST API로 공개하려면 <strong>LangServe</strong>, 더 복잡한 흐름·상태가 필요하면 <strong>LangGraph</strong>로 확장합니다 (adv_02 노트북).</p>
     <div class="callout callout-warn"><div class="callout-title">🔐 배포 시 키</div>공개 배포에는 API 키가 노출되지 않도록 서버/환경변수로 관리합니다.</div>
   </div>
-
-  <div class="lesson-section" id="과제" data-toc>
-    <h2>오늘의 과제</h2>
+  <div class="lesson-section" id="실습" data-toc>
+    <h2>오늘의 실습 미션</h2>
     <ol>
-      <li>내 PDF로 RAG 챗봇 완성 + 5개 질문 시연</li>
+      <li>내 PDF(학칙·매뉴얼 등)로 RAG 챗봇 완성 + 5개 질문 시연</li>
+      <li>근거 metadata를 함께 출력하도록 개선</li>
       <li>Gradio로 배포해 공유 URL 확보 → Day 6 발표 준비</li>
+    </ol>
+  </div>
+  <div class="lesson-section" id="과제" data-toc>
+    <h2>과제</h2>
+    <ol>
+      <li>RAG 챗봇 공유 URL 제출</li>
+      <li>"문서에 없는 질문"에 모른다고 답하는지 확인</li>
     </ol>
   </div>
 

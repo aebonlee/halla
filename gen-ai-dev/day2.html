@@ -115,96 +115,139 @@
   <aside class="lesson-sidebar">
     <div class="lesson-sidebar-title">이 페이지에서</div>
     <ul>
-      <li><a href="#시간표">오늘의 시간표</a></li>
+      <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
       <li><a href="#rules">프롬프트 작성 원칙</a></li>
-      <li><a href="#tmpl">프롬프트 템플릿</a></li>
-      <li><a href="#lcel">표현언어(LCEL)</a></li>
-      <li><a href="#runnable">Runnable 조합</a></li>
+      <li><a href="#tmpl">프롬프트 템플릿 심화</a></li>
+      <li><a href="#lcel">표현언어(LCEL) — 파이프</a></li>
+      <li><a href="#how">LCEL은 어떻게 동작하나</a></li>
+      <li><a href="#runnable">Runnable로 입력 다루기</a></li>
       <li><a href="#parser">커스텀 출력 파서</a></li>
+      <li><a href="#math">수학 체인 (실전)</a></li>
       <li><a href="#노트북">오늘의 노트북</a></li>
-      <li><a href="#과제">오늘의 과제</a></li>
+      <li><a href="#실습">오늘의 실습 미션</a></li>
+      <li><a href="#과제">과제</a></li>
     </ul>
   </aside>
   <main class="lesson-main" data-course-content>
   <div class="lesson-section" id="시간표" data-toc>
-    <h2>오늘의 시간표</h2>
+    <h2>오늘의 시간표 (종일 8H)</h2>
+    <p style="color:var(--color-text-muted);font-size:14px;margin-bottom:12px;">오전 1~3교시 개념·데모 · 오후 5~9교시 실습·빌드</p>
     <div class="timetable">
-      <div class="timetable-row lecture"><div class="timetable-time">오전 · 1~3교시</div><div class="timetable-content"><strong>개념 + 라이브 데모</strong> 프롬프트 원칙 · 템플릿 · LCEL 개념</div></div>
-      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심 시간</strong></div></div>
-      <div class="timetable-row activity"><div class="timetable-time">오후 · 5~9교시</div><div class="timetable-content"><strong>실습 + 빌드</strong> LCEL 파이프로 체인 조립 + 커스텀 파서</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>프롬프트 작성 원칙</strong> 명확·맥락·간결·예시(few-shot)</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>프롬프트 템플릿 심화</strong> PromptTemplate · ChatPromptTemplate · 조합</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>LCEL 개념</strong> " | " 파이프로 체인 조립 · StrOutputParser</div></div>
+      <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
+      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>LCEL 원리</strong> | 연산자가 동작하는 방식 직접 구현</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>Runnable</strong> Passthrough · assign으로 입력 가공</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>커스텀 파서</strong> 모델 답에서 원하는 부분만 추출</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>수학 체인 실전</strong> 자연어→수식→numexpr 계산 체인</div></div>
     </div>
   </div>
-
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>명확·구체·맥락 있는 프롬프트 작성 원칙을 적용할 수 있다.</li>
-      <li>PromptTemplate / ChatPromptTemplate / few-shot을 사용할 수 있다.</li>
-      <li>LCEL " | "로 prompt·model·parser를 연결하고 Runnable로 입력을 다룰 수 있다.</li>
+      <li>좋은 프롬프트의 원칙을 적용하고 템플릿으로 재사용할 수 있다.</li>
+      <li>LCEL " | "로 prompt·model·parser를 연결할 수 있다.</li>
+      <li>RunnablePassthrough/assign으로 체인 입력을 유연하게 다룰 수 있다.</li>
+      <li>커스텀 OutputParser로 모델 출력을 가공하고 외부 함수와 연결할 수 있다.</li>
     </ul>
   </div>
-
   <div class="lesson-section" id="rules" data-toc>
     <h2>프롬프트 작성 원칙</h2>
     <ul>
       <li><strong>명확성·구체성</strong> — 무엇을, 어떤 형식으로 원하는지 분명히</li>
-      <li><strong>맥락 제공</strong> — 배경 정보를 주면 환각이 줄고 관련성이 높아짐</li>
+      <li><strong>맥락 제공</strong> — 배경 정보를 주면 환각이 줄고 관련성↑</li>
       <li><strong>간결함</strong> — 핵심에 집중, 불필요한 정보 배제</li>
-      <li><strong>예시(few-shot)</strong> — 원하는 결과의 예를 1~2개 보여주기</li>
+      <li><strong>예시(few-shot)</strong> — 원하는 결과의 예를 1~2개 제시</li>
     </ul>
   </div>
-
   <div class="lesson-section" id="tmpl" data-toc>
-    <h2>프롬프트 템플릿</h2>
-    <pre><code>from langchain_core.prompts import PromptTemplate
-
+    <h2>프롬프트 템플릿 심화</h2>
+    <p>단일 프롬프트는 <code>PromptTemplate</code>, 대화형은 <code>ChatPromptTemplate</code>. 템플릿끼리 <code>+</code>로 조합도 됩니다.</p>
+<pre><code>from langchain_core.prompts import PromptTemplate
 tmpl = PromptTemplate.from_template("{name}님은 {age}살입니다. {language}로 인사해줘")
 print(tmpl.format(name="홍길동", age=20, language="영어"))</code></pre>
-    <p>대화형은 <code>ChatPromptTemplate.from_messages([...])</code> 로 system/human 메시지를 함께 구성합니다.</p>
   </div>
-
   <div class="lesson-section" id="lcel" data-toc>
-    <h2>표현언어(LCEL) — 핵심</h2>
-    <p>LangChain의 정수는 <strong>" | " 파이프</strong>로 구성요소를 잇는 것입니다. 데이터가 왼쪽 → 오른쪽으로 흐릅니다.</p>
-    <pre><code>from langchain_core.prompts import ChatPromptTemplate
+    <h2>표현언어(LCEL) — 파이프</h2>
+    <p>LangChain의 정수는 <strong>" | " 파이프</strong>로 구성요소를 잇는 것입니다. 데이터가 왼쪽→오른쪽으로 흐릅니다.</p>
+<pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
-prompt = ChatPromptTemplate.from_template("{topic}에 대한 짧은 농담 하나")
+prompt = ChatPromptTemplate.from_template("Tell me a short joke about {topic}")
 chain  = prompt | ChatOpenAI() | StrOutputParser()
-print(chain.invoke({"topic": "아이스크림"}))</code></pre>
-    <div class="callout callout-info"><div class="callout-title">💡 StrOutputParser</div>
-      모델 응답 객체에서 <strong>문자열만</strong> 깔끔히 뽑아줍니다. 체인 끝에 붙이면 <code>.content</code> 없이 바로 문자열.</div>
+print(chain.invoke({"topic": "ice cream"}))</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 StrOutputParser</div>모델 응답에서 <strong>문자열만</strong> 깔끔히 추출. 체인 끝에 붙이면 <code>.content</code> 없이 바로 문자열.</div>
   </div>
+  <div class="lesson-section" id="how" data-toc>
+    <h2>LCEL은 어떻게 동작하나</h2>
+    <p>" | "는 마법이 아니라 파이썬 <code>__or__</code> 연산자입니다. 함수를 이어 붙이는 작은 클래스를 직접 만들어 원리를 체험합니다.</p>
+<pre><code>class Runnable:
+    def __init__(self, func): self.func = func
+    def __or__(self, other):              # a | b
+        def chained(*a, **k): return other(self.func(*a, **k))
+        return Runnable(chained)
+    def __call__(self, *a, **k): return self.func(*a, **k)
 
+add_five     = Runnable(lambda x: x + 5)
+multiply_two = Runnable(lambda x: x * 2)
+chain = add_five | multiply_two
+print(chain(3))   # (3+5)*2 = 16</code></pre>
+  </div>
   <div class="lesson-section" id="runnable" data-toc>
-    <h2>Runnable 조합</h2>
-    <p>입력을 그대로 넘기거나(Passthrough), 병렬 실행(Parallel), 함수 끼우기(Lambda)로 흐름을 유연하게 만듭니다.</p>
-    <pre><code>from langchain_core.runnables import RunnablePassthrough
+    <h2>Runnable로 입력 다루기</h2>
+    <p>입력을 그대로 넘기거나(Passthrough), 일부 값을 함수로 채워(assign) 체인을 유연하게 만듭니다.</p>
+<pre><code>from langchain_core.runnables import RunnablePassthrough
 
-chain = {"topic": RunnablePassthrough()} | prompt | ChatOpenAI() | StrOutputParser()
-print(chain.invoke("커피"))   # 문자열 하나만 넣어도 동작</code></pre>
+template = "Please generate three dialogue sentences in {language} on {topic} for a {level} level"
+prompt = ChatPromptTemplate.from_template(template)
+
+# topic 하나만 넣으면 language/level은 함수가 자동으로 채움
+chain = (RunnablePassthrough.assign(
+            language=lambda _: "English",
+            level=lambda _: "beginner")
+         | prompt | ChatOpenAI() | StrOutputParser())
+print(chain.invoke({"topic": "travel"}))</code></pre>
   </div>
-
   <div class="lesson-section" id="parser" data-toc>
     <h2>커스텀 출력 파서</h2>
-    <p>모델 답에서 원하는 부분만 추출하도록 파서를 직접 만들 수 있습니다 (예: 수학 체인에서 코드만 뽑기).</p>
-    <pre><code>from langchain_core.output_parsers import BaseOutputParser
+    <p>모델 답에서 원하는 부분만 뽑도록 파서를 직접 만들 수 있습니다.</p>
+<pre><code>from langchain_core.output_parsers import BaseOutputParser
 
 class CodeOutputParser(BaseOutputParser):
-    def parse(self, text):
-        return text.split("```")[1] if "```" in text else text
-
-chain = chat_prompt | ChatOpenAI(temperature=0) | CodeOutputParser()</code></pre>
+    def parse(self, text: str):
+        # ```text\n15**0.3432\n``` → "15**0.3432"
+        return text.strip().split("```")[1].split("\n")[1]</code></pre>
   </div>
+  <div class="lesson-section" id="math" data-toc>
+    <h2>수학 체인 (실전)</h2>
+    <p>자연어 질문 → LLM이 수식 생성 → 파서로 수식 추출 → <code>numexpr</code>로 실제 계산. 여러 블록을 이어 "하는 일"을 만듭니다.</p>
+<pre><code>import numexpr
+from langchain_core.runnables import RunnablePassthrough
 
-  <div class="lesson-section" id="과제" data-toc>
-    <h2>오늘의 과제</h2>
+system = ("You make ONLY an argument for numexpr.evaluate.\n"
+          "Respond as a ```text``` code block only.")
+prompt = ChatPromptTemplate.from_messages([("system", system), ("human", "{user_input}")])
+
+chain = ({"user_input": RunnablePassthrough()}
+         | prompt | ChatOpenAI(temperature=0) | CodeOutputParser() | numexpr.evaluate)
+print(chain.invoke("What is 15 raised to the .3432 power?"))</code></pre>
+  </div>
+  <div class="lesson-section" id="실습" data-toc>
+    <h2>오늘의 실습 미션</h2>
     <ol>
-      <li>few-shot 예시를 넣은 프롬프트로 일정한 형식의 답 받기</li>
+      <li>few-shot 예시를 넣어 일정한 형식의 답을 받는 체인</li>
       <li>LCEL <code>prompt | model | StrOutputParser()</code> 체인 1개 완성</li>
-      <li>커스텀 파서로 답에서 원하는 부분만 추출해 보기</li>
+      <li>수학 체인을 변형해 "단위 변환기" 같은 나만의 도구 만들기</li>
+    </ol>
+  </div>
+  <div class="lesson-section" id="과제" data-toc>
+    <h2>과제</h2>
+    <ol>
+      <li>RunnablePassthrough.assign으로 변수 1개만 받아 동작하는 체인 만들기</li>
+      <li>커스텀 파서로 답에서 특정 부분만 추출해 출력</li>
     </ol>
   </div>
 
