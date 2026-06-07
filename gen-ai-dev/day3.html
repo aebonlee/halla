@@ -117,15 +117,22 @@
     <ul>
       <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
-      <li><a href="#cls">감성분석 분류 체인</a></li>
+      <li><a href="#why">LLM으로 분류한다는 것</a></li>
+      <li><a href="#prompt">감성분석 프롬프트</a></li>
       <li><a href="#parser">정수 출력 파서</a></li>
-      <li><a href="#data">데이터 로드 & 일괄 분류</a></li>
-      <li><a href="#eval">정확도·혼동행렬 평가</a></li>
-      <li><a href="#chat">대화형 챗봇 구조</a></li>
+      <li><a href="#chain">분류 체인 조립</a></li>
+      <li><a href="#data">데이터 로드</a></li>
+      <li><a href="#batch">일괄 분류 루프</a></li>
+      <li><a href="#eval">정확도·혼동행렬</a></li>
+      <li><a href="#multi">확장 — 다중 분류</a></li>
+      <li><a href="#chat">챗봇 기초</a></li>
       <li><a href="#mem">대화 기억 유지</a></li>
-      <li><a href="#session">세션별 기록 관리</a></li>
-      <li><a href="#노트북">오늘의 노트북</a></li>
+      <li><a href="#save">직접 저장형 챗봇</a></li>
+      <li><a href="#session">세션별 기록 (RunnableWithMessageHistory)</a></li>
+      <li><a href="#persona">확장 — 페르소나 챗봇</a></li>
+      <li><a href="#loop">대화 루프</a></li>
       <li><a href="#실습">오늘의 실습 미션</a></li>
+      <li><a href="#faq">자주 막히는 부분</a></li>
       <li><a href="#과제">과제</a></li>
     </ul>
   </aside>
@@ -134,120 +141,279 @@
     <h2>오늘의 시간표 (종일 8H)</h2>
     <p style="color:var(--color-text-muted);font-size:14px;margin-bottom:12px;">오전 1~3교시 개념·데모 · 오후 5~9교시 실습·빌드</p>
     <div class="timetable">
-      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>분류 태스크 설계</strong> LLM으로 감성분석 — 프롬프트 설계</div></div>
-      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>정수 출력 파서</strong> 0/1만 받아 프로그램이 처리</div></div>
-      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>데이터 로드</strong> pandas로 댓글 데이터 적재</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>분류 태스크 설계</strong> LLM으로 감성분석 — 프롬프트</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>파서 + 체인</strong> 0/1 정수 추출·분류 체인</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>데이터 + 평가</strong> pandas·정확도·혼동행렬</div></div>
       <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
-      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>성능 평가</strong> 정확도·혼동행렬(sklearn)</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>챗봇 구조</strong> MessagesPlaceholder로 대화 끼우기</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>대화 기억</strong> 최근 N개 대화 유지</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>세션 챗봇 빌드</strong> RunnableWithMessageHistory로 완성</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>챗봇 구조</strong> MessagesPlaceholder·대화 끼우기</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>대화 기억</strong> 최근 N개 유지·직접 저장</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>세션 챗봇</strong> RunnableWithMessageHistory</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>페르소나 챗봇 + 실습</strong> 친구/사장 봇·대화 루프·미션</div></div>
     </div>
   </div>
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>LLM 체인으로 텍스트 분류(감성분석)를 수행하고 결과를 정량 평가할 수 있다.</li>
+      <li>LLM을 "분류기"로 써서 감성분석을 수행하고 결과를 정수로 받을 수 있다.</li>
+      <li>데이터셋을 불러와 일괄 분류하고 정확도·혼동행렬로 성능을 평가할 수 있다.</li>
       <li>대화 이력을 유지하는 챗봇을 LangChain으로 만들 수 있다.</li>
-      <li>세션별로 대화 기록을 분리·관리할 수 있다.</li>
+      <li>세션별로 대화 기록을 분리·관리하고 페르소나를 부여할 수 있다.</li>
     </ul>
+
   </div>
-  <div class="lesson-section" id="cls" data-toc>
-    <h2>감성분석 분류 체인</h2>
-    <p>리뷰/댓글을 긍정(1)·부정(0)으로 분류합니다. system 프롬프트로 "숫자만 출력"하도록 강하게 지시합니다.</p>
+  <div class="lesson-section" id="why" data-toc>
+    <h2>LLM으로 분류한다는 것</h2>
+    <p>전통적으로 텍스트 분류는 학습 데이터로 모델을 훈련해야 했지만, LLM은 <strong>프롬프트만으로</strong> 분류기가 됩니다. "긍정이면 1, 부정이면 0만 출력해"라고 시키면 됩니다.</p>
+    <div class="callout callout-info"><div class="callout-title">💡 핵심</div>별도 학습 없이 즉시 분류기. 단, 출력이 "말"이라 흔들릴 수 있으니 <strong>출력 형식을 강하게 고정</strong>하고 <strong>파서로 정리</strong>합니다.</div>
+
+  </div>
+  <div class="lesson-section" id="prompt" data-toc>
+    <h2>감성분석 프롬프트</h2>
+    <p>System 메시지로 "분류기" 역할과 출력 형식을 못박습니다. (lang_04 원본)</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "Act as a sentiment classifier. Output '1' if positive, '0' if negative. Only the integer."),
+chat_prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     "Act as a classifier of comment sentiment. "
+     "Write '1' if positive, '0' if negative. "
+     "Output the integer '1' or '0' only, without any other text."),
     ("human", "{input_text}"),
 ])
-chat = ChatOpenAI(temperature=0)</code></pre>
+chat_model = ChatOpenAI(temperature=0)   # 분류는 흔들리면 안 됨 → 0</code></pre>
+
   </div>
   <div class="lesson-section" id="parser" data-toc>
     <h2>정수 출력 파서</h2>
-    <p>모델이 "1" 같은 문자열을 주면, 파서로 <strong>정수</strong>로 바꿔 이후 계산(정확도 등)에 쓸 수 있게 합니다.</p>
+    <p>모델은 "1" 같은 <strong>문자열</strong>을 줍니다. 이후 계산(정확도)을 하려면 <strong>정수</strong>로 바꿔야 합니다 — 커스텀 파서로 처리.</p>
 <pre><code>from langchain_core.output_parsers import BaseOutputParser
 
-class ClassificationOutputParser(BaseOutputParser):
+class classificationOutputParser(BaseOutputParser):
     def parse(self, text: str):
-        return 1 if "1" in text else 0
+        # 답에 '1'이 들어있으면 1, 아니면 0 (모델이 군말을 붙여도 견고)
+        if "1" in text:
+            return 1
+        return 0</code></pre>
 
-chain = prompt | chat | ClassificationOutputParser()
-def classify(t): return chain.invoke({"input_text": t})</code></pre>
+  </div>
+  <div class="lesson-section" id="chain" data-toc>
+    <h2>분류 체인 조립</h2>
+    <p>프롬프트 → 모델 → 정수 파서를 <code>|</code>로 잇고, 함수로 감쌉니다.</p>
+<pre><code>chain = chat_prompt | chat_model | classificationOutputParser()
+
+def classify_text(input_text):
+    return chain.invoke({"input_text": input_text})   # 1 또는 0 반환
+
+print(classify_text("이 영화 정말 최고였어요!"))   # 1
+print(classify_text("최악이에요. 환불해주세요."))   # 0</code></pre>
+
   </div>
   <div class="lesson-section" id="data" data-toc>
-    <h2>데이터 로드 & 일괄 분류</h2>
-    <p>실제 댓글 데이터셋을 내려받아 pandas로 읽고, 행마다 분류 체인을 돌립니다.</p>
-<pre><code>import urllib.request, pandas as pd
+    <h2>데이터 로드</h2>
+    <p>실제 댓글 데이터셋을 내려받아 pandas로 읽습니다.</p>
+<pre><code>import urllib.request
+import pandas as pd
+
 urllib.request.urlretrieve(
-  "https://raw.githubusercontent.com/tykimos/tykimos.github.io/master/warehouse/dataset/tarr_train.txt",
-  "tarr_train.txt")
-df = pd.read_csv("tarr_train.txt", sep="\t")
-preds  = [classify(c) for c in df["comment"]]
-actual = list(df["label"])</code></pre>
+    "https://raw.githubusercontent.com/tykimos/tykimos.github.io/master/warehouse/dataset/tarr_train.txt",
+    filename="tarr_train.txt",
+)
+df = pd.read_csv("tarr_train.txt", sep="\t")   # 탭 구분 파일
+df.head()    # comment(댓글), label(정답 0/1) 컬럼 확인</code></pre>
+
+  </div>
+  <div class="lesson-section" id="batch" data-toc>
+    <h2>일괄 분류 루프</h2>
+    <p>데이터의 각 댓글을 분류해 예측값을 모읍니다 (lang_04 원본, 처음 12개만).</p>
+<pre><code>actual_labels = []
+predicted_labels = []
+
+for index, row in df.iterrows():
+    comment = row["comment"]
+    actual  = row["label"]
+    pred    = classify_text(comment)        # LLM 분류
+
+    actual_labels.append(actual)
+    predicted_labels.append(pred)
+
+    print(f"[{index+1}] {comment}")
+    print(f"   정답={actual}  예측={pred}")
+    if index &gt; 10:                          # 비용/시간 절약: 12개만
+        break</code></pre>
+
   </div>
   <div class="lesson-section" id="eval" data-toc>
-    <h2>정확도·혼동행렬 평가</h2>
-    <p>"느낌"이 아니라 <strong>숫자로</strong> 성능을 확인합니다.</p>
+    <h2>정확도·혼동행렬</h2>
+    <p>"느낌"이 아니라 <strong>숫자로</strong> 성능을 확인합니다. 정확도 + 혼동행렬(무엇을 자주 틀리나).</p>
 <pre><code>from sklearn.metrics import accuracy_score, confusion_matrix
-print("정확도:", accuracy_score(actual, preds))
-print(confusion_matrix(actual, preds, labels=[1, 0]))</code></pre>
-    <div class="callout callout-tip"><div class="callout-title">📝 실무 기본</div>분류기·요약기 등은 항상 정량 평가와 함께. 혼동행렬로 "어떤 걸 자주 틀리는지"까지 봅니다.</div>
+
+acc = accuracy_score(actual_labels, predicted_labels)
+print(f"정확도: {acc*100:.2f}%")
+
+cm = confusion_matrix(actual_labels, predicted_labels, labels=[1, 0])
+print("            예측:긍정  예측:부정")
+print(f"실제:긍정     {cm[0][0]:&lt;6} {cm[0][1]}")
+print(f"실제:부정     {cm[1][0]:&lt;6} {cm[1][1]}")</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 혼동행렬 읽기</div>대각선(정답 맞춤)이 클수록 좋습니다. "실제 부정인데 긍정으로 본" 칸이 크면, 부정 표현을 놓치는 것 → 프롬프트에 부정 예시를 보강합니다.</div>
+
+  </div>
+  <div class="lesson-section" id="multi" data-toc>
+    <h2>확장 — 다중 분류</h2>
+    <p>긍/부정(2종)을 넘어 여러 범주로도 분류할 수 있습니다. 라벨을 바꾸고 파서를 손보면 됩니다.</p>
+<pre><code># 확장: 문의 유형 분류 (배송/환불/상품문의/기타)
+labels = ["배송", "환불", "상품문의", "기타"]
+prompt = ChatPromptTemplate.from_messages([
+    ("system", f"다음 문의를 {labels} 중 하나로만 분류해. 라벨 단어 하나만 출력."),
+    ("human", "{q}"),
+])
+clf = prompt | ChatOpenAI(temperature=0)
+print(clf.invoke({"q": "어제 주문했는데 언제 와요?"}).content)   # 배송
+print(clf.invoke({"q": "사이즈가 안 맞아 반품하고 싶어요"}).content) # 환불</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 few-shot 분류</div>분류가 흔들리면, 각 범주의 예시 1~2개를 프롬프트에 넣으면 정확도가 올라갑니다.</div>
+
   </div>
   <div class="lesson-section" id="chat" data-toc>
-    <h2>대화형 챗봇 구조</h2>
-    <p>system 프롬프트로 페르소나를 잡고, <code>MessagesPlaceholder</code>로 이전 대화를 끼워 넣습니다.</p>
+    <h2>챗봇 기초</h2>
+    <p>이제 분류를 넘어 <strong>대화</strong>입니다. system으로 페르소나를 잡고, <code>MessagesPlaceholder</code>로 이전 대화를 끼워 넣습니다 (lang_05 원본).</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "당신은 친절한 음식점 사장입니다. 리뷰에 정중히 답하세요."),
-    MessagesPlaceholder(variable_name="chat_history"),
+chat_prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     "당신은 친절한 음식점 사장입니다. 이전 대화를 참고해 리뷰에 정중히 답하세요. "
+     "부정 리뷰엔 구체적으로 사과+개선점, 긍정 리뷰엔 진심 어린 감사."),
+    MessagesPlaceholder(variable_name="chat_history"),   # ← 여기에 과거 대화가 들어감
     ("human", "{input_text}"),
 ])
-chain = prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0.1) | StrOutputParser()</code></pre>
+chat_model = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+chain = chat_prompt | chat_model | StrOutputParser()</code></pre>
+
   </div>
   <div class="lesson-section" id="mem" data-toc>
     <h2>대화 기억 유지</h2>
-    <p>이전 user/ai 메시지를 저장했다 매번 함께 보내면 맥락을 이어갑니다. 길어지면 최근 N개만 사용합니다.</p>
+    <p>이전 user/ai 메시지를 저장했다가 매번 함께 보내면 맥락이 이어집니다. 길어지면 최근 N개만 사용해 비용을 줄입니다.</p>
 <pre><code>from langchain_core.chat_history import InMemoryChatMessageHistory
-history = InMemoryChatMessageHistory()
-def load_memory(_): return history.messages[-6:]   # 최근 3쌍</code></pre>
+
+chat_history = InMemoryChatMessageHistory()
+
+# 최근 6개(=3쌍)만 불러오는 함수 — 대화가 길어도 토큰 폭증 방지
+def load_memory(_):
+    return chat_history.messages[-6:]</code></pre>
+
+  </div>
+  <div class="lesson-section" id="save" data-toc>
+    <h2>직접 저장형 챗봇</h2>
+    <p>가장 직관적인 형태 — 답을 받은 뒤 직접 history에 user/ai 메시지를 추가합니다 (lang_05 "친구" 봇 원본).</p>
+<pre><code>from langchain_core.runnables import RunnablePassthrough
+
+system = """You act like a friend to me. Write casually with emojis. Write in Korean."""
+chat_prompt = ChatPromptTemplate.from_messages([
+    ("system", system),
+    MessagesPlaceholder(variable_name="chat_history"),
+    ("human", "{user_input}"),
+])
+chain = (
+    {"user_input": RunnablePassthrough()}
+    | RunnablePassthrough.assign(chat_history=load_memory)   # 과거 대화 자동 주입
+    | chat_prompt | ChatOpenAI() | StrOutputParser()
+)
+
+def chat(user_input):
+    output = chain.invoke(user_input)
+    chat_history.add_user_message(user_input)   # 직접 저장
+    chat_history.add_ai_message(output)
+    return output
+
+print(chat("오늘 너무 힘들었어요"))
+print(chat("아까 말한 그 일 때문에..."))   # 앞 대화를 기억함</code></pre>
+
   </div>
   <div class="lesson-section" id="session" data-toc>
-    <h2>세션별 기록 관리</h2>
-    <p>여러 사용자를 다루려면 <code>RunnableWithMessageHistory</code>로 session_id별 기록을 분리합니다.</p>
+    <h2>세션별 기록 (RunnableWithMessageHistory)</h2>
+    <p>여러 사용자를 다루려면 <strong>세션 ID별</strong>로 기록을 분리해야 합니다. LangChain이 자동 관리해주는 표준 방식입니다 (lang_05 원본).</p>
 <pre><code>from langchain_core.runnables.history import RunnableWithMessageHistory
-store = {}
-def get_session_history(sid):
-    store.setdefault(sid, InMemoryChatMessageHistory())
-    return store[sid]
 
-bot = RunnableWithMessageHistory(chain, get_session_history,
-        input_messages_key="input_text", history_messages_key="chat_history")
-bot.invoke({"input_text":"음식이 너무 짰어요"},
-           config={"configurable":{"session_id":"user-1"}})</code></pre>
+store = {}                                   # 세션ID → 대화기록
+def get_session_history(session_id: str):
+    if session_id not in store:
+        store[session_id] = InMemoryChatMessageHistory()
+    return store[session_id]
+
+chain = chat_prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0.1) | StrOutputParser()
+
+bot = RunnableWithMessageHistory(
+    chain, get_session_history,
+    input_messages_key="user_input",       # 입력 키
+    history_messages_key="chat_history",   # 과거 대화가 들어갈 자리(Placeholder 이름)
+)
+
+# 세션마다 대화가 따로 유지됨
+bot.invoke({"user_input": "안녕"}, config={"configurable": {"session_id": "userA"}})
+bot.invoke({"user_input": "내 이름 기억해?"}, config={"configurable": {"session_id": "userA"}})</code></pre>
+
+  </div>
+  <div class="lesson-section" id="persona" data-toc>
+    <h2>확장 — 페르소나 챗봇</h2>
+    <p>system 프롬프트만 바꾸면 완전히 다른 챗봇이 됩니다. 같은 구조로 여러 봇을 찍어낼 수 있습니다.</p>
+<pre><code>def make_bot(system_text):
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", system_text),
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("human", "{user_input}"),
+    ])
+    return prompt | ChatOpenAI(temperature=0.3) | StrOutputParser()
+
+tutor = make_bot("너는 친절한 코딩 튜터다. 초등학생도 알아듣게 비유로 설명한다.")
+coach = make_bot("너는 단호하지만 따뜻한 운동 코치다. 짧고 강하게 동기부여한다.")</code></pre>
+
+  </div>
+  <div class="lesson-section" id="loop" data-toc>
+    <h2>대화 루프</h2>
+    <p>터미널에서 계속 대화하는 간단한 루프 (lang_05 원본).</p>
+<pre><code>while True:
+    user_message = input("USER &gt; ")
+    if user_message.lower() == "quit":     # quit 입력 시 종료
+        break
+    print("AI &gt;", chat(user_message))</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 화면 붙이기</div>내일 이후 Gradio로 이 루프를 웹 채팅창으로 바꿉니다(Day 5). 지금은 로직에 집중.</div>
+
   </div>
   <div class="lesson-section" id="실습" data-toc>
     <h2>오늘의 실습 미션</h2>
     <ol>
-      <li>내 주제의 분류 체인(예: 문의 유형/스팸 여부) + 정확도 측정</li>
-      <li>페르소나가 분명한 챗봇(예: 친구·튜터·사장) 만들기</li>
-      <li>맥락을 3턴 이상 이어가는 대화 시연</li>
+      <li>내 주제 분류기 만들기(예: 스팸/정상, 문의 유형) + 10개 샘플 정확도 측정</li>
+      <li>혼동행렬을 보고 "자주 틀리는 유형"을 찾아 프롬프트 개선</li>
+      <li>페르소나가 분명한 챗봇 2개(예: 친구·튜터) 만들기</li>
+      <li>세션 2개(userA/userB)로 각각 다른 대화가 유지되는지 확인</li>
+      <li>대화 루프로 5턴 이상 맥락이 이어지는지 시연</li>
     </ol>
+
+  </div>
+  <div class="lesson-section" id="faq" data-toc>
+    <h2>자주 막히는 부분</h2>
+    <ul>
+      <li><strong>분류가 0/1이 아니라 문장으로 나옴</strong> → system에 "정수만 출력" 강조 + 파서로 방어</li>
+      <li><strong>챗봇이 앞 대화를 못 기억함</strong> → MessagesPlaceholder 이름과 history_messages_key가 일치해야 함</li>
+      <li><strong>대화가 길어 비용 급증</strong> → 최근 N개만(load_memory) 사용하거나 요약</li>
+      <li><strong>세션이 섞임</strong> → invoke마다 올바른 session_id를 config로 넘겼는지 확인</li>
+    </ul>
+    <div class="callout callout-tip"><div class="callout-title">🤖 막히면</div>챗봇이 이상하면 <code>chat_history.messages</code>를 출력해 "무엇을 기억 중인지" 확인하세요.</div>
+
   </div>
   <div class="lesson-section" id="과제" data-toc>
     <h2>과제</h2>
     <ol>
-      <li>분류기 정확도 + 혼동행렬 캡처</li>
-      <li>세션 2개로 각각 다른 대화가 유지되는지 확인</li>
+      <li>분류기 정확도 + 혼동행렬 캡처 + 개선 전/후 비교</li>
+      <li>페르소나 챗봇 1개 완성(시스템 프롬프트 포함)</li>
+      <li>세션별로 다른 대화가 유지되는 화면 캡처</li>
     </ol>
+
   </div>
 
   <div class="lesson-section" id="노트북" data-toc>
     <h2>오늘 함께 실습할 Colab 노트북</h2>
-    <p>위 강의안 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <p>본 강의안의 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
     <ul>
       <li><strong>lang_04_랭체인_기반_댓글_분류_태스크_감성분석.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_04_%EB%9E%AD%EC%B2%B4%EC%9D%B8_%EA%B8%B0%EB%B0%98_%EB%8C%93%EA%B8%80_%EB%B6%84%EB%A5%98_%ED%83%9C%EC%8A%A4%ED%81%AC_%EA%B0%90%EC%84%B1%EB%B6%84%EC%84%9D.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>
       <li><strong>lang_05_랭체인 기반 챗봇 만들기.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_05_%EB%9E%AD%EC%B2%B4%EC%9D%B8%20%EA%B8%B0%EB%B0%98%20%EC%B1%97%EB%B4%87%20%EB%A7%8C%EB%93%A4%EA%B8%B0.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>

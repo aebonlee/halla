@@ -117,14 +117,20 @@
     <ul>
       <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
-      <li><a href="#emb">임베딩 이해</a></li>
-      <li><a href="#load">문서 로드 → 분할</a></li>
+      <li><a href="#what">임베딩이란</a></li>
+      <li><a href="#call">임베딩 호출해 보기</a></li>
+      <li><a href="#load">문서 로드</a></li>
+      <li><a href="#split">청크로 분할</a></li>
       <li><a href="#store">벡터스토어 구축</a></li>
       <li><a href="#search">유사도 검색</a></li>
-      <li><a href="#retriever">retriever & 첫 RAG</a></li>
-      <li><a href="#custom">직접 구현·한글·튜닝</a></li>
-      <li><a href="#노트북">오늘의 노트북</a></li>
+      <li><a href="#how">검색은 어떻게 동작하나</a></li>
+      <li><a href="#retriever">retriever</a></li>
+      <li><a href="#rag">첫 RAG 체인</a></li>
+      <li><a href="#format">format_docs</a></li>
+      <li><a href="#diy">직접 구현 — 코사인 유사도</a></li>
+      <li><a href="#korean">한글 임베딩 & 튜닝</a></li>
       <li><a href="#실습">오늘의 실습 미션</a></li>
+      <li><a href="#faq">자주 막히는 부분</a></li>
       <li><a href="#과제">과제</a></li>
     </ul>
   </aside>
@@ -138,100 +144,235 @@
       <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>벡터스토어</strong> Chroma에 임베딩 저장</div></div>
       <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
       <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>유사도 검색</strong> similarity_search·by_vector</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>retriever</strong> as_retriever + 첫 RAG 체인</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>직접 구현</strong> SimpleVectorStore·코사인 유사도</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>한글·튜닝</strong> HuggingFace 임베딩·chunk 튜닝</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>retriever + RAG</strong> 검색 결과를 프롬프트에</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>직접 구현</strong> SimpleVectorStore·코사인</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>한글·튜닝 + 실습</strong> HuggingFace·chunk/k 튜닝·미션</div></div>
     </div>
   </div>
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
       <li>임베딩이 "의미를 숫자 벡터로" 바꾸는 것임을 설명할 수 있다.</li>
-      <li>문서를 분할·임베딩해 벡터스토어에 저장하고 유사 문서를 검색할 수 있다.</li>
-      <li>retriever로 첫 RAG 체인을 구성할 수 있다.</li>
+      <li>문서를 로드·분할·임베딩해 벡터스토어(Chroma)에 저장할 수 있다.</li>
+      <li>질문과 유사한 문서를 검색(retriever)하고 첫 RAG 체인을 만들 수 있다.</li>
+      <li>코사인 유사도의 원리를 이해하고, chunk_size·k 등을 튜닝할 수 있다.</li>
     </ul>
+
   </div>
-  <div class="lesson-section" id="emb" data-toc>
-    <h2>임베딩 이해</h2>
-    <p>임베딩은 텍스트를 <strong>의미가 담긴 숫자 벡터</strong>로 바꿉니다. 의미가 비슷하면 벡터도 가깝습니다.</p>
+  <div class="lesson-section" id="what" data-toc>
+    <h2>임베딩이란</h2>
+    <p>임베딩(embedding)은 텍스트를 <strong>의미가 담긴 숫자 벡터</strong>로 바꾸는 것입니다. 의미가 비슷한 문장은 벡터도 가깝습니다.</p>
+    <ul>
+      <li>"강아지"와 "개" → 벡터가 가까움</li>
+      <li>"강아지"와 "주식 시장" → 벡터가 멂</li>
+      <li>가까움/멂은 <strong>코사인 유사도</strong>로 잰다</li>
+    </ul>
+    <div class="callout callout-info"><div class="callout-title">💡 왜 필요한가</div>컴퓨터는 글자를 "이해"하지 못합니다. 의미를 숫자로 바꿔야 "비슷한 문서 찾기"(검색)가 가능 → RAG의 핵심 부품.</div>
+
+  </div>
+  <div class="lesson-section" id="call" data-toc>
+    <h2>임베딩 호출해 보기</h2>
+    <p>OpenAI 임베딩 모델로 문장을 벡터로 바꿉니다. 벡터의 "차원 수"는 모델마다 다릅니다 (lang_06 원본).</p>
 <pre><code>from openai import OpenAI
 client = OpenAI()
-resp = client.embeddings.create(model="text-embedding-3-small", input="Hello~ I am Dr.Will")
-vec = resp.data[0].embedding
-print(len(vec))   # 벡터 차원 수 (모델마다 다름, 예: 1536)</code></pre>
+
+response = client.embeddings.create(
+    input="Hello~ I'm Dr.Will",
+    model="text-embedding-3-small",
+)
+vec = response.data[0].embedding
+print(vec[:5])        # 벡터 앞 5개 값 (실수들)
+print(len(vec))       # 차원 수 (예: 1536) — 모델마다 다름</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 참고</div>모든 임베딩 모델이 1536차원은 아닙니다. 모델별 차원은 OpenAI 임베딩 문서에서 확인.</div>
+
   </div>
   <div class="lesson-section" id="load" data-toc>
-    <h2>문서 로드 → 분할</h2>
-    <p>긴 문서는 검색·전달이 쉽도록 <strong>청크(chunk)</strong>로 나눕니다. "1000자짜리 상자"에 담는다고 생각하세요.</p>
+    <h2>문서 로드</h2>
+    <p>검색 대상 문서를 불러옵니다. 예제로 미국 국정연설 텍스트를 내려받습니다 (lang_07 원본).</p>
 <pre><code>import urllib.request
 urllib.request.urlretrieve(
-  "https://raw.githubusercontent.com/hwchase17/chat-your-data/master/state_of_the_union.txt",
-  "state_of_the_union.txt")
+    "https://raw.githubusercontent.com/hwchase17/chat-your-data/master/state_of_the_union.txt",
+    filename="state_of_the_union.txt",
+)
 
 from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import CharacterTextSplitter
-raw = TextLoader("state_of_the_union.txt").load()
-docs = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0).split_documents(raw)
-print(len(docs), "개 청크")</code></pre>
+raw_documents = TextLoader("state_of_the_union.txt").load()
+print(type(raw_documents), len(raw_documents))   # Document 리스트</code></pre>
+
+  </div>
+  <div class="lesson-section" id="split" data-toc>
+    <h2>청크로 분할</h2>
+    <p>긴 문서는 통째로 다루기 어렵습니다. <strong>청크(chunk)</strong>로 잘게 나눕니다 — "1000자짜리 상자"에 담는다고 생각하세요.</p>
+<pre><code>from langchain_text_splitters import CharacterTextSplitter
+
+# chunk_size: 한 상자에 담을 글자 수 / chunk_overlap: 상자끼리 겹치는 글자 수
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+documents = text_splitter.split_documents(raw_documents)
+
+print("청크(상자) 개수:", len(documents))
+print(documents[0].page_content[:200])   # 첫 상자 내용 일부</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 overlap이 왜 있나</div>문장이 상자 경계에서 잘리면 의미가 끊깁니다. 약간 겹치게(overlap) 하면 경계 정보 손실을 줄입니다.</div>
+
   </div>
   <div class="lesson-section" id="store" data-toc>
     <h2>벡터스토어 구축</h2>
-    <p>청크를 임베딩해 <strong>Chroma</strong>에 저장합니다. 청크 1개 → 벡터 1개(예: 1536차원).</p>
+    <p>각 청크를 임베딩해 <strong>Chroma</strong> 벡터스토어에 저장합니다. 청크 1개 → 벡터 1개.</p>
 <pre><code>from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
-db = Chroma.from_documents(docs, OpenAIEmbeddings())</code></pre>
+
+# 청크들을 임베딩해서 벡터DB에 저장 (상자마다 1536차원 벡터 부여)
+db = Chroma.from_documents(documents, OpenAIEmbeddings())
+# 예: 42개 상자 → 42개 벡터 (42 × 1536개의 수치)</code></pre>
+
   </div>
   <div class="lesson-section" id="search" data-toc>
     <h2>유사도 검색</h2>
-    <p>질문을 벡터로 바꿔, 가장 가까운 청크들을 찾아옵니다(기본 4개).</p>
+    <p>질문을 벡터로 바꿔, 가장 가까운 청크들을 찾아옵니다 (기본 4개).</p>
 <pre><code>query = "What did the president say about Ketanji Brown Jackson"
-hits = db.similarity_search(query)
-print(hits[0].page_content)</code></pre>
-    <div class="callout callout-info"><div class="callout-title">💡 동작 원리</div>문서→42개 상자→각 상자에 1536차원 벡터. 질문도 벡터로 바꿔(QV) 42개와 유사도(코사인)를 재 가장 가까운 상자 k개를 반환.</div>
+docs = db.similarity_search(query)      # k=4 기본
+print(docs[0].page_content)
+
+# 벡터로 직접 검색하기 (질문→임베딩→유사도)
+qvec = OpenAIEmbeddings().embed_query(query)
+docs2 = db.similarity_search_by_vector(qvec)
+print(len(qvec))   # 질문 벡터 차원</code></pre>
+
+  </div>
+  <div class="lesson-section" id="how" data-toc>
+    <h2>검색은 어떻게 동작하나</h2>
+    <p>전체 흐름을 한 장으로 정리하면:</p>
+<pre><code>문서
+ → 1000자 상자(chunk)로 분할  →  예: 42개 상자
+ → 각 상자를 임베딩          →  상자마다 1536차원 벡터
+ → 벡터스토어(Chroma)에 저장
+
+[질문]
+ → 질문도 1536차원 벡터(QV)로 변환
+ → QV와 42개 상자 벡터의 유사도(코사인) 계산
+ → 가장 가까운 상자 k개 반환</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 감각</div>RAG는 AI를 "더 똑똑하게" 만드는 게 아니라 <strong>"좋은 자료를 손에 쥐여 주는"</strong> 것. 상자 분할·임베딩 품질이 답 품질을 좌우합니다.</div>
+
   </div>
   <div class="lesson-section" id="retriever" data-toc>
-    <h2>retriever & 첫 RAG</h2>
-    <p>검색기를 만들고, 찾은 문서를 프롬프트의 context로 넣으면 <strong>RAG</strong>(검색→삽입→생성)가 됩니다.</p>
-<pre><code>from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_openai import ChatOpenAI
-
+    <h2>retriever</h2>
+    <p>체인에서 검색을 담당하는 부품이 <strong>retriever</strong>입니다. "질문을 주면 유사 문서 k개를 주는" 인터페이스.</p>
+<pre><code># k=3: 가장 유사한 상자 3개만 가져오는 검색기
 retriever = db.as_retriever(search_kwargs={"k": 3})
-prompt = ChatPromptTemplate.from_template(
-  "다음 문서를 참고해 답하세요.\n문서:\n{context}\n\n질문:\n{question}")
-def format_docs(ds): return "\n\n".join(d.page_content for d in ds)
+hits = retriever.invoke("대통령이 말한 핵심은?")
+for d in hits:
+    print("-", d.page_content[:80])</code></pre>
 
-chain = ({"context": lambda q: format_docs(retriever.invoke(q)), "question": lambda q: q}
-         | prompt | ChatOpenAI(model="gpt-4o", temperature=0) | StrOutputParser())
-print(chain.invoke("케탄지 브라운 잭슨에 대해 한국어로 답해줘"))</code></pre>
   </div>
-  <div class="lesson-section" id="custom" data-toc>
-    <h2>직접 구현·한글·튜닝</h2>
-    <ul>
-      <li><strong>직접 구현</strong> — SimpleTextLoader·SimpleVectorStore로 코사인 유사도 내부 동작 체험 (lang_08)</li>
-      <li><strong>한글 임베딩</strong> — HuggingFace 임베딩으로 한국어 문서 품질 비교</li>
-      <li><strong>튜닝</strong> — chunk_size·overlap·검색 개수(k)를 바꿔 검색 품질 개선</li>
-    </ul>
+  <div class="lesson-section" id="rag" data-toc>
+    <h2>첫 RAG 체인</h2>
+    <p>검색된 문서를 프롬프트의 <code>context</code>로 넣어 답하게 하면 <strong>RAG</strong>(검색 → 삽입 → 생성)입니다 (lang_07 원본).</p>
+<pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+chat_model = ChatOpenAI(model="gpt-4o", temperature=0)
+prompt = ChatPromptTemplate.from_template("""
+다음 문서를 참고해서 질문에 답변하세요.
+
+문서:
+{context}
+
+질문:
+{question}
+""")
+
+def format_docs(docs):
+    return "\n\n".join(d.page_content for d in docs)   # 여러 청크를 한 덩어리로
+
+chain = (
+    {
+        "context":  lambda q: format_docs(retriever.invoke(q)),  # 질문→검색→합치기
+        "question": lambda q: q,
+    }
+    | prompt | chat_model | StrOutputParser()
+)
+
+print(chain.invoke("케탄지 브라운 잭슨에 대해 뭐라고 했어? 한국어로 답해줘."))</code></pre>
+
+  </div>
+  <div class="lesson-section" id="format" data-toc>
+    <h2>format_docs</h2>
+    <p>검색된 여러 청크(Document)를 모델이 읽기 좋은 하나의 문자열로 합치는 도우미입니다. 출처를 함께 넣을 수도 있습니다(내일 활용).</p>
+<pre><code>def format_docs(docs):
+    return "\n\n".join(d.page_content for d in docs)
+
+# 확장: 출처(metadata)도 함께
+def format_docs_with_meta(docs):
+    return "\n\n".join(f"{d.page_content}\n(출처: {d.metadata})" for d in docs)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="diy" data-toc>
+    <h2>직접 구현 — 코사인 유사도</h2>
+    <p>블랙박스를 열어, 임베딩·벡터스토어를 직접 만들어 보면 원리가 또렷해집니다 (lang_08 개념).</p>
+<pre><code>import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+# 두 문장이 의미적으로 얼마나 가까운지 = 코사인 유사도(1에 가까울수록 유사)
+def embed(text):
+    return client.embeddings.create(input=text, model="text-embedding-3-small").data[0].embedding
+
+a = np.array(embed("강아지가 공을 물고 뛴다")).reshape(1, -1)
+b = np.array(embed("개가 공놀이를 한다")).reshape(1, -1)
+c = np.array(embed("내일 주식 시장 전망")).reshape(1, -1)
+print("강아지↔개:", cosine_similarity(a, b)[0][0])   # 높음
+print("강아지↔주식:", cosine_similarity(a, c)[0][0]) # 낮음</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 SimpleVectorStore</div>lang_08은 SimpleTextLoader·SimpleVectorStore·SimpleRetriever를 직접 구현합니다. "저장된 벡터들과 질문 벡터의 유사도를 재서 가장 가까운 것을 반환"이 전부입니다.</div>
+
+  </div>
+  <div class="lesson-section" id="korean" data-toc>
+    <h2>한글 임베딩 & 튜닝</h2>
+    <p>한국어 문서는 한국어에 강한 임베딩이 유리할 수 있습니다. 또 chunk_size·k를 바꿔 검색 품질을 조정합니다.</p>
+<pre><code># 한글 친화 임베딩 (HuggingFace) — OpenAI 임베딩과 품질 비교
+from langchain_huggingface import HuggingFaceEmbeddings
+emb_ko = HuggingFaceEmbeddings(model_name="jhgan/ko-sroberta-multitask")
+
+# 튜닝 포인트
+# - chunk_size: 작게(500) → 정밀하지만 맥락 적음 / 크게(1500) → 맥락 많지만 노이즈↑
+# - chunk_overlap: 100~200 권장
+# - k: 너무 작으면 근거 부족, 너무 크면 노이즈/비용↑</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 튜닝 실험</div>같은 질문에 chunk_size 500 vs 1500, k 2 vs 5를 비교해 "어떤 설정이 내 문서에 맞는지" 직접 찾으세요.</div>
+
   </div>
   <div class="lesson-section" id="실습" data-toc>
     <h2>오늘의 실습 미션</h2>
     <ol>
-      <li>내 문서(txt)로 벡터스토어 만들고 5개 질문 검색</li>
-      <li>chunk_size 500 vs 1500 비교 — 검색 결과가 어떻게 달라지나</li>
-      <li>k값을 바꿔 답변 품질 비교</li>
+      <li>내 문서(txt)를 로드·분할·임베딩해 벡터스토어 만들기</li>
+      <li>질문 5개로 유사도 검색 → 잘 찾는지 확인</li>
+      <li>retriever + RAG 체인으로 내 문서 기반 답변 받기</li>
+      <li>chunk_size 500 vs 1500 비교 — 답이 어떻게 달라지나</li>
+      <li>코사인 유사도로 "비슷한 문장 / 다른 문장" 점수 비교</li>
     </ol>
+
+  </div>
+  <div class="lesson-section" id="faq" data-toc>
+    <h2>자주 막히는 부분</h2>
+    <ul>
+      <li><strong>chromadb 설치 오류</strong> → <code>!pip install -U langchain-chroma chromadb</code> 후 런타임 재시작</li>
+      <li><strong>검색이 엉뚱함</strong> → chunk가 너무 크거나, 질문이 모호. chunk_size·k 조정</li>
+      <li><strong>한글 검색이 약함</strong> → 한국어 임베딩(HuggingFace) 시도</li>
+      <li><strong>비용/속도</strong> → 임베딩은 문서가 많을수록 비용↑. 필요한 문서만 넣기</li>
+    </ul>
+    <div class="callout callout-tip"><div class="callout-title">🤖 막히면</div>검색 결과(<code>retriever.invoke(q)</code>)를 먼저 출력해 "근거 문서가 제대로 잡히는지"부터 확인하세요. 답이 이상하면 대개 검색 단계 문제입니다.</div>
+
   </div>
   <div class="lesson-section" id="과제" data-toc>
     <h2>과제</h2>
     <ol>
-      <li>첫 RAG 체인으로 내 문서 질문 3개 답변 캡처</li>
-      <li>한글 임베딩 vs OpenAI 임베딩 차이 한 줄 정리</li>
+      <li>내 문서로 RAG 체인 만들어 질문 3개 답변 캡처</li>
+      <li>chunk_size/k 튜닝 전후 비교 한 줄 정리</li>
+      <li>한글 임베딩 vs OpenAI 임베딩 차이 느낀 점 메모</li>
     </ol>
+
   </div>
 
   <div class="lesson-section" id="노트북" data-toc>
     <h2>오늘 함께 실습할 Colab 노트북</h2>
-    <p>위 강의안 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <p>본 강의안의 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
     <ul>
       <li><strong>lang_06_Embedding 이해.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_06_Embedding%20%EC%9D%B4%ED%95%B4.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>
       <li><strong>lang_07_getting_started_with_vectorstore.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_07_getting_started_with_vectorstore.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>
