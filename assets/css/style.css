@@ -619,6 +619,8 @@ body {
   margin: 0;
   display: none;
   z-index: 200;
+  max-height: calc(100vh - 90px);   /* 항목이 많아도 화면 밖으로 안 잘리게 */
+  overflow-y: auto;                  /* 넘치면 드롭다운 내부 스크롤 */
 }
 
 .nav-dropdown.open .nav-dropdown-menu { display: block; }
