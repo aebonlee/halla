@@ -7,7 +7,93 @@
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = stored || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', theme);
+  // 강조색(accent)도 깜빡임 없이 즉시 적용
+  const accent = (() => { try { return localStorage.getItem('halla-accent'); } catch { return null; } })();
+  if (accent && accent !== 'blue') document.documentElement.setAttribute('data-accent', accent);
 })();
+
+// 강조색 적용 + 저장
+function setAccent(accent) {
+  const root = document.documentElement;
+  if (accent && accent !== 'blue') root.setAttribute('data-accent', accent);
+  else root.removeAttribute('data-accent');
+  try { localStorage.setItem('halla-accent', accent || 'blue'); } catch {}
+}
+function currentAccent() {
+  try { return localStorage.getItem('halla-accent') || 'blue'; } catch { return 'blue'; }
+}
+
+// 네비 끝(아바타 앞)에 팔레트·모드전환 아이콘 주입
+function buildNavTools(menu) {
+  if (!menu || menu.querySelector('.nav-tools')) return;   // 메뉴 없거나 이미 주입됨
+
+  const ICON_MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  const ICON_SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const ICON_PALETTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r="1.3" fill="currentColor" stroke="none"/><path d="M12 2C6.5 2 2 6 2 11c0 3.9 3.1 7 7 7 1.1 0 2-.9 2-2 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.3 0-1 .8-1.8 1.8-1.8H14c3.3 0 6-2.6 6-5.7C20 4.8 16.4 2 12 2z"/></svg>';
+
+  const ACCENTS = [
+    { key: 'blue',   color: '#2563eb', label: '기본' },
+    { key: 'teal',   color: '#0891b2', label: '청록' },
+    { key: 'pink',   color: '#db2777', label: '핑크' },
+    { key: 'violet', color: '#7c3aed', label: '보라' },
+  ];
+  const swatches = ACCENTS.map((a) =>
+    `<button type="button" class="nav-swatch" data-accent="${a.key}" title="${a.label}" style="background:${a.color}"></button>`
+  ).join('');
+
+  const li = document.createElement('li');
+  li.className = 'nav-tools';
+  li.innerHTML = `
+    <div style="position:relative;display:flex;">
+      <button type="button" class="nav-tool-btn" id="nav-palette-btn" aria-haspopup="true" aria-expanded="false" title="강조색 바꾸기">${ICON_PALETTE}</button>
+      <div class="nav-palette" id="nav-palette-pop" role="menu">
+        <div class="nav-palette-label">강조색</div>
+        <div class="nav-palette-swatches">${swatches}</div>
+      </div>
+    </div>
+    <button type="button" class="nav-tool-btn" id="nav-mode-btn" title="라이트/다크 전환">${ICON_MOON}</button>
+  `;
+
+  const authSlot = menu.querySelector('#auth-slot');
+  if (authSlot) menu.insertBefore(li, authSlot);
+  else menu.appendChild(li);
+
+  // ── 모드전환 (해/달) ──
+  const modeBtn = li.querySelector('#nav-mode-btn');
+  const updateModeIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    modeBtn.innerHTML = dark ? ICON_SUN : ICON_MOON;   // 다크면 해(→라이트), 라이트면 달(→다크)
+  };
+  updateModeIcon();
+  modeBtn.addEventListener('click', () => { toggleTheme(); updateModeIcon(); });
+  // 계정 팝오버 등 다른 곳에서 테마가 바뀌어도 아이콘 동기화
+  new MutationObserver(updateModeIcon).observe(
+    document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }
+  );
+
+  // ── 팔레트(강조색) 팝오버 ──
+  const palBtn = li.querySelector('#nav-palette-btn');
+  const palPop = li.querySelector('#nav-palette-pop');
+  const markSwatch = () => {
+    const cur = currentAccent();
+    palPop.querySelectorAll('.nav-swatch').forEach((s) =>
+      s.classList.toggle('active', s.getAttribute('data-accent') === cur)
+    );
+  };
+  markSwatch();
+  palBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = palPop.classList.toggle('open');
+    palBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) markSwatch();
+  });
+  palPop.addEventListener('click', (e) => e.stopPropagation());
+  palPop.querySelectorAll('.nav-swatch').forEach((s) => {
+    s.addEventListener('click', () => { setAccent(s.getAttribute('data-accent')); markSwatch(); });
+  });
+  document.addEventListener('click', () => { palPop.classList.remove('open'); palBtn.setAttribute('aria-expanded', 'false'); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') palPop.classList.remove('open'); });
+}
 
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
@@ -30,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
   }
 
-  // 테마 전환은 auth.js의 아바타 팝오버(화면 모드: 라이트/다크/시스템)로 이동했습니다.
-  // (이전의 nav 테마 토글 버튼 자동 주입 제거 — 메뉴 줄바꿈 방지 + 옵션 통합)
+  // 네비 도구 아이콘 주입 — 팔레트(강조색) + 모드전환(라이트/다크)
+  buildNavTools(menu);
 
   // 드롭다운 메뉴 — 클릭/호버 토글 + 지연 close로 6px 갭 통과 허용
   const dropdowns = document.querySelectorAll('.nav-dropdown');

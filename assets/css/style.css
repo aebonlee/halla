@@ -55,6 +55,16 @@
   --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
 }
 
+/* ---------- 강조색(accent) 팔레트 — data-accent 로 포인트 컬러 교체 ---------- */
+/* 라이트 기준 (기본 blue 는 :root 값 그대로 사용) */
+[data-accent="teal"]   { --color-primary:#0891b2; --color-primary-dark:#0e7490; --color-secondary:#06b6d4; }
+[data-accent="pink"]   { --color-primary:#db2777; --color-primary-dark:#be185d; --color-secondary:#ec4899; }
+[data-accent="violet"] { --color-primary:#7c3aed; --color-primary-dark:#6d28d9; --color-secondary:#8b5cf6; }
+/* 다크 기준 (더 밝은 톤 — [data-theme][data-accent] 결합으로 우선순위 확보) */
+[data-theme="dark"][data-accent="teal"]   { --color-primary:#22d3ee; --color-primary-dark:#0891b2; --color-secondary:#67e8f9; }
+[data-theme="dark"][data-accent="pink"]   { --color-primary:#f472b6; --color-primary-dark:#db2777; --color-secondary:#f9a8d4; }
+[data-theme="dark"][data-accent="violet"] { --color-primary:#a78bfa; --color-primary-dark:#7c3aed; --color-secondary:#c4b5fd; }
+
 [data-theme="dark"] body {
   background: var(--color-bg);
   color: var(--color-text);
@@ -257,12 +267,72 @@ body {
 
 .nav-menu {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   list-style: none;
   align-items: center;
 }
 
 .nav-menu > li { display: flex; }
+
+/* ---------- 네비 도구 아이콘 (팔레트 · 모드전환) ---------- */
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+}
+.nav-tool-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.nav-tool-btn:hover { background: var(--color-bg); color: var(--color-primary); }
+.nav-tool-btn:active { transform: scale(0.92); }
+.nav-tool-btn svg { width: 18px; height: 18px; }
+
+/* 팔레트 팝오버 */
+.nav-palette {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  display: none;
+  z-index: 200;
+}
+.nav-palette.open { display: block; }
+.nav-palette-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.nav-palette-swatches { display: flex; gap: 8px; }
+.nav-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s, border-color 0.12s;
+}
+.nav-swatch:hover { transform: scale(1.12); }
+.nav-swatch.active { border-color: var(--color-text); }
 
 .nav-menu a {
   display: flex;
