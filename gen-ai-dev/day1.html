@@ -118,14 +118,21 @@
       <li><a href="#시간표">시간표</a></li>
       <li><a href="#목표">학습 목표</a></li>
       <li><a href="#vibe">바이브 코딩으로 시작</a></li>
+      <li><a href="#구성요소">LangChain 4대 구성요소</a></li>
       <li><a href="#env">개발 환경 · API 키</a></li>
       <li><a href="#first">첫 LLM 호출</a></li>
-      <li><a href="#msg">메시지 구조 & temperature</a></li>
+      <li><a href="#resp">응답 객체 뜯어보기</a></li>
+      <li><a href="#msg">메시지 구조 (편지봉투)</a></li>
+      <li><a href="#trans">번역기 만들기 (원본+확장)</a></li>
+      <li><a href="#temp">temperature 심화</a></li>
+      <li><a href="#params">max_tokens 등 파라미터</a></li>
       <li><a href="#tmpl">프롬프트 템플릿</a></li>
-      <li><a href="#chain">LLM 체인 + 스트리밍</a></li>
+      <li><a href="#tmpl2">템플릿 심화·조합</a></li>
+      <li><a href="#chain">LLM 체인 (Prompt|LLM)</a></li>
+      <li><a href="#stream">스트리밍 출력</a></li>
       <li><a href="#monitor">토큰·콜백 모니터링</a></li>
-      <li><a href="#노트북">오늘의 노트북</a></li>
       <li><a href="#실습">오늘의 실습 미션</a></li>
+      <li><a href="#faq">자주 막히는 부분</a></li>
       <li><a href="#과제">과제</a></li>
     </ul>
   </aside>
@@ -134,130 +141,376 @@
     <h2>오늘의 시간표 (종일 8H)</h2>
     <p style="color:var(--color-text-muted);font-size:14px;margin-bottom:12px;">오전 1~3교시 개념·데모 · 오후 5~9교시 실습·빌드</p>
     <div class="timetable">
-      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>바이브 코딩이란 / 왜 LangChain</strong> AI에게 시켜 만드는 개발 + LangChain 4대 구성요소</div></div>
-      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>개발 환경 세팅</strong> Colab · API 키(보안비밀) · 설치/버전 확인</div></div>
-      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>첫 LLM 호출</strong> OpenAI vs ChatOpenAI · invoke · .content</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">1교시</div><div class="timetable-content"><strong>바이브 코딩 + LangChain 4대 구성요소</strong> 왜/무엇을 만드는가</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">2교시</div><div class="timetable-content"><strong>개발 환경 세팅</strong> Colab · API 키(보안비밀) · 설치/버전</div></div>
+      <div class="timetable-row lecture"><div class="timetable-time">3교시</div><div class="timetable-content"><strong>첫 LLM 호출 + 응답 구조</strong> OpenAI vs ChatOpenAI · response 뜯어보기</div></div>
       <div class="timetable-row break"><div class="timetable-time">점심</div><div class="timetable-content"><strong>점심</strong> </div></div>
-      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>메시지 구조 & temperature</strong> System/Human/AI 메시지 · 창의성 조절</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>프롬프트 템플릿</strong> 변수 {}로 재사용 가능한 프롬프트</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>LLM 체인 + 스트리밍</strong> prompt | llm · 실시간 출력</div></div>
-      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>실습 + 모니터링</strong> 번역기/도우미 만들기 · 토큰·콜백</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">5교시</div><div class="timetable-content"><strong>메시지 구조 + 번역기</strong> System/Human/AI · 다국어 확장</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">6교시</div><div class="timetable-content"><strong>temperature · 파라미터</strong> 창의성·길이·비용 조절</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">7교시</div><div class="timetable-content"><strong>프롬프트 템플릿 + 체인</strong> 변수 템플릿 · prompt|llm</div></div>
+      <div class="timetable-row activity"><div class="timetable-time">8~9교시</div><div class="timetable-content"><strong>스트리밍 · 모니터링 · 실습</strong> 실시간 출력 · 토큰 콜백 · 미션</div></div>
     </div>
   </div>
   <div class="lesson-section" id="목표" data-toc>
     <h2>학습 목표</h2>
     <ul>
-      <li>"AI에게 시켜서 만든다"는 바이브 코딩 방식으로 개발을 시작할 수 있다.</li>
-      <li>Colab에서 API 키를 안전하게 다루고 LangChain을 설치할 수 있다.</li>
-      <li>LLM 호출 → 메시지 구성 → 프롬프트 템플릿 → 체인까지 직접 만들 수 있다.</li>
-      <li>temperature·스트리밍·토큰 사용량의 의미를 이해한다.</li>
+      <li>"AI에게 시켜서 만든다"는 <strong>바이브 코딩</strong> 방식으로 개발을 시작할 수 있다.</li>
+      <li>LangChain의 4대 구성요소와 "체인" 개념을 설명할 수 있다.</li>
+      <li>Colab에서 API 키를 안전하게 다루고 LangChain을 설치·검증할 수 있다.</li>
+      <li>LLM 호출 → 응답 객체 해석 → 메시지 구성 → 프롬프트 템플릿 → 체인까지 직접 만들 수 있다.</li>
+      <li>temperature·max_tokens·스트리밍·토큰 사용량의 의미를 이해하고 조절할 수 있다.</li>
     </ul>
+
   </div>
   <div class="lesson-section" id="vibe" data-toc>
     <h2>바이브 코딩으로 시작</h2>
-    <p>이 과정은 코드를 외워서 치는 게 아니라 <strong>AI에게 자연어로 시켜서 만드는</strong> 바이브 코딩으로 출발합니다. 막히면 Claude·Cursor·ChatGPT에게 "이 코드 설명해줘 / 이 에러 고쳐줘 / 이렇게 바꿔줘"라고 요청하세요.</p>
-    <h3>LangChain이란?</h3>
-    <p>대규모 언어 모델(LLM)을 활용해 애플리케이션을 만드는 <strong>프레임워크</strong>입니다. 4가지 축으로 구성됩니다.</p>
+    <p>이 과정은 코드를 통째로 외워서 치는 게 아니라, <strong>AI에게 자연어로 시켜서 만들고</strong> 사람이 이해·수정하는 "바이브 코딩"으로 출발합니다. 막히면 Claude·Cursor·ChatGPT에게 이렇게 요청하세요.</p>
     <ul>
-      <li><strong>LangChain 라이브러리</strong> — 컴포넌트(프롬프트·모델·파서…)를 체인/에이전트로 결합</li>
-      <li><strong>LangChain 템플릿</strong> — 작업별로 빠르게 배포하는 아키텍처 모음</li>
-      <li><strong>LangServe</strong> — 만든 체인을 REST API로 배포</li>
-      <li><strong>LangSmith</strong> — 체인 디버깅·테스트·평가·모니터링</li>
+      <li>"이 코드가 무슨 뜻인지 한 줄씩 설명해줘"</li>
+      <li>"이 에러 메시지를 보고 원인과 해결책을 알려줘"</li>
+      <li>"이 코드를 ○○하게 바꿔줘. 바뀐 부분만 설명해줘"</li>
     </ul>
-    <div class="callout callout-tip"><div class="callout-title">📝 오늘의 마음가짐</div>"정확히 묘사하는 능력"이 새로운 코딩 실력입니다. 오늘은 LangChain 블록 1개(LLM 체인)를 만듭니다.</div>
+    <div class="callout callout-tip"><div class="callout-title">📝 오늘의 마음가짐</div>"원하는 것을 정확히 묘사하는 능력"이 새로운 코딩 실력입니다. 문법을 못 외워도 됩니다 — 무엇을 원하는지 분명히 말할 수 있으면 됩니다.</div>
+
+  </div>
+  <div class="lesson-section" id="구성요소" data-toc>
+    <h2>LangChain 4대 구성요소</h2>
+    <p>LangChain은 대규모 언어 모델(LLM)로 애플리케이션을 만드는 <strong>프레임워크</strong>입니다. "AI 블록"들을 조립해 앱을 만든다고 생각하세요.</p>
+    <ul>
+      <li><strong>LangChain 라이브러리</strong> — 프롬프트·모델·파서 같은 컴포넌트를 <em>체인(chain)</em>·<em>에이전트(agent)</em>로 결합하는 런타임</li>
+      <li><strong>LangChain 템플릿</strong> — 자주 쓰는 작업을 빠르게 배포하는 아키텍처 모음</li>
+      <li><strong>LangServe</strong> — 만든 체인을 <em>REST API</em>로 배포 (Day 5)</li>
+      <li><strong>LangSmith</strong> — 체인을 디버깅·테스트·평가·모니터링하는 개발자 플랫폼</li>
+    </ul>
+    <div class="callout callout-info"><div class="callout-title">💡 "체인"이란?</div>사용자 입력(프롬프트)을 받아 LLM을 통해 결과를 만드는 <strong>흐름</strong>입니다. 가장 기본은 <code>프롬프트 + LLM</code> = LLM 체인. 오늘 이걸 만듭니다.</div>
+
   </div>
   <div class="lesson-section" id="env" data-toc>
     <h2>개발 환경 · API 키</h2>
-    <p>설치 없이 브라우저에서 바로 쓰는 <strong>Google Colab</strong>으로 실습합니다. 첫 셀에서 라이브러리를 설치하고 버전을 확인합니다.</p>
-<pre><code>!pip install langchain&gt;=0.3.0 langchain-openai langchain-community langchain-text-splitters
-!pip install faiss-cpu tiktoken   # 벡터검색·토큰계산(이후 사용)
+    <p>설치 없이 브라우저에서 바로 쓰는 <strong>Google Colab</strong>으로 실습합니다. 첫 셀에서 라이브러리를 설치합니다.</p>
+<pre><code># [1] 라이브러리 설치 — 셀 맨 위에서 한 번만
+!pip install langchain&gt;=0.3.0 langchain-openai langchain-community langchain-text-splitters
+!pip install faiss-cpu tiktoken   # faiss=벡터검색(나중에) / tiktoken=토큰 계산
 
+# [2] 설치 확인 — 버전이 찍히면 성공
 import langchain
-from langchain_openai import ChatOpenAI
 print(f"LangChain 버전 : {langchain.__version__}")</code></pre>
-    <p>API 키는 코드에 직접 쓰지 않고 Colab <strong>보안 비밀(🔑 Secrets)</strong>에 저장한 뒤 불러옵니다.</p>
+    <h3>API 키를 "보안 비밀"에 저장하기</h3>
+    <p>키를 코드에 직접 쓰면 깃허브·캡처로 새어 나갑니다. Colab 왼쪽 <strong>🔑(보안 비밀)</strong> 메뉴에 키를 등록하고 코드로 불러옵니다.</p>
 <pre><code>import os
 from google.colab import userdata
-os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")</code></pre>
-    <div class="callout callout-warn"><div class="callout-title">⚠️ 키 보안 — 매우 중요</div>API 키는 절대 공개 코드/깃허브에 올리지 않습니다. 노출 시 요금 폭탄·오남용 위험. 키 = 돈이라는 감각을 처음부터 가집니다.</div>
+
+# userdata.get("이름")  → 보안 비밀에 저장한 키를 읽어옴
+# 아래 "OPENAI_API_KEY"는 본인이 보안 비밀에 등록한 "이름"과 같아야 함
+os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")
+
+# 키가 잘 들어왔는지 길이만 확인(값은 절대 print 하지 않기!)
+print("키 등록됨:", bool(os.environ.get("OPENAI_API_KEY")))</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">⚠️ 키 보안 — 매우 중요</div>API 키는 절대 공개 코드/깃허브/스크린샷에 올리지 않습니다. 노출되면 타인이 내 요금으로 호출할 수 있습니다. "키 = 돈"이라는 감각을 처음부터 가지세요.</div>
+
   </div>
   <div class="lesson-section" id="first" data-toc>
     <h2>첫 LLM 호출</h2>
-    <p>모델 객체를 만들고 <code>invoke()</code>로 질문하면 끝입니다. 두 가지 형태가 있습니다.</p>
-<pre><code># (1) 문자열 in → 문자열 out (구형 LLM)
-from langchain_community.llms import OpenAI
-llm = OpenAI()
-print(llm.invoke("안녕하세요"))
+    <p>모델 객체를 만들고 <code>invoke()</code>로 질문하면 끝입니다. LangChain에는 두 종류의 모델이 있습니다.</p>
+    <h3>① 일반 LLM — 문자열 in, 문자열 out (엽서)</h3>
+<pre><code>from langchain_community.llms import OpenAI
 
-# (2) 채팅 모델 (권장) — 응답이 메시지 객체, .content로 텍스트
-from langchain_openai import ChatOpenAI
-chat = ChatOpenAI(model="gpt-4o-mini")
-resp = chat.invoke("지구의 윤년 주기는?")
-print(resp.content)</code></pre>
-    <div class="callout callout-info"><div class="callout-title">💡 비유</div>LLM은 "엽서"(문자열→문자열), ChatModel은 "편지봉투+편지지"(역할이 있는 메시지). 앞으로는 주로 ChatModel을 씁니다.</div>
+llm = OpenAI()                 # 옛날 방식 모델 (completion)
+prompt = "안녕하세요"           # 입력은 그냥 문자열
+response = llm.invoke(prompt)  # 호출
+print(response)                # 출력도 문자열
+# 구조:  문자열 입력  →  LLM  →  문자열 출력</code></pre>
+    <h3>② 채팅 모델 — 메시지 in, 메시지 out (편지봉투+편지지) · 권장</h3>
+<pre><code>from langchain_openai import ChatOpenAI
+
+chat = ChatOpenAI(model="gpt-4o-mini")     # 요즘 표준(chat) 모델
+response = chat.invoke("지구의 윤년 주기는?")  # 문자열만 넣어도 됨
+
+print(response)            # ← AIMessage(content='...', ...) 객체 전체
+print()
+print(response.content)    # ← 우리가 원하는 "답변 텍스트"만</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 LLM vs ChatModel</div>LLM은 "엽서"(문자열→문자열), ChatModel은 "편지봉투+편지지"(역할이 있는 메시지). 앞으로는 거의 항상 <strong>ChatModel(ChatOpenAI)</strong>을 씁니다.</div>
+    <h3>확장 예제 — 입력을 바꿔가며 여러 번 질문</h3>
+<pre><code># 확장: 질문 리스트를 돌면서 연속 호출 (반복 호출 패턴 익히기)
+questions = [
+    "파이썬의 장점 한 가지만 말해줘",
+    "초보자가 가장 먼저 배울 자료구조는?",
+    "리스트와 튜플의 차이를 한 문장으로",
+]
+for q in questions:
+    answer = chat.invoke(q).content   # .content로 텍스트만 추출
+    print(f"Q: {q}")
+    print(f"A: {answer}\n")</code></pre>
+
+  </div>
+  <div class="lesson-section" id="resp" data-toc>
+    <h2>응답 객체 뜯어보기</h2>
+    <p><code>chat.invoke()</code>가 돌려주는 것은 단순 문자열이 아니라 <strong>AIMessage 객체</strong>입니다. 안에 무엇이 들어있는지 보면 토큰 사용량까지 알 수 있습니다.</p>
+<pre><code>resp = chat.invoke("한국의 수도는?")
+
+print(type(resp))                    # &lt;class 'langchain_core.messages.ai.AIMessage'&gt;
+print(resp.content)                  # 답변 텍스트
+print(resp.response_metadata)        # 모델명·종료이유 등 메타데이터(dict)
+print(resp.usage_metadata)           # 토큰 사용량 {input_tokens, output_tokens, total_tokens}
+
+# 확장: 토큰 사용량만 깔끔히 출력
+u = resp.usage_metadata
+print(f"입력 {u['input_tokens']} + 출력 {u['output_tokens']} = 총 {u['total_tokens']} 토큰")</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 왜 보나요?</div>토큰 = 비용입니다. 응답 객체에서 사용량을 바로 확인하는 습관을 들이면, 나중에 비용이 큰 호출을 미리 잡아낼 수 있습니다.</div>
+
   </div>
   <div class="lesson-section" id="msg" data-toc>
-    <h2>메시지 구조 & temperature</h2>
-    <p>대화는 <strong>역할(role)</strong>이 있는 메시지로 구성됩니다 — System(개발자가 정한 규칙)·Human(사용자)·AI(응답).</p>
-<pre><code>from langchain_core.messages import SystemMessage, HumanMessage
+    <h2>메시지 구조 (편지봉투)</h2>
+    <p>채팅은 <strong>역할(role)</strong>이 있는 메시지들의 리스트로 구성됩니다. "편지봉투(messages) 안에 편지지(각 메시지)를 담는다"고 생각하세요.</p>
+    <ul>
+      <li><strong>SystemMessage</strong> — 개발자가 정하는 규칙/페르소나 (대화 내내 유지)</li>
+      <li><strong>HumanMessage</strong> — 사용자가 보낸 말</li>
+      <li><strong>AIMessage</strong> — AI가 답한 말 (대화 이력으로 다시 전달)</li>
+    </ul>
+<pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
 
 chat = ChatOpenAI(temperature=0)
+
+# 편지봉투(messages)에 편지지 2장(system 규칙 + human 질문)을 담음
 messages = [
     SystemMessage(content="You are a helpful assistant that translates English to Korean."),
     HumanMessage(content="I love programming"),
 ]
+response = chat.invoke(messages)
+print(response.content)   # → "나는 프로그래밍을 사랑한다" 류</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 핵심</div>같은 모델도 <strong>SystemMessage</strong>를 바꾸면 완전히 다른 비서가 됩니다. "역할 지정"이 품질의 8할입니다.</div>
+
+  </div>
+  <div class="lesson-section" id="trans" data-toc>
+    <h2>번역기 만들기 (원본 + 확장)</h2>
+    <p>System 메시지로 "번역가" 역할을 고정하면 간단한 번역기가 됩니다. 원본 예제 → 확장 예제 순으로 발전시켜 봅니다.</p>
+    <h3>원본 — 영어를 한국어로</h3>
+<pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
+
+chat = ChatOpenAI(temperature=0)   # 번역은 일관성이 중요 → 0
+messages = [
+    SystemMessage(content="You are a translator. Translate the user's text into Korean only."),
+    HumanMessage(content="Practice makes perfect."),
+]
 print(chat.invoke(messages).content)</code></pre>
-    <div class="callout callout-info"><div class="callout-title">💡 temperature</div><code>0</code> = 일관·사실적, <code>1</code> = 창의·매번 다름. 같은 질문을 0/1로 여러 번 호출해 차이를 직접 확인합니다.</div>
+    <h3>확장 ① — 도착 언어를 함수 인자로</h3>
+<pre><code>def translate(text, target="Korean"):
+    """text를 target 언어로 번역해 문자열로 돌려준다."""
+    msgs = [
+        SystemMessage(content=f"You are a translator. Translate into {target} only, no explanation."),
+        HumanMessage(content=text),
+    ]
+    return chat.invoke(msgs).content
+
+print(translate("Good morning", "Japanese"))   # 일본어로
+print(translate("좋은 아침이에요", "English"))    # 한→영
+print(translate("Bonjour", "Korean"))           # 프→한</code></pre>
+    <h3>확장 ② — 말투까지 지정 (격식/반말)</h3>
+<pre><code>def translate_tone(text, target="Korean", tone="공손한 존댓말"):
+    msgs = [
+        SystemMessage(content=f"Translate into {target}. Use this tone: {tone}. Output only the translation."),
+        HumanMessage(content=text),
+    ]
+    return chat.invoke(msgs).content
+
+print(translate_tone("Where is the station?", "Korean", "친구에게 하는 반말"))
+print(translate_tone("Where is the station?", "Korean", "아주 정중한 비즈니스 존댓말"))</code></pre>
+
+  </div>
+  <div class="lesson-section" id="temp" data-toc>
+    <h2>temperature 심화</h2>
+    <p><code>temperature</code>는 답변의 "무작위성/창의성"을 조절합니다. 0이면 일관·사실적, 1이면 다양·창의적. 직접 비교해 봅니다.</p>
+<pre><code>from langchain_openai import ChatOpenAI
+
+# 같은 질문을 temperature만 다르게 4번 호출 (0이 2개, 1이 2개)
+models = [
+    ChatOpenAI(model="gpt-4o-mini", temperature=0, max_tokens=120),
+    ChatOpenAI(model="gpt-4o-mini", temperature=0, max_tokens=120),
+    ChatOpenAI(model="gpt-4o-mini", temperature=1, max_tokens=120),
+    ChatOpenAI(model="gpt-4o-mini", temperature=1, max_tokens=120),
+]
+for i, m in enumerate(models):
+    print(f"--- {i} (temp={m.temperature}) ---")
+    print(m.invoke("왜 파이썬이 인기 있어? 한 문장으로.").content)</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 언제 뭘 쓰나</div>사실 답변·번역·분류 → <strong>0</strong> (재현 가능, 흔들리지 않음). 아이디어·카피·브레인스토밍 → <strong>0.7~1.0</strong> (다양성).</div>
+    <h3>확장 — temperature 0은 "거의" 같은 답, 1은 매번 다름</h3>
+<pre><code># temperature 0: 두 번 호출해도 거의 동일 / 1: 호출마다 달라짐 → 직접 확인
+low  = ChatOpenAI(temperature=0)
+high = ChatOpenAI(temperature=1)
+print("[low]", low.invoke("창업 아이템 1개").content)
+print("[low]", low.invoke("창업 아이템 1개").content)
+print("[high]", high.invoke("창업 아이템 1개").content)
+print("[high]", high.invoke("창업 아이템 1개").content)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="params" data-toc>
+    <h2>max_tokens 등 파라미터</h2>
+    <p>호출 시 동작을 바꾸는 주요 파라미터들입니다.</p>
+    <ul>
+      <li><strong>model</strong> — 사용할 모델 (예: <code>gpt-4o-mini</code>는 빠르고 저렴, <code>gpt-4o</code>는 더 똑똑)</li>
+      <li><strong>temperature</strong> — 창의성(0~1)</li>
+      <li><strong>max_tokens</strong> — 답변 최대 길이. 너무 작으면 잘리고, 크면 비용↑</li>
+      <li><strong>timeout / max_retries</strong> — 응답 지연·실패 대비</li>
+    </ul>
+<pre><code>chat = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.3,
+    max_tokens=256,    # 답변을 256토큰으로 제한
+)
+ans = chat.invoke("LangChain을 처음 배우는 사람에게 3줄로 설명해줘")
+print(ans.content)
+print("출력 토큰:", ans.usage_metadata["output_tokens"])  # max_tokens 근처면 잘렸을 수 있음</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">⚠️ 잘림 주의</div>답이 문장 중간에 끊기면 <code>max_tokens</code>가 작은 것입니다. 늘리거나, 더 짧게 답하라고 프롬프트로 유도하세요.</div>
+
   </div>
   <div class="lesson-section" id="tmpl" data-toc>
     <h2>프롬프트 템플릿</h2>
-    <p>반복되는 프롬프트는 <strong>변수 {}</strong>가 있는 템플릿으로 만들어 값만 바꿔 끼웁니다.</p>
+    <p>매번 똑같은 문장을 새로 쓰지 않도록, <strong>변수 {}</strong>가 들어간 템플릿을 만들어 값만 바꿔 끼웁니다.</p>
+    <h3>가장 간단한 형태</h3>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 
+# {topic} 자리에 나중에 값을 끼움
+prompt = ChatPromptTemplate.from_template("{topic}에 대해 한 문장으로 설명해줘")
+
+print(prompt.format(topic="머신러닝"))   # 문자열로 확인
+msgs = prompt.format_messages(topic="딥러닝")  # 실제 호출용 메시지로
+print(ChatOpenAI().invoke(msgs).content)</code></pre>
+    <h3>역할 + 변수 여러 개 (번역기 템플릿)</h3>
+<pre><code>from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+# system/human 각각 변수를 가질 수 있음
 chat_prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant that translates {input_language} to {output_language}."),
-    ("human", "{user_input}"),
+    ("human",  "{user_input}"),
 ])
+
 messages = chat_prompt.format_messages(
-    input_language="English", output_language="Korean", user_input="I love programming")
+    input_language="English",
+    output_language="Korean",
+    user_input="I love programming",
+)
 print(ChatOpenAI(temperature=0).invoke(messages).content)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="tmpl2" data-toc>
+    <h2>템플릿 심화·조합</h2>
+    <h3>format vs format_messages</h3>
+    <p><code>format()</code>은 사람이 읽는 <strong>문자열</strong>을, <code>format_messages()</code>는 모델에 넣는 <strong>메시지 리스트</strong>를 만듭니다. 호출엔 보통 <code>format_messages()</code>를 씁니다.</p>
+    <h3>확장 — 이메일 작성기 템플릿</h3>
+<pre><code>from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+email_prompt = ChatPromptTemplate.from_messages([
+    ("system", "너는 비즈니스 이메일 작성 도우미야. 정중하고 간결하게 한국어로 써."),
+    ("human", "받는사람: {to}\n목적: {purpose}\n톤: {tone}\n위 내용으로 이메일 초안을 써줘."),
+])
+msgs = email_prompt.format_messages(
+    to="교수님", purpose="과제 제출 기한 3일 연장 요청", tone="아주 공손하게")
+print(ChatOpenAI(temperature=0.4).invoke(msgs).content)</code></pre>
+    <h3>확장 — 템플릿 조합(+)으로 규칙 덧붙이기</h3>
+<pre><code>from langchain_core.prompts import PromptTemplate
+
+base = PromptTemplate.from_template("{name}님께 {language}로 인사말을 만들어줘")
+rule = PromptTemplate.from_template("\n\n조건: 한 문장, 이모지 1개 포함")
+combined = base + rule           # 두 템플릿을 이어붙임
+print(combined.format(name="홍길동", language="영어"))</code></pre>
+
   </div>
   <div class="lesson-section" id="chain" data-toc>
-    <h2>LLM 체인 + 스트리밍</h2>
-    <p>LangChain의 핵심은 <strong>체인</strong> — 프롬프트와 모델을 이어 "입력 → 처리 → 출력" 흐름을 만드는 것입니다. (내일 배울 LCEL의 맛보기)</p>
-<pre><code>chain = chat_prompt | ChatOpenAI(model="gpt-4o-mini")
-print(chain.invoke({"input_language":"English","output_language":"Korean","user_input":"Good morning"}).content)</code></pre>
-    <h3>ChatGPT처럼 실시간 출력 (스트리밍)</h3>
-<pre><code>from langchain_core.messages import HumanMessage
+    <h2>LLM 체인 (Prompt | LLM)</h2>
+    <p>프롬프트와 모델을 이어 "입력 → 처리 → 출력" 흐름을 만든 것이 <strong>LLM 체인</strong>입니다. (내일 배울 LCEL의 맛보기 — 파이프 <code>|</code>로 연결)</p>
+<pre><code>from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+prompt = ChatPromptTemplate.from_template(
+    "다음 문장을 {style} 말투로 다시 써줘: {text}")
+chain = prompt | ChatOpenAI(model="gpt-4o-mini")   # ← 프롬프트와 모델을 | 로 연결
+
+out = chain.invoke({"style": "아주 친근한 반말", "text": "회의는 오후 3시에 시작합니다."})
+print(out.content)</code></pre>
+    <h3>확장 — 여러 입력을 한 번에 처리(batch)</h3>
+<pre><code>inputs = [
+    {"style": "정중한 존댓말", "text": "지금 어디야?"},
+    {"style": "신나는 광고 카피", "text": "오늘 세일합니다."},
+]
+for r in chain.batch(inputs):     # batch: 여러 입력을 한 번에
+    print("-", r.content)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="stream" data-toc>
+    <h2>스트리밍 출력</h2>
+    <p>ChatGPT처럼 답이 <strong>한 글자씩 실시간으로</strong> 나오게 하려면 <code>stream()</code>을 씁니다. 체감 속도가 크게 좋아집니다.</p>
+<pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
+
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
-for chunk in llm.stream([HumanMessage(content="왜 파이썬이 인기있어?")]):
-    print(chunk.content, end="", flush=True)</code></pre>
+
+# stream()은 응답을 "조각(chunk)"으로 나눠서 차례로 돌려줌
+for chunk in llm.stream([HumanMessage(content="왜 파이썬이 가장 인기 있는 언어야?")]):
+    print(chunk.content, end="", flush=True)   # end=""로 이어붙여 출력</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 원리</div>전체 답을 다 만든 뒤 한 번에 주는 게 아니라, 생성되는 대로 조각으로 흘려보냅니다(streaming). 사용자는 기다림을 덜 느낍니다.</div>
+
   </div>
   <div class="lesson-section" id="monitor" data-toc>
     <h2>토큰·콜백 모니터링</h2>
-    <p>실무에선 "얼마나 쓰는지"를 추적합니다. <strong>콜백 핸들러</strong>로 실행 단계·토큰 사용량·소요 시간을 모니터링할 수 있습니다 (adv_01 노트북의 CallbackHandler 예제).</p>
-    <div class="callout callout-tip"><div class="callout-title">📝 감각</div>토큰 = 비용. 입력(prompt)·출력(completion) 토큰이 쌓입니다. 오늘은 "동작 확인" 수준으로만 보고, 모니터링은 콜백으로 자동화할 수 있다는 점만 익힙니다.</div>
+    <p>실무에선 "얼마나 쓰는지/얼마나 걸리는지"를 추적합니다. <strong>콜백 핸들러</strong>를 붙이면 호출 시작·종료·토큰·시간을 자동 기록할 수 있습니다 (adv_01 노트북).</p>
+<pre><code>import time
+from langchain_core.callbacks.base import BaseCallbackHandler
+
+# 호출 시간을 재는 아주 단순한 콜백 핸들러
+class TimerHandler(BaseCallbackHandler):
+    def on_llm_start(self, serialized, prompts, **kwargs):
+        self.t0 = time.time()                       # LLM 호출 시작 시각 기록
+    def on_llm_end(self, response, **kwargs):
+        print(f"[소요시간] {time.time() - self.t0:.2f}초")   # 종료 시 경과 출력
+
+llm = ChatOpenAI(model="gpt-4o-mini", callbacks=[TimerHandler()])
+ans = llm.invoke("LangChain의 장점 3가지")
+print(ans.content)
+print("총 토큰:", ans.usage_metadata["total_tokens"])</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 확장 아이디어</div>콜백에서 토큰을 누적하면 "이번 세션 총 비용"을 추적할 수 있습니다. 로깅·모니터링·LangSmith 연동의 출발점입니다.</div>
+
   </div>
   <div class="lesson-section" id="실습" data-toc>
     <h2>오늘의 실습 미션</h2>
     <ol>
-      <li><strong>나만의 번역기</strong> — 입력 언어·출력 언어를 변수로 받는 ChatPromptTemplate 체인</li>
-      <li><strong>나만의 도우미</strong> — system 프롬프트로 역할·말투·금지사항을 정한 비서</li>
-      <li>같은 질문을 temperature 0 / 0.7 / 1.0 으로 호출해 결과 비교</li>
+      <li><strong>나만의 번역기</strong> — 도착 언어와 말투를 인자로 받는 <code>translate_tone()</code> 완성 후 3개 언어 테스트</li>
+      <li><strong>나만의 도우미</strong> — system 프롬프트로 역할·말투·금지사항을 정한 비서 만들기 (예: "초등학생도 알아듣게 설명하는 과학 선생님")</li>
+      <li><strong>temperature 실험</strong> — 같은 질문을 0/0.5/1.0으로 호출해 답 차이를 표로 정리</li>
+      <li><strong>이메일 작성기</strong> — 받는사람·목적·톤을 변수로 받는 템플릿 체인 만들기</li>
+      <li><strong>스트리밍</strong> — 좋아하는 주제 질문을 스트리밍으로 출력해 보기</li>
     </ol>
+
+  </div>
+  <div class="lesson-section" id="faq" data-toc>
+    <h2>자주 막히는 부분</h2>
+    <ul>
+      <li><strong>AuthenticationError</strong> → 보안 비밀 "이름"과 <code>userdata.get("이름")</code>이 다르거나, 키가 만료됨</li>
+      <li><strong>RateLimitError / quota</strong> → OpenAI 사용량/결제 한도 초과. 잠시 후 재시도 또는 결제 확인</li>
+      <li><strong>답이 중간에 잘림</strong> → <code>max_tokens</code>를 키우기</li>
+      <li><strong>한국어가 어색함</strong> → system 프롬프트에 "자연스러운 한국어로" 명시</li>
+      <li><strong>모듈 없음(ModuleNotFound)</strong> → 설치 셀을 다시 실행하고 런타임을 재시작</li>
+    </ul>
+    <div class="callout callout-tip"><div class="callout-title">🤖 막히면</div>에러 메시지 전체를 복사해 Claude/ChatGPT에 붙여넣고 "원인과 해결책"을 물어보세요. 디버깅도 바이브 코딩입니다.</div>
+
   </div>
   <div class="lesson-section" id="과제" data-toc>
     <h2>과제</h2>
     <ol>
-      <li>Colab에서 첫 LLM 호출 성공 + 스크린샷</li>
-      <li>나만의 system 프롬프트 도우미 1개 완성</li>
+      <li>Colab에서 첫 LLM 호출 성공 + 응답 객체의 토큰 사용량 캡처</li>
+      <li>나만의 system 프롬프트 도우미 1개 완성 (역할·말투·금지사항 포함)</li>
+      <li>번역기 확장판(말투 지정) 으로 3개 언어 번역 결과 제출</li>
       <li>스트리밍 출력 동작 확인</li>
     </ol>
+
   </div>
 
   <div class="lesson-section" id="노트북" data-toc>
     <h2>오늘 함께 실습할 Colab 노트북</h2>
-    <p>위 강의안 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
+    <p>본 강의안의 내용을 아래 <strong>Colab 노트북</strong>으로 단계별 실습합니다. (구글 로그인 + OpenAI API 키 필요)</p>
     <ul>
       <li><strong>lang_01_랭체인기초.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/lang_01_%EB%9E%AD%EC%B2%B4%EC%9D%B8%EA%B8%B0%EC%B4%88.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>
       <li><strong>adv_01_LLM_LLM체인_20260517.ipynb</strong><br><a href="https://colab.research.google.com/github/aebonlee/halla/blob/main/gen-ai-dev/adv_01_LLM_LLM%EC%B2%B4%EC%9D%B8_20260517.ipynb" target="_blank" rel="noopener">▶ Colab에서 열기</a></li>
