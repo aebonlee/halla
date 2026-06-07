@@ -2737,3 +2737,7 @@ pre code {
   height: 1px; margin: 7px 12px; padding: 0;
   background: var(--color-border); list-style: none;
 }
+
+/* 코드 주석 녹색 강조 (main.js가 주석을 .cmt로 감쌈) */
+pre code .cmt { color: #6ee7b7; font-style: italic; }
+[data-theme="dark"] pre code .cmt { color: #86efac; }

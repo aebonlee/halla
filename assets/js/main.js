@@ -153,6 +153,28 @@ document.addEventListener('DOMContentLoaded', () => {
     pre.appendChild(btn);
   });
 
+  // 코드 주석 녹색 강조 — 의존성 없이 주석만 .cmt로 감쌈
+  // 파이썬/셸 '#' 주석, JS '//' 주석. URL '://' 와 이스케이프 '&#39;' 오작동 방지.
+  document.querySelectorAll('pre code').forEach((codeEl) => {
+    if (codeEl.dataset.cmt) return;          // 재실행 안전
+    codeEl.dataset.cmt = '1';
+    const out = codeEl.innerHTML.split('\n').map((line) => {
+      if (line.indexOf('class="cmt"') !== -1) return line;
+      // 1) 파이썬/셸: (줄시작|공백) + # ~ 줄끝  ('&#39;' 같은 숫자엔티티는 제외)
+      if (/(^|\s)#(?!\d{1,3};)/.test(line)) {
+        return line.replace(/(^|\s)(#(?!\d{1,3};).*)$/,
+          (m, p1, c) => p1 + '<span class="cmt">' + c + '</span>');
+      }
+      // 2) JS: // ~ 줄끝  (단, http:// 처럼 ':' 뒤 // 는 제외)
+      if (/(^|[^:"'\/])\/\//.test(line)) {
+        return line.replace(/(^|[^:"'\/])(\/\/.*)$/,
+          (m, p1, c) => p1 + '<span class="cmt">' + c + '</span>');
+      }
+      return line;
+    });
+    codeEl.innerHTML = out.join('\n');
+  });
+
   // 스크롤 등장 애니메이션
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
