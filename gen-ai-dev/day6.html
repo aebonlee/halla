@@ -182,39 +182,42 @@
 <pre><code># ===== 0) 설치 &amp; 키 =====
 # !pip install langchain langchain-openai langchain-community langchain-chroma pypdf gradio
 import os
-from google.colab import userdata
-os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")
+from google.colab import userdata                 # Colab 비밀저장소에서 키 읽기
+os.environ["OPENAI_API_KEY"] = userdata.get("OPENAI_API_KEY")  # 환경변수로 등록
 
 # ===== 1) 문서 적재 → 청크 =====
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
 
 texts, splitter = [], CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=50)
-for f in os.listdir("./pdfs"):
-    if f.endswith(".pdf"):
-        texts += splitter.split_documents(PyPDFLoader(f"./pdfs/{f}").load())
+for f in os.listdir("./pdfs"):                     # pdfs 폴더의 파일을 하나씩
+    if f.endswith(".pdf"):                         # .pdf 만 골라
+        texts += splitter.split_documents(PyPDFLoader(f"./pdfs/{f}").load())  # 읽고 상자로 분할
 
 # ===== 2) 임베딩 → 벡터스토어 → 검색기 =====
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_chroma import Chroma
-db = Chroma.from_documents(texts, OpenAIEmbeddings())
-retriever = db.as_retriever(search_kwargs={"k": 4})
+db = Chroma.from_documents(texts, OpenAIEmbeddings())    # 상자→벡터→DB 저장
+retriever = db.as_retriever(search_kwargs={"k": 4})     # 질문당 가까운 상자 4개
 
 # ===== 3) RAG 체인 (검색→삽입→생성) =====
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
+# "내용에 없으면 모른다" 규칙 → 환각 방지. {context}=문서, {question}=질문
 prompt = ChatPromptTemplate.from_template(
     "아래 [내용]만 근거로 한국어로 답하라. 없으면 모른다고 답하라.\n[내용]\n{context}\n\n[질문]\n{question}")
-def format_docs(docs): return "\n\n".join(d.page_content for d in docs)
+def format_docs(docs): return "\n\n".join(d.page_content for d in docs)  # 상자들→한 글
 
+# context=(검색→합치기), question=질문 그대로 → 프롬프트 → 모델 → 문자열
 rag = ({"context": retriever | format_docs, "question": RunnablePassthrough()}
        | prompt | ChatOpenAI(model="gpt-4o-mini", temperature=0.1) | StrOutputParser())
 
 # ===== 4) Gradio UI 배포 =====
 import gradio as gr
-def respond(message, history): return rag.invoke(message)   # RAG 체인 연결
+def respond(message, history): return rag.invoke(message)   # 입력을 RAG 체인에 연결
+# ChatInterface : 채팅 UI를 한 줄로. share=True → 외부 공유 URL 생성
 gr.ChatInterface(respond, title="내 문서 Q&amp;A 봇").launch(share=True)</code></pre>
     <div class="callout callout-info"><div class="callout-title">💡 변형</div>분류기 프로젝트라면 2~3단계를 "분류 체인"으로, 단순 도우미라면 RAG 없이 "LLM 체인 + Gradio"로 줄이면 됩니다.</div>
 
