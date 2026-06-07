@@ -167,32 +167,33 @@
       <li>few-shot 예시로 출력 형식을 안정화할 수 있다.</li>
       <li>LCEL <code>|</code>로 prompt·model·parser를 연결하고, 그 원리(<code>__or__</code>)를 설명할 수 있다.</li>
       <li>RunnablePassthrough/assign/Parallel로 체인 입력을 자유롭게 가공할 수 있다.</li>
-      <li>커스텀 OutputParser로 모델 출력을 가공하고 외부 함수(numexpr)와 연결할 수 있다.</li>
+      <li>커스텀 OutputParser로 모델 출력을 가공하고 외부 함수와 연결할 수 있다.</li>
     </ul>
 
   </div>
   <div class="lesson-section" id="rules" data-toc>
     <h2>프롬프트 작성 원칙</h2>
-    <p>프롬프트는 사용자와 모델 사이의 "요청서"입니다. 잘 쓰면 환각이 줄고 원하는 형식이 안정됩니다.</p>
+    <p>프롬프트는 모델에게 주는 "요청서"입니다. 잘 쓰면 환각이 줄고 형식이 안정됩니다.</p>
     <ul>
       <li><strong>명확성·구체성</strong> — 무엇을, 어떤 형식으로 원하는지 분명히</li>
       <li><strong>맥락 제공</strong> — 배경 정보를 주면 관련성↑, 환각↓</li>
-      <li><strong>간결함</strong> — 핵심에 집중, 불필요한 정보 배제</li>
-      <li><strong>열린 질문 + 예시</strong> — 원하는 답의 예를 1~2개 보여주면(few-shot) 일관성↑</li>
+      <li><strong>간결함</strong> — 핵심만, 불필요한 정보 배제</li>
+      <li><strong>예시(few-shot)</strong> — 원하는 답의 예를 1~2개 제시</li>
     </ul>
-    <div class="callout callout-tip"><div class="callout-title">📝 한 줄</div>"역할 + 맥락 + 출력형식 + 예시" 네 가지를 갖추면 대부분의 프롬프트가 좋아집니다.</div>
+    <div class="callout callout-tip"><div class="callout-title">📝 한 줄</div>"역할 + 맥락 + 출력형식 + 예시" 네 가지를 갖추면 대부분 좋아집니다.</div>
 
   </div>
   <div class="lesson-section" id="ptmpl" data-toc>
     <h2>PromptTemplate 기초</h2>
-    <p>변수 <code>{}</code>가 들어간 틀을 만들어 값만 바꿔 끼웁니다. 단일 문장용은 <code>PromptTemplate</code>.</p>
-<pre><code>from langchain_core.prompts import PromptTemplate
+    <p>변수 <code>{}</code>가 든 틀을 만들어 값만 바꿔 끼웁니다. 단일 문장용은 <code>PromptTemplate</code>.</p>
+<pre><code>from langchain_core.prompts import PromptTemplate   # 단일 텍스트용 템플릿
 
+# from_template : 문자열로 템플릿을 만듦. {name}{age}{language} 는 나중에 채울 빈칸
 tmpl = PromptTemplate.from_template("{name}님은 {age}살입니다. {language}로 인사해줘")
 
-# format(): 값을 채워 "문자열"로 확인
+# format(빈칸=값) : 빈칸을 채워 완성된 "문자열"을 돌려줌
 print(tmpl.format(name="홍길동", age=20, language="영어"))
-# → 홍길동님은 20살입니다. 영어로 인사해줘</code></pre>
+# 출력 → 홍길동님은 20살입니다. 영어로 인사해줘</code></pre>
 
   </div>
   <div class="lesson-section" id="combine" data-toc>
@@ -200,41 +201,43 @@ print(tmpl.format(name="홍길동", age=20, language="영어"))
     <p>템플릿끼리 <code>+</code>로 이어 붙여 "기본 틀 + 규칙"을 합칠 수 있습니다.</p>
 <pre><code>from langchain_core.prompts import PromptTemplate
 
-base = PromptTemplate.from_template("{topic}에 대해 설명해줘")
-rule = PromptTemplate.from_template("\n\n조건: 3문장 이내, 중학생 눈높이로")
-combined = base + rule           # 두 틀을 합침
+base = PromptTemplate.from_template("{topic}에 대해 설명해줘")        # 기본 요청
+rule = PromptTemplate.from_template("\n\n조건: 3문장 이내, 중학생 눈높이로")  # 덧붙일 규칙
+combined = base + rule        # + 로 두 템플릿을 하나로 합침
 
-print(combined.format(topic="블랙홀"))</code></pre>
+print(combined.format(topic="블랙홀"))   # 합쳐진 틀에 topic 채우기</code></pre>
 
   </div>
   <div class="lesson-section" id="fewshot" data-toc>
     <h2>few-shot 예시</h2>
-    <p>"이렇게 답해줘"라는 <strong>예시</strong>를 프롬프트에 넣으면 형식이 안정됩니다.</p>
+    <p>"이렇게 답해줘"라는 <strong>예시</strong>를 넣으면 형식이 안정됩니다. 예시를 주는 방식을 few-shot이라 합니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-# 예시 2개를 보여주고, 같은 형식으로 답하게 유도(few-shot)
+# system(규칙) 다음에, human/ai 쌍으로 "예시"를 보여줌 → 모델이 형식을 따라함
 prompt = ChatPromptTemplate.from_messages([
     ("system", "너는 단어를 받아 '단어: 한줄뜻' 형식으로만 답한다."),
-    ("human", "사과"),   ("ai", "사과: 빨갛고 단 과일"),
-    ("human", "고래"),   ("ai", "고래: 바다에 사는 큰 포유류"),
-    ("human", "{word}"),                       # ← 실제 입력
+    ("human", "사과"),   ("ai", "사과: 빨갛고 단 과일"),   # 예시 1
+    ("human", "고래"),   ("ai", "고래: 바다에 사는 큰 포유류"),  # 예시 2
+    ("human", "{word}"),                                    # 실제 입력 자리
 ])
-chain = prompt | ChatOpenAI(temperature=0)
+chain = prompt | ChatOpenAI(temperature=0)   # 형식을 따르게 temperature=0
 print(chain.invoke({"word": "은하"}).content)</code></pre>
 
   </div>
   <div class="lesson-section" id="ctmpl" data-toc>
     <h2>ChatPromptTemplate</h2>
-    <p>대화형은 <code>ChatPromptTemplate.from_messages</code>로 system/human 메시지를 함께 구성합니다. 각 메시지가 변수를 가질 수 있습니다.</p>
+    <p>대화형은 <code>from_messages</code>로 system/human 메시지를 함께 구성합니다. 각 메시지가 변수를 가질 수 있습니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 
+# 리스트 안에 (역할, 내용) 튜플로 메시지들을 정의. 각 내용에 빈칸{} 가능
 chat_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful assistant that translates {input_language} to {output_language}."),
+    ("system", "너는 {input_language}를 {output_language}로 번역하는 번역가야."),
     ("human",  "{user_input}"),
 ])
+# format_messages : 빈칸을 채워 "메시지 리스트"로 만듦(모델 입력용)
 msgs = chat_prompt.format_messages(
-    input_language="English", output_language="Korean", user_input="I love programming")
+    input_language="영어", output_language="한국어", user_input="I love programming")
 print(msgs)   # SystemMessage(...), HumanMessage(...) 로 채워진 리스트</code></pre>
 
   </div>
@@ -242,96 +245,99 @@ print(msgs)   # SystemMessage(...), HumanMessage(...) 로 채워진 리스트</c
     <h2>LCEL — 파이프 |</h2>
     <p>LangChain의 정수는 <strong>표현언어(LCEL)</strong> — <code>|</code> 파이프로 구성요소를 잇는 것입니다. 데이터가 왼쪽→오른쪽으로 흐릅니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser   # 응답에서 문자열만 뽑는 파서
 from langchain_openai import ChatOpenAI
 
-prompt = ChatPromptTemplate.from_template("Tell me a short joke about {topic}")
+prompt = ChatPromptTemplate.from_template("{topic}에 대한 짧은 농담 하나")
 chat_model = ChatOpenAI()
 output_parser = StrOutputParser()
 
-# 체인 "정의" (아직 호출 안 함) — 프롬프트 → 모델 → 파서
+# | 로 셋을 연결: 프롬프트 → 모델 → 파서. (아직 "정의"만 하고 실행은 안 함)
 chain = prompt | chat_model | output_parser
 
-# invoke에 변수는 dict로 전달 (프롬프트가 dict를 받기 때문)
-print(chain.invoke({"topic": "ice cream"}))</code></pre>
+# invoke 에 변수는 딕셔너리로 전달 (프롬프트가 딕셔너리를 받기 때문)
+print(chain.invoke({"topic": "아이스크림"}))</code></pre>
 
   </div>
   <div class="lesson-section" id="parser" data-toc>
     <h2>StrOutputParser</h2>
-    <p>모델 응답은 메시지 객체입니다. <code>StrOutputParser</code>를 체인 끝에 붙이면 <strong>문자열만</strong> 깔끔히 나옵니다(<code>.content</code> 불필요).</p>
-<pre><code># 객체를 따로 안 만들고 한 줄로도 가능
+    <p>모델 응답은 메시지 객체입니다. 파서를 끝에 붙이면 <strong>문자열만</strong> 깔끔히 나옵니다(<code>.content</code> 불필요).</p>
+<pre><code># 객체를 따로 안 만들고 한 줄로도 가능 — 같은 의미
 chain = prompt | ChatOpenAI() | StrOutputParser()
-print(chain.invoke({"topic": "ice cream"}))</code></pre>
-    <div class="callout callout-info"><div class="callout-title">💡 파서의 역할</div>모델 출력을 "프로그램이 쓰기 좋은 형태"로 변환. 문자열(StrOutputParser), JSON, 정수 등 목적에 맞게.</div>
+print(chain.invoke({"topic": "아이스크림"}))   # 결과가 바로 문자열</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 파서의 역할</div>모델 출력을 "프로그램이 쓰기 좋은 형태"로 변환. 문자열·JSON·정수 등 목적에 맞게.</div>
 
   </div>
   <div class="lesson-section" id="how" data-toc>
     <h2>LCEL 원리 (__or__)</h2>
-    <p><code>|</code>는 마법이 아니라 파이썬 <strong>OR 연산자 오버로딩</strong>입니다. 작은 클래스를 직접 만들어 원리를 체험합니다 (lang_02 원본).</p>
+    <p><code>|</code>는 마법이 아니라 파이썬의 <strong>OR 연산자 오버로딩</strong>입니다. 작은 클래스로 원리를 직접 만들어 봅니다.</p>
 <pre><code>class Runnable:
-    def __init__(self, func):
-        self.func = func
+    def __init__(self, func):       # __init__ : 객체가 만들어질 때 실행(생성자)
+        self.func = func            # 넘겨받은 함수를 self.func 에 저장
 
-    # a | b 를 만나면 호출됨 → 두 함수를 이어 붙임
-    def __or__(self, other):
+    def __or__(self, other):        # __or__ : "a | b" 를 만났을 때 자동 호출되는 특수 메서드
         def chained_func(*args, **kwargs):
-            # self의 결과를 other에 넘김 (왼→오 흐름)
+            # self(왼쪽)의 결과를 other(오른쪽)에 넘김 → 왼→오 흐름
             return other(self.func(*args, **kwargs))
-        return Runnable(chained_func)
+        return Runnable(chained_func)   # 이어붙인 함수를 다시 Runnable로 감싸 반환
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs):  # __call__ : 객체를 함수처럼 () 로 부를 때 실행
         return self.func(*args, **kwargs)</code></pre>
 
   </div>
   <div class="lesson-section" id="funcchain" data-toc>
     <h2>함수 체이닝 예제</h2>
     <p>일반 함수도 위 Runnable로 감싸면 <code>|</code>로 이을 수 있습니다.</p>
-<pre><code>def add_five(x):  return x + 5
-def multiply_by_two(x): return x * 2
-def num2ko(x): return str(x) + "입니다."
+<pre><code>def add_five(x):  return x + 5        # 5 더하기
+def multiply_by_two(x): return x * 2 # 2 곱하기
+def num2ko(x): return str(x) + "입니다."  # 숫자를 문자열로
 
+# 각 함수를 Runnable 로 감쌈
 add_five = Runnable(add_five)
 multiply_by_two = Runnable(multiply_by_two)
 num2ko = Runnable(num2ko)
 
-chain = add_five | multiply_by_two | num2ko
-print(chain(3))    # (3+5)*2 = 16 → "16입니다."</code></pre>
+chain = add_five | multiply_by_two | num2ko   # 세 함수를 순서대로 연결
+print(chain(3))    # 3 → +5 → 8 → *2 → 16 → "16입니다."</code></pre>
     <div class="callout callout-tip"><div class="callout-title">📝 깨달음</div>LCEL의 <code>prompt | model | parser</code>도 결국 "앞의 결과를 뒤로 넘기는" 같은 원리입니다.</div>
 
   </div>
   <div class="lesson-section" id="passth" data-toc>
     <h2>RunnablePassthrough</h2>
-    <p>체인은 보통 dict를 받습니다. <code>RunnablePassthrough</code>를 쓰면 <strong>값 하나만</strong> 넣어도 동작하게 만들 수 있습니다.</p>
+    <p>체인은 보통 딕셔너리를 받습니다. <code>RunnablePassthrough</code>를 쓰면 <strong>값 하나만</strong> 넣어도 동작하게 만들 수 있습니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough  # 입력을 그대로 흘려보냄
 
-prompt = ChatPromptTemplate.from_template("Tell me a short joke about {topic}")
+prompt = ChatPromptTemplate.from_template("{topic}에 대한 짧은 농담 하나")
+
+# {"topic": RunnablePassthrough()} : 들어온 값을 그대로 topic 자리에 넣어줌
 chain = {"topic": RunnablePassthrough()} | prompt | ChatOpenAI() | StrOutputParser()
 
-# "ice cream" → {"topic": "ice cream"} 으로 자동 포장되어 흐름
-print(chain.invoke("ice cream"))</code></pre>
+# 딕셔너리 대신 문자열 하나만 넣어도 됨 → 자동으로 {"topic":"아이스크림"} 처럼 처리
+print(chain.invoke("아이스크림"))</code></pre>
 
   </div>
   <div class="lesson-section" id="assign" data-toc>
     <h2>assign으로 변수 자동 채우기</h2>
-    <p>변수가 여러 개인데 사용자는 하나만 입력하게 하고 싶을 때, <code>RunnablePassthrough.assign</code>으로 나머지를 함수가 자동으로 채웁니다 (lang_02 원본: 대화 예문 생성기).</p>
+    <p>변수가 여러 개인데 사용자는 하나만 입력하게 하고 싶을 때, <code>assign</code>으로 나머지를 함수가 자동으로 채웁니다.</p>
 <pre><code>from langchain_core.runnables import RunnablePassthrough
 
-template = "Please generate three dialogue sentences in {language} on {topic} for a {level} level"
+template = "{language}로 {topic}에 대한 {level} 수준 대화문 3개를 만들어줘"
 prompt = ChatPromptTemplate.from_template(template)
 
-# 시스템이 정하는 값(language/level)을 함수로 제공 — 인자는 1개(_)만 받는다
-def get_language(_): return "English"
-def get_level(_):    return "beginner"
+# 시스템이 정하는 값은 함수로 제공. 인자는 1개(_)만 받음(입력은 안 쓰고 고정값 반환)
+def get_language(_): return "영어"
+def get_level(_):    return "초급"
 
 chain = (
+    # assign(빈칸=함수) : 들어온 딕셔너리에 language/level 값을 자동으로 추가해 줌
     RunnablePassthrough.assign(language=get_language, level=get_level)
     | prompt | ChatOpenAI() | StrOutputParser()
 )
-# 사용자는 topic 하나만 입력 → language/level은 자동으로 채워짐
-print(chain.invoke({"topic": "travel"}))</code></pre>
+# 사용자는 topic 하나만 전달 → language/level 은 함수가 채움
+print(chain.invoke({"topic": "여행"}))</code></pre>
 
   </div>
   <div class="lesson-section" id="parallel" data-toc>
@@ -339,39 +345,41 @@ print(chain.invoke({"topic": "travel"}))</code></pre>
     <p><code>RunnableParallel</code>은 여러 작업을 동시에, <code>RunnableLambda</code>는 임의의 함수를 체인에 끼웁니다.</p>
 <pre><code>from langchain_core.runnables import RunnableParallel, RunnableLambda
 
-# 한 입력으로 두 결과를 동시에 만들기
-joke  = ChatPromptTemplate.from_template("{t} 농담") | ChatOpenAI() | StrOutputParser()
-fact  = ChatPromptTemplate.from_template("{t} 사실 1개") | ChatOpenAI() | StrOutputParser()
-both  = RunnableParallel(joke=joke, fact=fact)
-print(both.invoke({"t": "고양이"}))   # {"joke": "...", "fact": "..."}
+# 한 입력으로 두 결과를 "동시에" 만들기
+joke = ChatPromptTemplate.from_template("{t} 농담") | ChatOpenAI() | StrOutputParser()
+fact = ChatPromptTemplate.from_template("{t} 사실 1개") | ChatOpenAI() | StrOutputParser()
+both = RunnableParallel(joke=joke, fact=fact)    # joke와 fact를 병렬 실행
+print(both.invoke({"t": "고양이"}))   # {"joke": "...", "fact": "..."} 딕셔너리로 반환
 
-# 중간에 함수 끼우기(대문자로)
-upper = RunnableLambda(lambda s: s.upper())
+# RunnableLambda : 보통 함수를 체인 부품으로 끼움(여기선 대문자 변환)
+upper = RunnableLambda(lambda s: s.upper())   # lambda : 한 줄짜리 익명 함수
 chain = ChatPromptTemplate.from_template("{t} in english, one word") | ChatOpenAI() | StrOutputParser() | upper
 print(chain.invoke({"t": "사과"}))</code></pre>
 
   </div>
   <div class="lesson-section" id="custom" data-toc>
     <h2>커스텀 OutputParser</h2>
-    <p>모델 답에서 원하는 부분만 뽑도록 파서를 직접 만들 수 있습니다 (lang_03 원본).</p>
-<pre><code>from langchain_core.output_parsers import BaseOutputParser
+    <p>모델 답에서 원하는 부분만 뽑도록 파서를 직접 만들 수 있습니다.</p>
+<pre><code>from langchain_core.output_parsers import BaseOutputParser  # 파서의 기본 뼈대
 
+# BaseOutputParser 를 상속받아 parse() 만 우리 식으로 구현
 class CodeOutputParser(BaseOutputParser):
-    def parse(self, text: str):
+    def parse(self, text: str):       # text : 모델이 돌려준 답(문자열)
         # 모델이 ```text\n15**0.3432\n``` 처럼 답하면 가운데 수식만 추출
-        value = text.strip().split("```")
-        return value[1].split("\n")[1]</code></pre>
+        value = text.strip().split("```")   # strip:양끝 공백 제거, split:``` 기준 나누기
+        return value[1].split("\n")[1]     # 가운데 조각에서 둘째 줄(수식)만</code></pre>
 
   </div>
   <div class="lesson-section" id="math" data-toc>
     <h2>수학 체인 (실전)</h2>
-    <p>자연어 질문 → LLM이 수식 생성 → 파서로 추출 → <code>numexpr</code>로 실제 계산. 여러 블록을 이어 "하는 일"을 완성합니다.</p>
-<pre><code>import numexpr
-numexpr.evaluate("15**0.3432")   # 파이썬으로 수식 계산 확인</code></pre>
+    <p>자연어 질문 → LLM이 수식 생성 → 파서로 추출 → <code>numexpr</code>로 실제 계산. 블록을 이어 "하는 일"을 완성합니다.</p>
+<pre><code>import numexpr            # 수식 문자열을 실제로 계산해주는 라이브러리
+numexpr.evaluate("15**0.3432")   # 파이썬으로 직접 계산 확인 (** 는 거듭제곱)</code></pre>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.runnables import RunnablePassthrough
 
+# 모델에게 "numexpr가 계산할 수식만, 코드블록으로" 답하도록 역할 지정
 system = """You make ONLY an argument for numexpr.evaluate from the user query.
 Respond as a code block only, like:
 ```text
@@ -381,18 +389,16 @@ without any other description."""
 
 prompt = ChatPromptTemplate.from_messages([("system", system), ("human", "{user_input}")])
 
-# 질문 → 수식 생성 → 수식 추출 → numexpr로 계산까지 한 줄 체인
+# 질문 → 수식 생성(model) → 수식 추출(파서) → 계산(numexpr) 까지 한 줄 체인
 chain = ({"user_input": RunnablePassthrough()}
-         | prompt | ChatOpenAI(temperature=0) | CodeOutputParser() | numexpr.evaluate)
+         | prompt
+         | ChatOpenAI(temperature=0)
+         | CodeOutputParser()         # 위에서 만든 커스텀 파서
+         | numexpr.evaluate)          # 마지막에 일반 함수도 체인에 연결 가능
 print(chain.invoke("What is 15 raised to the .3432 power?"))</code></pre>
     <h3>확장 — 단위 변환기</h3>
 <pre><code># 같은 패턴으로 "단위 변환"도 가능 (자연어 → 수식 → 계산)
-chain2 = ({"user_input": RunnablePassthrough()}
-          | ChatPromptTemplate.from_messages([
-                ("system", system),
-                ("human", "{user_input}")])
-          | ChatOpenAI(temperature=0) | CodeOutputParser() | numexpr.evaluate)
-print(chain2.invoke("5 km is how many meters?"))   # 5000 류</code></pre>
+print(chain.invoke("5 km is how many meters?"))   # 5000 같은 결과</code></pre>
 
   </div>
   <div class="lesson-section" id="실습" data-toc>
@@ -409,12 +415,12 @@ print(chain2.invoke("5 km is how many meters?"))   # 5000 류</code></pre>
   <div class="lesson-section" id="faq" data-toc>
     <h2>자주 막히는 부분</h2>
     <ul>
-      <li><strong>KeyError: 'topic'</strong> → invoke에 dict로 변수를 안 넣었거나 키 이름이 다름</li>
+      <li><strong>KeyError: 'topic'</strong> → invoke에 딕셔너리로 변수를 안 넣었거나 키 이름이 다름</li>
       <li><strong>출력이 메시지 객체로 나옴</strong> → 체인 끝에 <code>StrOutputParser()</code> 추가</li>
-      <li><strong>파서 IndexError</strong> → 모델이 코드블록(```) 형식을 안 지킴. system 프롬프트를 더 강하게</li>
+      <li><strong>파서 IndexError</strong> → 모델이 코드블록(```) 형식을 안 지킴. system을 더 강하게</li>
       <li><strong>numexpr 미설치</strong> → <code>!pip install numexpr</code></li>
     </ul>
-    <div class="callout callout-tip"><div class="callout-title">🤖 막히면</div>체인을 <code>print(chain)</code> 하거나, 단계별로 끊어서 <code>(prompt|model).invoke(...)</code>로 중간 출력을 확인하세요.</div>
+    <div class="callout callout-tip"><div class="callout-title">🤖 막히면</div>체인을 단계별로 끊어 <code>(prompt|model).invoke(...)</code>로 중간 출력을 확인하세요.</div>
 
   </div>
   <div class="lesson-section" id="과제" data-toc>
