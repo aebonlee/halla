@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <title>스트림릿 Tip! - 생성형 AI 개발</title>
+  <meta name="description" content="Streamlit 핵심 사용법과 LangChain 연결·배포(secrets) 팁.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
+  <meta property="og:title" content="스트림릿 Tip! - 생성형 AI 개발">
+  <meta property="og:description" content="Streamlit 핵심 사용법과 LangChain 연결·배포(secrets) 팁.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260612">
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../syllabus.html">강의계획서</a></li>
+      <li><a href="../gen-ai.html">Gen AI활용</a></li>
+      <li><a href="../pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="../prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="../prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="../ai-basic/index.html">과정 개요</a></li>
+          <li><a href="../ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="../ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
+          <li><a href="../vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="../vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li><a href="../gen-ai-dev/python-atoz.html">파이썬 A to Z</a></li>
+          <li><a href="../gen-ai-dev/gradio-tip.html">그라디오 Tip!</a></li>
+          <li><a href="../gen-ai-dev/streamlit-tip.html" class="active">스트림릿 Tip!</a></li>
+          <li><a href="../gen-ai-dev/project-ideas.html">프로젝트 아이디어</a></li>
+          <li><a href="../gen-ai-dev/project-build.html">프로젝트 설계 & 구현</a></li>
+        </ul>
+      </li>
+      <li><a href="../resources.html">참고자료</a></li>
+      <li><a href="../community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+<section class="lesson-hero dev">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="../index.html">홈</a> &nbsp;›&nbsp; <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp; <span>스트림릿 Tip!</span></div>
+    <h1>스트림릿 Tip!</h1>
+    <p style="opacity:0.95; max-width:760px;">Streamlit으로 AI 앱 만들기 — 위젯·세션상태·챗 UI·캐싱·LangChain 연결·배포 팁.</p>
+  </div>
+</section>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#what">Streamlit이란</a></li>
+      <li><a href="#run">설치 & 실행</a></li>
+      <li><a href="#widget">위젯·출력</a></li>
+      <li><a href="#state">세션 상태</a></li>
+      <li><a href="#chat">챗 UI</a></li>
+      <li><a href="#cache">캐싱 (벡터스토어)</a></li>
+      <li><a href="#lc">LangChain 연결</a></li>
+      <li><a href="#deploy">배포 & secrets</a></li>
+      <li><a href="#tip">실전 팁 & 실수</a></li>
+    </ul>
+  </aside>
+  <main class="lesson-main">
+  <div class="lesson-section" id="what" data-toc>
+    <h2>Streamlit이란</h2>
+    <p>데이터·AI 앱을 <strong>파이썬 스크립트</strong>로 만드는 프레임워크입니다. Gradio보다 자유도가 높아 대시보드형 앱에 좋습니다.</p>
+<pre><code>!pip install streamlit</code></pre>
+
+  </div>
+  <div class="lesson-section" id="run" data-toc>
+    <h2>설치 & 실행</h2>
+    <p>Gradio와 달리 <strong>.py 파일</strong>로 만들고 명령어로 실행합니다.</p>
+<pre><code># app.py 로 저장 후 터미널에서:
+streamlit run app.py
+# (Colab은 localtunnel/ngrok 필요 — 로컬·클라우드 권장)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="widget" data-toc>
+    <h2>위젯·출력</h2>
+<pre><code>import streamlit as st
+
+st.title("내 AI 앱")
+st.write("일반 텍스트/표/차트 출력")
+
+name = st.text_input("이름")          # 입력창
+if st.button("인사"):                 # 버튼
+    st.success(f"{name}님 안녕하세요")  # 결과 박스</code></pre>
+
+  </div>
+  <div class="lesson-section" id="state" data-toc>
+    <h2>세션 상태</h2>
+    <p>Streamlit은 입력 때마다 스크립트를 <strong>처음부터 다시 실행</strong>합니다. 값을 유지하려면 <code>st.session_state</code>를 씁니다 (대화 기록의 핵심).</p>
+<pre><code>import streamlit as st
+if "messages" not in st.session_state:
+    st.session_state.messages = []      # 최초 1회 초기화
+st.session_state.messages.append({"role": "user", "content": "안녕"})</code></pre>
+
+  </div>
+  <div class="lesson-section" id="chat" data-toc>
+    <h2>챗 UI</h2>
+<pre><code>import streamlit as st
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# 이전 대화 출력
+for m in st.session_state.messages:
+    with st.chat_message(m["role"]):
+        st.write(m["content"])
+
+# 입력 받기
+if prompt := st.chat_input("메시지를 입력하세요"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    answer = "답변: " + prompt          # ← 여기에 LangChain 체인 연결
+    st.session_state.messages.append({"role": "assistant", "content": answer})
+    st.rerun()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="cache" data-toc>
+    <h2>캐싱 (벡터스토어)</h2>
+    <p>벡터스토어 같은 무거운 객체는 매 실행마다 다시 만들면 느립니다. <code>@st.cache_resource</code>로 한 번만 만듭니다.</p>
+<pre><code>import streamlit as st
+
+@st.cache_resource          # 한 번 만들고 재사용
+def load_db():
+    from langchain_chroma import Chroma
+    from langchain_openai import OpenAIEmbeddings
+    return Chroma(persist_directory="./db", embedding_function=OpenAIEmbeddings())
+
+db = load_db()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="lc" data-toc>
+    <h2>LangChain 연결</h2>
+<pre><code>answer = rag.invoke(prompt)          # 체인 결과를
+st.session_state.messages.append({"role": "assistant", "content": answer})</code></pre>
+
+  </div>
+  <div class="lesson-section" id="deploy" data-toc>
+    <h2>배포 & secrets</h2>
+    <p><strong>Streamlit Community Cloud</strong>에 무료 배포할 수 있습니다. API 키는 <code>st.secrets</code>로 안전하게 관리합니다.</p>
+<pre><code>import streamlit as st, os
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]   # 비밀값
+# 배포 시 대시보드 Settings → Secrets 에 키 등록</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">🔐 키 주의</div>키를 코드에 직접 쓰지 말고 <code>st.secrets</code>/환경변수로. GitHub에 키 커밋 금지.</div>
+
+  </div>
+  <div class="lesson-section" id="tip" data-toc>
+    <h2>실전 팁 & 실수</h2>
+    <ul>
+      <li>"왜 변수가 초기화되지?" → Streamlit은 매 입력마다 재실행. 유지할 값은 <code>session_state</code></li>
+      <li>무거운 로딩 → <code>@st.cache_resource</code>(객체)·<code>@st.cache_data</code>(데이터)</li>
+      <li><code>st.rerun()</code>으로 화면 갱신</li>
+      <li>레이아웃 → <code>st.columns</code>, <code>st.sidebar</code></li>
+      <li>대시보드형(차트·표)엔 Streamlit, 초간단 데모엔 Gradio</li>
+    </ul>
+
+  </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.</div></div>
+    <div><div class="footer-title">생성형 AI</div>
+      <ul class="footer-links">
+        <li><a href="index.html">과정 개요</a></li>
+        <li><a href="project-ideas.html">프로젝트 아이디어</a></li>
+        <li><a href="project-build.html">프로젝트 설계 & 구현</a></li>
+      </ul></div>
+    <div><div class="footer-title">운영 · 문의</div>
+      <ul class="footer-links">
+        <li>강사 · 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js?v=20260612"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/notifications.js?v=20260612"></script>
+<script src="../assets/js/auth.js?v=20260612"></script>
+<script src="../assets/js/main.js?v=20260612"></script>
+</body>
+</html>

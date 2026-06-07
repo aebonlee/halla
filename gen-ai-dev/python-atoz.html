@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <title>파이썬 A to Z - 생성형 AI 개발</title>
+  <meta name="description" content="비전공자를 위한 파이썬 핵심 + LangChain에서 자주 쓰는 패턴 정리.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
+  <meta property="og:title" content="파이썬 A to Z - 생성형 AI 개발">
+  <meta property="og:description" content="비전공자를 위한 파이썬 핵심 + LangChain에서 자주 쓰는 패턴 정리.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260612">
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../syllabus.html">강의계획서</a></li>
+      <li><a href="../gen-ai.html">Gen AI활용</a></li>
+      <li><a href="../pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="../prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="../prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="../ai-basic/index.html">과정 개요</a></li>
+          <li><a href="../ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="../ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
+          <li><a href="../vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="../vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li><a href="../gen-ai-dev/python-atoz.html" class="active">파이썬 A to Z</a></li>
+          <li><a href="../gen-ai-dev/gradio-tip.html">그라디오 Tip!</a></li>
+          <li><a href="../gen-ai-dev/streamlit-tip.html">스트림릿 Tip!</a></li>
+          <li><a href="../gen-ai-dev/project-ideas.html">프로젝트 아이디어</a></li>
+          <li><a href="../gen-ai-dev/project-build.html">프로젝트 설계 & 구현</a></li>
+        </ul>
+      </li>
+      <li><a href="../resources.html">참고자료</a></li>
+      <li><a href="../community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+<section class="lesson-hero dev">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="../index.html">홈</a> &nbsp;›&nbsp; <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp; <span>파이썬 A to Z</span></div>
+    <h1>파이썬 A to Z</h1>
+    <p style="opacity:0.95; max-width:760px;">이 과정에 필요한 최소 파이썬 — 변수·자료구조·반복문·함수·컴프리헨션과 LangChain 패턴.</p>
+  </div>
+</section>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#why">왜 파이썬인가</a></li>
+      <li><a href="#var">변수와 자료형</a></li>
+      <li><a href="#ds">자료구조</a></li>
+      <li><a href="#flow">조건문·반복문</a></li>
+      <li><a href="#func">함수</a></li>
+      <li><a href="#mod">모듈·패키지·pip</a></li>
+      <li><a href="#file">파일·예외</a></li>
+      <li><a href="#str">문자열·f-string</a></li>
+      <li><a href="#comp">컴프리헨션</a></li>
+      <li><a href="#lc">LangChain에서 자주 쓰는 패턴</a></li>
+      <li><a href="#mistake">자주 하는 실수</a></li>
+    </ul>
+  </aside>
+  <main class="lesson-main">
+  <div class="lesson-section" id="why" data-toc>
+    <h2>왜 파이썬인가</h2>
+    <p>생성형 AI 개발의 사실상 표준 언어입니다. 이 과정에선 <strong>"코드를 다 외우기"보다 "읽고 고치기"</strong>가 목표 — 아래는 그때 필요한 최소 파이썬입니다.</p>
+    <div class="callout callout-tip"><div class="callout-title">📝 사용법</div>막히면 이 페이지에서 문법을 찾고, AI에게 "이 코드 설명해줘"라고 물으세요.</div>
+
+  </div>
+  <div class="lesson-section" id="var" data-toc>
+    <h2>변수와 자료형</h2>
+<pre><code>name = "한라"      # 문자열(str)
+age  = 20           # 정수(int)
+pi   = 3.14         # 실수(float)
+ok   = True         # 불(bool): True / False
+none = None         # 값 없음
+
+print(type(name), type(age), type(pi), type(ok))
+print(f"{name}대학교, {age}살")   # f-string 으로 값 끼워넣기</code></pre>
+
+  </div>
+  <div class="lesson-section" id="ds" data-toc>
+    <h2>자료구조</h2>
+<pre><code># 리스트(list): 순서O, 변경O
+nums = [1, 2, 3];  nums.append(4);  print(nums[0], nums[-1])
+
+# 딕셔너리(dict): 키-값 (LangChain invoke 입력이 dict!)
+person = {"name": "홍길동", "age": 20};  print(person["name"])
+
+# 튜플(tuple): 순서O, 변경X
+point = (3, 4)
+
+# 집합(set): 중복X
+tags = {"ai", "ai", "ml"};  print(tags)   # {'ai','ml'}</code></pre>
+    <div class="callout callout-info"><div class="callout-title">💡 중요</div>LangChain의 <code>chain.invoke({"topic": "AI"})</code>처럼 <strong>dict</strong>를 가장 많이 씁니다.</div>
+
+  </div>
+  <div class="lesson-section" id="flow" data-toc>
+    <h2>조건문·반복문</h2>
+<pre><code># 조건문
+score = 85
+if score &gt;= 90:   grade = "A"
+elif score &gt;= 80: grade = "B"
+else:             grade = "C"
+
+# for 반복
+for i in range(3):        # 0,1,2
+    print(i)
+for q in ["a", "b"]:      # 리스트 순회
+    print(q)
+
+# while 반복 (챗봇 루프에서 사용)
+while True:
+    msg = input("입력(quit=종료): ")
+    if msg == "quit": break</code></pre>
+
+  </div>
+  <div class="lesson-section" id="func" data-toc>
+    <h2>함수</h2>
+<pre><code>def greet(name, lang="한국어"):     # lang은 기본값
+    """이름을 받아 인사말을 돌려준다."""
+    return f"{name}님 안녕하세요 ({lang})"
+
+print(greet("철수"))            # 철수님 안녕하세요 (한국어)
+print(greet("Tom", "English"))  # 인자 바꿔 호출
+
+# 람다(lambda): 한 줄 함수 — LCEL에서 RunnableLambda로 자주 씀
+double = lambda x: x * 2
+print(double(5))</code></pre>
+
+  </div>
+  <div class="lesson-section" id="mod" data-toc>
+    <h2>모듈·패키지·pip</h2>
+<pre><code>!pip install langchain-openai     # 패키지 설치 (Colab은 ! 붙임)
+
+import os                        # 표준 모듈
+from langchain_openai import ChatOpenAI   # 특정 클래스만 가져오기
+import pandas as pd              # 별칭(as)
+
+print(os.getcwd())</code></pre>
+
+  </div>
+  <div class="lesson-section" id="file" data-toc>
+    <h2>파일·예외</h2>
+<pre><code># 파일 읽기 (with: 자동으로 닫아줌)
+with open("notes.txt", "r", encoding="utf-8") as f:
+    text = f.read()
+
+# 예외 처리 (에러로 멈추지 않게)
+try:
+    n = int("abc")           # 에러 발생
+except ValueError as e:
+    print("숫자가 아니에요:", e)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="str" data-toc>
+    <h2>문자열·f-string</h2>
+<pre><code>s = "  LangChain  "
+print(s.strip())            # 양끝 공백 제거 → "LangChain"
+print(s.lower())            # 소문자
+print("a,b,c".split(","))   # ['a','b','c']
+print("\n".join(["x","y"])) # 줄바꿈으로 합치기 (format_docs에서 사용)
+
+topic, n = "AI", 3
+print(f"{topic} 관련 문장 {n}개 만들어줘")   # f-string</code></pre>
+
+  </div>
+  <div class="lesson-section" id="comp" data-toc>
+    <h2>컴프리헨션</h2>
+<pre><code># 리스트 컴프리헨션: for를 한 줄로 (RAG format_docs에서 자주 사용)
+squares = [x*x for x in range(5)]          # [0,1,4,9,16]
+texts   = [d.upper() for d in ["a","b"]]   # ['A','B']
+
+# 조건 포함
+evens = [x for x in range(10) if x % 2 == 0]</code></pre>
+
+  </div>
+  <div class="lesson-section" id="lc" data-toc>
+    <h2>LangChain에서 자주 쓰는 패턴</h2>
+<pre><code># 1) dict 입력
+chain.invoke({"topic": "AI"})
+
+# 2) 람다로 함수 끼우기
+{"context": lambda q: format_docs(retriever.invoke(q)), "question": lambda q: q}
+
+# 3) join + 컴프리헨션 (검색 문서 합치기)
+def format_docs(docs):
+    return "\n\n".join(d.page_content for d in docs)
+
+# 4) with 로 파일/리소스 안전하게</code></pre>
+    <div class="callout callout-tip"><div class="callout-title">📝 이 4가지</div>dict · lambda · join+컴프리헨션 · with — LangChain 코드의 8할이 이 패턴입니다.</div>
+
+  </div>
+  <div class="lesson-section" id="mistake" data-toc>
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li>들여쓰기(indent) 안 맞음 → 파이썬은 들여쓰기로 블록을 구분 (스페이스 4칸 통일)</li>
+      <li><code>=</code>(대입)와 <code>==</code>(비교) 혼동</li>
+      <li>딕셔너리 키 오타 → <code>KeyError</code></li>
+      <li>문자열/정수 섞기 → <code>"3" + 3</code>는 에러 (<code>int("3")+3</code>)</li>
+      <li>Colab에서 설치는 <code>!pip</code>, 코드에선 <code>import</code></li>
+    </ul>
+
+  </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.</div></div>
+    <div><div class="footer-title">생성형 AI</div>
+      <ul class="footer-links">
+        <li><a href="index.html">과정 개요</a></li>
+        <li><a href="project-ideas.html">프로젝트 아이디어</a></li>
+        <li><a href="project-build.html">프로젝트 설계 & 구현</a></li>
+      </ul></div>
+    <div><div class="footer-title">운영 · 문의</div>
+      <ul class="footer-links">
+        <li>강사 · 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js?v=20260612"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/notifications.js?v=20260612"></script>
+<script src="../assets/js/auth.js?v=20260612"></script>
+<script src="../assets/js/main.js?v=20260612"></script>
+</body>
+</html>

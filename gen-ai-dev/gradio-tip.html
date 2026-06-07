@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+  <meta name="theme-color" content="#1B2A4A">
+  <title>그라디오 Tip! - 생성형 AI 개발</title>
+  <meta name="description" content="Gradio 핵심 사용법과 LangChain 연결·배포 팁.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="한라대학교 하계 방학특강">
+  <meta property="og:title" content="그라디오 Tip! - 생성형 AI 개발">
+  <meta property="og:description" content="Gradio 핵심 사용법과 LangChain 연결·배포 팁.">
+  <meta property="og:image" content="https://halla.dreamitbiz.com/og-image.png">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260612">
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">한</div>
+      <div class="brand-text">
+        <span class="brand-title">한라대학교</span>
+        <span class="brand-sub">하계 방학특강</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    <ul class="nav-menu">
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../syllabus.html">강의계획서</a></li>
+      <li><a href="../gen-ai.html">Gen AI활용</a></li>
+      <li><a href="../pre-learning.html">사전학습</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger" type="button">프롬프트 실습</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">SCORE 프레임워크</li>
+          <li><a href="../prompt-practice.html">학습 + 시나리오</a></li>
+          <li><a href="../prompt-score.html">자동 점수화 도구</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-am" type="button">오전반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">15H · 비전공자 · 1~3교시</li>
+          <li><a href="../ai-basic/index.html">과정 개요</a></li>
+          <li><a href="../ai-basic/day1.html">Day 01 · AI란 무엇인가</a></li>
+          <li><a href="../ai-basic/day2.html">Day 02 · 프롬프트 기초</a></li>
+          <li><a href="../ai-basic/day3.html">Day 03 · 생성형 AI 도구</a></li>
+          <li><a href="../ai-basic/day4.html">Day 04 · AI 콘텐츠 제작</a></li>
+          <li><a href="../ai-basic/day5.html">Day 05 · 미니 프로젝트 ①</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-pm" type="button">오후반</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">45H · 비전공자 · 5~9교시</li>
+          <li><a href="../vibe-coding/index.html">과정 개요</a></li>
+          <li><a href="../vibe-coding/day1.html">Day 01 · 환경 세팅</a></li>
+          <li><a href="../vibe-coding/day2.html">Day 02 · 자연어로 코드 읽기</a></li>
+          <li><a href="../vibe-coding/day3.html">Day 03 · 웹페이지 ①</a></li>
+          <li><a href="../vibe-coding/day4.html">Day 04 · 웹페이지 ②</a></li>
+          <li><a href="../vibe-coding/day5.html">Day 05 · 인터랙션 & 기능</a></li>
+          <li><a href="../vibe-coding/day6.html">Day 06 · 디자인 & 다크모드</a></li>
+          <li><a href="../vibe-coding/day7.html">Day 07 · 배포 & 공개</a></li>
+          <li><a href="../vibe-coding/day8.html">Day 08 · 개인 프로젝트</a></li>
+          <li><a href="../vibe-coding/day9.html">Day 09 · 미니 프로젝트 ②</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-trigger cohort-dev active" type="button">생성형 AI</button>
+        <ul class="nav-dropdown-menu">
+          <li class="nav-dropdown-label">48H · 누구나 · 종일</li>
+          <li><a href="../gen-ai-dev/index.html">과정 개요</a></li>
+          <li><a href="../gen-ai-dev/day1.html">Day 01 · 바이브코딩 + LangChain</a></li>
+          <li><a href="../gen-ai-dev/day2.html">Day 02 · 프롬프트 & LCEL</a></li>
+          <li><a href="../gen-ai-dev/day3.html">Day 03 · 분류·감성 & 챗봇</a></li>
+          <li><a href="../gen-ai-dev/day4.html">Day 04 · 임베딩 & 벡터스토어</a></li>
+          <li><a href="../gen-ai-dev/day5.html">Day 05 · RAG 문서 QA & 배포</a></li>
+          <li><a href="../gen-ai-dev/day6.html">Day 06 · 미니 프로젝트</a></li>
+          <li class="nav-dropdown-divider"></li>
+          <li><a href="../gen-ai-dev/python-atoz.html">파이썬 A to Z</a></li>
+          <li><a href="../gen-ai-dev/gradio-tip.html" class="active">그라디오 Tip!</a></li>
+          <li><a href="../gen-ai-dev/streamlit-tip.html">스트림릿 Tip!</a></li>
+          <li><a href="../gen-ai-dev/project-ideas.html">프로젝트 아이디어</a></li>
+          <li><a href="../gen-ai-dev/project-build.html">프로젝트 설계 & 구현</a></li>
+        </ul>
+      </li>
+      <li><a href="../resources.html">참고자료</a></li>
+      <li><a href="../community.html">커뮤니티</a></li>
+      <li id="auth-slot"></li>
+    </ul>
+</nav>
+</header>
+<section class="lesson-hero dev">
+  <div class="lesson-hero-inner">
+    <div class="lesson-breadcrumb"><a href="../index.html">홈</a> &nbsp;›&nbsp; <a href="index.html">생성형 AI 개발</a> &nbsp;›&nbsp; <span>그라디오 Tip!</span></div>
+    <h1>그라디오 Tip!</h1>
+    <p style="opacity:0.95; max-width:760px;">Gradio로 LangChain 체인을 빠르게 웹 데모로 — 최소 예제부터 챗봇·스트리밍·공유 링크까지.</p>
+  </div>
+</section>
+<div class="lesson-layout">
+  <aside class="lesson-sidebar">
+    <div class="lesson-sidebar-title">이 페이지에서</div>
+    <ul>
+      <li><a href="#what">Gradio란</a></li>
+      <li><a href="#min">최소 예제</a></li>
+      <li><a href="#chat">챗봇 — ChatInterface</a></li>
+      <li><a href="#blocks">Blocks 레이아웃</a></li>
+      <li><a href="#lc">LangChain 연결</a></li>
+      <li><a href="#stream">스트리밍 출력</a></li>
+      <li><a href="#share">공개 링크 share=True</a></li>
+      <li><a href="#tip">실전 팁 & 실수</a></li>
+    </ul>
+  </aside>
+  <main class="lesson-main">
+  <div class="lesson-section" id="what" data-toc>
+    <h2>Gradio란</h2>
+    <p>파이썬 몇 줄로 <strong>웹 데모 UI</strong>를 만드는 도구입니다. 만든 LangChain 체인을 누구나 쓰게 공개할 때 가장 빠릅니다.</p>
+<pre><code>!pip install gradio</code></pre>
+
+  </div>
+  <div class="lesson-section" id="min" data-toc>
+    <h2>최소 예제</h2>
+<pre><code>import gradio as gr
+
+def greet(name):
+    return f"안녕하세요, {name}님!"
+
+# fn=함수, inputs/outputs=컴포넌트
+gr.Interface(fn=greet, inputs="text", outputs="text").launch()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="chat" data-toc>
+    <h2>챗봇 — ChatInterface</h2>
+    <p>챗봇은 <code>ChatInterface</code> 한 줄이면 됩니다. <code>fn(message, history)</code> 형태로 함수만 주면 끝.</p>
+<pre><code>import gradio as gr
+
+def respond(message, history):
+    # history: [(user, bot), ...] 이전 대화
+    return f"'{message}' 라고 하셨네요!"
+
+gr.ChatInterface(respond, title="내 챗봇").launch()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="blocks" data-toc>
+    <h2>Blocks 레이아웃</h2>
+    <p>자유롭게 화면을 구성하려면 <code>gr.Blocks</code>를 씁니다.</p>
+<pre><code>import gradio as gr
+
+with gr.Blocks() as demo:
+    gr.Markdown("## 내 데모")
+    chatbot = gr.Chatbot()
+    msg = gr.Textbox(placeholder="입력...")
+    def respond(message, chat_history):
+        chat_history.append((message, "답: " + message))
+        return "", chat_history
+    msg.submit(respond, [msg, chatbot], [msg, chatbot])
+
+demo.launch()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="lc" data-toc>
+    <h2>LangChain 연결</h2>
+    <p>응답 함수 안에서 우리가 만든 체인을 <code>invoke</code>하면 됩니다.</p>
+<pre><code># rag, tutor 등 미리 만든 LangChain 체인을 그대로 연결
+def respond(message, history):
+    return rag.invoke(message)      # 체인 호출 결과를 그대로 반환
+
+gr.ChatInterface(respond, title="문서 Q&amp;A 봇").launch(share=True)</code></pre>
+
+  </div>
+  <div class="lesson-section" id="stream" data-toc>
+    <h2>스트리밍 출력</h2>
+    <p>한 글자씩 나오게 하려면 <code>yield</code>로 부분 응답을 흘려보냅니다.</p>
+<pre><code>def respond(message, history):
+    partial = ""
+    for chunk in llm.stream(message):   # LangChain stream
+        partial += chunk.content
+        yield partial                   # 누적해서 계속 반환
+
+gr.ChatInterface(respond).launch()</code></pre>
+
+  </div>
+  <div class="lesson-section" id="share" data-toc>
+    <h2>공개 링크 share=True</h2>
+<pre><code>demo.launch(share=True)   # 72시간 동안 유효한 공유 URL 생성</code></pre>
+    <div class="callout callout-warn"><div class="callout-title">🔐 키 주의</div>공유 링크엔 누구나 접속합니다. API 키는 환경변수로만 두고, 비용 상한을 걸어두세요.</div>
+
+  </div>
+  <div class="lesson-section" id="tip" data-toc>
+    <h2>실전 팁 & 실수</h2>
+    <ul>
+      <li><strong>queue()</strong> — 동시 접속이 많으면 <code>demo.queue().launch()</code></li>
+      <li><strong>예시 버튼</strong> — <code>gr.ChatInterface(fn, examples=["안녕","요약해줘"])</code></li>
+      <li>느린 응답 → 스트리밍 또는 gpt-4o-mini 사용</li>
+      <li>Colab에서 share=True가 막히면 런타임 재시작 후 재실행</li>
+      <li>키 노출 금지 — 화면 공유 전 키 출력 셀 삭제</li>
+    </ul>
+
+  </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><div class="footer-brand">한라대학교 하계 방학특강</div>
+      <div class="footer-desc">AI 기초 · 바이브 코딩 · 생성형 AI 개발.</div></div>
+    <div><div class="footer-title">생성형 AI</div>
+      <ul class="footer-links">
+        <li><a href="index.html">과정 개요</a></li>
+        <li><a href="project-ideas.html">프로젝트 아이디어</a></li>
+        <li><a href="project-build.html">프로젝트 설계 & 구현</a></li>
+      </ul></div>
+    <div><div class="footer-title">운영 · 문의</div>
+      <ul class="footer-links">
+        <li>강사 · 이애본</li>
+        <li><a href="mailto:aebon@kyonggi.ac.kr">aebon@kyonggi.ac.kr</a></li>
+      </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 한라대학교 · DreamIT Biz. All rights reserved.</span>
+    <span class="footer-version">halla.dreamitbiz.com</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site-config.js?v=20260612"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/notifications.js?v=20260612"></script>
+<script src="../assets/js/auth.js?v=20260612"></script>
+<script src="../assets/js/main.js?v=20260612"></script>
+</body>
+</html>

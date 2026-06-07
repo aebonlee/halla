@@ -2729,3 +2729,9 @@ pre code {
   #auth-slot { position: relative; }
   .nav-pop { right: auto; left: 0; }
 }
+
+/* 생성형 AI 드롭다운 구분선 (일차 ↔ 보조/프로젝트 메뉴 구분) */
+.nav-dropdown-menu .nav-dropdown-divider {
+  height: 1px; margin: 7px 12px; padding: 0;
+  background: var(--color-border); list-style: none;
+}
