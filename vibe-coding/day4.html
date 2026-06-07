@@ -215,12 +215,14 @@
     <p>이 버튼을 누르면 "안녕!" 팝업이 뜹니다.<br>이게 JS의 가장 단순한 모습입니다.</p>
 
     <h3>좀 더 깔끔한 방법 (이벤트 리스너)</h3>
-    <pre>&lt;button id="myBtn"&gt;클릭&lt;/button&gt;
+    <pre>&lt;button id="myBtn"&gt;클릭&lt;/button&gt;   &lt;!-- id로 이 버튼을 콕 집어 부름 --&gt;
 
 &lt;script&gt;
+  // getElementById : id가 'myBtn'인 요소를 찾아 변수 btn에 담기
   const btn = document.getElementById('myBtn');
+  // addEventListener('click', 함수) : 버튼을 클릭하면 함수 실행
   btn.addEventListener('click', () =&gt; {
-    alert('안녕!');
+    alert('안녕!');                  // 화면에 작은 알림창 띄우기
   });
 &lt;/script&gt;</pre>
 
