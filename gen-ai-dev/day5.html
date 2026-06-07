@@ -175,57 +175,60 @@
   </div>
   <div class="lesson-section" id="pdf" data-toc>
     <h2>PDF 적재</h2>
-    <p>폴더를 만들고 PDF를 받아 읽습니다 (lang_9 원본 — 삼성 매뉴얼 예시).</p>
-<pre><code>!pip install pypdf langchain-chroma langchain-community
+    <p>폴더를 만들고 PDF를 받아 읽습니다 (예시: 삼성 제품 매뉴얼).</p>
+<pre><code>!pip install pypdf langchain-chroma langchain-community  # 필요한 패키지 설치
 
 import os, urllib.request
-os.makedirs("pdfs", exist_ok=True)                 # PDF 저장 폴더
+os.makedirs("pdfs", exist_ok=True)   # PDF 저장 폴더 만들기(이미 있어도 OK)
 
+# urlretrieve(주소, filename=저장경로) : PDF를 pdfs 폴더로 내려받기
 urllib.request.urlretrieve(
     "https://downloadcenter.samsung.com/content/UM/202402/20240220134027613/S92X_UG_CA_UU_ENG_D9.pdf",
     filename="./pdfs/S92X_manual.pdf",
 )
 
 from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
-raw = PyPDFLoader("./pdfs/S92X_manual.pdf").load()
-print("페이지 수:", len(raw))</code></pre>
+raw = PyPDFLoader("./pdfs/S92X_manual.pdf").load()  # PDF를 페이지별 Document로
+print("페이지 수:", len(raw))         # 몇 페이지로 읽혔는지 확인</code></pre>
 
   </div>
   <div class="lesson-section" id="split" data-toc>
     <h2>청크 분할</h2>
-    <p>폴더의 모든 PDF를 읽어 청크로 나눕니다. 줄바꿈 기준으로 자르고 약간 겹칩니다 (lang_9 원본).</p>
+    <p>폴더의 모든 PDF를 읽어 청크로 나눕니다. 줄바꿈 기준으로 자르고 약간 겹칩니다.</p>
 <pre><code>from langchain_text_splitters import CharacterTextSplitter
 
 folder_path = "./pdfs"
-texts = []
+texts = []                            # 모든 PDF의 청크를 한 곳에 모을 리스트
+# separator="\n": 줄바꿈 기준 / chunk_size=1000: 상자 크기 / overlap=50: 겹침
 splitter = CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=50)
 
-for filename in os.listdir(folder_path):
-    if filename.endswith(".pdf"):
-        raw_documents = PyPDFLoader(os.path.join(folder_path, filename)).load()
-        documents = splitter.split_documents(raw_documents)
-        texts.extend(documents)
+for filename in os.listdir(folder_path):       # 폴더 안 파일들을 하나씩
+    if filename.endswith(".pdf"):              # .pdf 로 끝나는 것만 처리
+        raw_documents = PyPDFLoader(os.path.join(folder_path, filename)).load()  # 읽기
+        documents = splitter.split_documents(raw_documents)   # 상자로 분할
+        texts.extend(documents)                # 결과를 texts에 이어 붙임
 
 print(f"총 청크 수 : {len(texts)}")</code></pre>
 
   </div>
   <div class="lesson-section" id="store" data-toc>
     <h2>벡터스토어 + retriever</h2>
-<pre><code>from langchain_openai import OpenAIEmbeddings
-from langchain_chroma import Chroma
+<pre><code>from langchain_openai import OpenAIEmbeddings   # 문장→벡터 변환기
+from langchain_chroma import Chroma             # 벡터 저장 DB
 
-# 청크들을 임베딩해 Chroma에 저장
+# 청크(texts)들을 임베딩해 Chroma 벡터DB에 저장
 db = Chroma.from_documents(texts, OpenAIEmbeddings())
 
-# 질문당 유사 청크 5개를 가져오는 검색기
+# as_retriever : DB를 "검색기"로. k=5 → 질문당 가장 가까운 상자 5개
 retriever = db.as_retriever(search_kwargs={"k": 5})</code></pre>
 
   </div>
   <div class="lesson-section" id="prompt" data-toc>
     <h2>RAG 프롬프트</h2>
-    <p>"제공된 내용만 근거로, 한국어로 답하라"는 규칙을 명확히 합니다 (lang_9 원본).</p>
+    <p>"제공된 내용만 근거로, 한국어로 답하라"는 규칙을 명확히 합니다.</p>
 <pre><code>from langchain_core.prompts import ChatPromptTemplate
 
+# {context}=검색된 문서, {question}=질문. 두 빈칸을 가진 지시문
 template = """
 너는 훌륭한 비서이다.
 아래 [질문]에 대해 [내용]을 참고하여 한국어로 답변하시오.
@@ -239,24 +242,26 @@ template = """
 [질문]
 {question}
 """
-chat_prompt_template = ChatPromptTemplate.from_template(template)</code></pre>
+chat_prompt_template = ChatPromptTemplate.from_template(template)  # 문자열→프롬프트</code></pre>
 
   </div>
   <div class="lesson-section" id="chain" data-toc>
     <h2>RAG 체인 완성</h2>
-    <p>검색 → 합치기 → 프롬프트 → 모델 → 문자열. 한 줄 파이프로 완성합니다 (lang_9 원본).</p>
+    <p>검색 → 합치기 → 프롬프트 → 모델 → 문자열. 한 줄 파이프로 완성합니다.</p>
 <pre><code>from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough  # 입력을 그대로 흘려보냄
 
 chat_model = ChatOpenAI(model="gpt-4o", temperature=0.1)
 
+# 검색된 상자들의 본문을 한 덩어리 글로 합치기
 def format_docs(docs):
     return "\n\n".join(d.page_content for d in docs)
 
 chain = (
+    # context = (질문→retriever 검색→format_docs로 합치기), question = 질문 그대로
     {"context": retriever | format_docs, "question": RunnablePassthrough()}
-    | chat_prompt_template | chat_model | StrOutputParser()
+    | chat_prompt_template | chat_model | StrOutputParser()   # 프롬프트→모델→문자열
 )
 
 print(chain.invoke("이 제품의 배터리 충전 방법은?"))</code></pre>
@@ -266,10 +271,11 @@ print(chain.invoke("이 제품의 배터리 충전 방법은?"))</code></pre>
     <h2>근거(metadata) 표시</h2>
     <p>답이 어느 문서/페이지에서 나왔는지 함께 보여주면 신뢰도가 올라갑니다.</p>
 <pre><code>def format_docs(docs):
-    result = []
-    for doc in docs:
+    result = []                          # 상자별 "내용+출처" 글을 모을 리스트
+    for doc in docs:                     # 검색된 상자들을 하나씩
+        # page_content=본문, metadata=출처(파일명/페이지 등)를 함께 묶기
         result.append(f"내용:\n{doc.page_content}\n메타데이터:\n{doc.metadata}")
-    return "\n\n".join(result)
+    return "\n\n".join(result)           # 줄바꿈 2번으로 이어 한 덩어리로
 
 # 체인은 동일 — context에 출처가 함께 들어가 모델이 출처를 인용</code></pre>
     <div class="callout callout-warn"><div class="callout-title">⚠️ 환각 방지</div>프롬프트에 "내용에 없으면 모른다고 답하라"를 넣으면, 문서 밖 추측(환각)을 줄일 수 있습니다.</div>
@@ -278,41 +284,44 @@ print(chain.invoke("이 제품의 배터리 충전 방법은?"))</code></pre>
   <div class="lesson-section" id="loop" data-toc>
     <h2>대화형으로 묶기</h2>
 <pre><code>def chat_with_user(user_message):
-    return chain.invoke(user_message)
+    return chain.invoke(user_message)    # 앞서 만든 RAG 체인 호출
 
-while True:
-    user_message = input("user &gt;&gt; ")
-    if user_message.lower() == "quit":
-        break
-    print("ai &gt;&gt;", chat_with_user(user_message))</code></pre>
+while True:                               # 무한 반복(대화 계속)
+    user_message = input("user &gt;&gt; ")     # 사용자 입력 받기
+    if user_message.lower() == "quit":   # quit 입력 시
+        break                            # 반복 종료
+    print("ai &gt;&gt;", chat_with_user(user_message))   # 답 출력</code></pre>
 
   </div>
   <div class="lesson-section" id="gradio" data-toc>
     <h2>배포 — Gradio</h2>
-    <p>완성한 체인에 <strong>채팅 화면</strong>을 붙여 공유 가능한 URL을 만듭니다 (adv_02 원본 응용).</p>
-<pre><code>import gradio as gr
+    <p>완성한 체인에 <strong>채팅 화면</strong>을 붙여 공유 가능한 URL을 만듭니다.</p>
+<pre><code>import gradio as gr        # 파이썬만으로 웹 UI를 만드는 라이브러리
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
+# 화면에서 메시지를 보낼 때마다 실행되는 함수
 def respond(message, chat_history):
-    # 이전 대화를 LangChain 메시지로 변환
-    messages = [SystemMessage(content="너는 친절한 한국어 AI assistant야.")]
-    for user_msg, bot_msg in chat_history:
+    # 이전 대화를 LangChain 메시지 형식으로 변환
+    messages = [SystemMessage(content="너는 친절한 한국어 AI assistant야.")]  # 역할
+    for user_msg, bot_msg in chat_history:   # 지난 (내말, AI답) 쌍들을
         messages += [HumanMessage(content=user_msg), AIMessage(content=bot_msg)]
-    messages.append(HumanMessage(content=message))
-    answer = llm.invoke(messages).content
-    chat_history.append((message, answer))
-    return "", chat_history
+    messages.append(HumanMessage(content=message))  # 이번 새 질문 추가
+    answer = llm.invoke(messages).content    # 모델 답 받기
+    chat_history.append((message, answer))   # 대화 기록에 이번 쌍 추가
+    return "", chat_history                  # 입력창 비우기, 갱신된 기록 반환
 
+# gr.Blocks : 화면 구성을 묶는 컨테이너
 with gr.Blocks() as demo:
-    gr.Markdown("## 나의 RAG Assistant")
-    chatbot = gr.Chatbot()
-    msg = gr.Textbox(placeholder="메시지를 입력하세요...")
+    gr.Markdown("## 나의 RAG Assistant")     # 제목
+    chatbot = gr.Chatbot()                   # 대화 표시 영역
+    msg = gr.Textbox(placeholder="메시지를 입력하세요...")  # 입력창
+    # 입력창에서 Enter → respond 실행([입력] → [입력,대화] 갱신)
     msg.submit(respond, [msg, chatbot], [msg, chatbot])
 
-demo.launch(share=True)   # share=True → 외부 공유 URL 생성</code></pre>
+demo.launch(share=True)   # share=True → 외부에서 접속 가능한 공유 URL 생성</code></pre>
     <div class="callout callout-tip"><div class="callout-title">📝 RAG 붙이기</div>위 <code>llm.invoke(messages)</code>를 우리가 만든 <code>chain.invoke(message)</code>로 바꾸면 "내 문서로 답하는" 챗봇 UI가 됩니다.</div>
 
   </div>
