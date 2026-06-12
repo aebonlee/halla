@@ -1047,9 +1047,28 @@ body {
 .gallery-card.amber { background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%); }
 
 .gallery-card-emoji {
-  font-size: 56px;
+  font-size: 42px;
   line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
 }
+
+/* 결과물 갤러리 — 과정 계열 그룹 */
+.gallery-group { margin-top: 28px; }
+.gallery-group:first-of-type { margin-top: 16px; }
+.gallery-group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-border);
+}
+.gallery-group-title i { font-size: 16px; opacity: 0.95; }
+.gallery-group-title.ai   { color: var(--color-ai);   border-bottom-color: var(--color-ai); }
+.gallery-group-title.vibe { color: var(--color-vibe); border-bottom-color: var(--color-vibe); }
+.gallery-group-title.dev  { color: var(--color-dev);  border-bottom-color: var(--color-dev); }
 
 .gallery-card-title {
   font-size: 22px;
@@ -1805,7 +1824,8 @@ body {
 
 .tool-card:hover { border-color: var(--color-primary); transform: translateY(-2px); }
 
-.tool-emoji { font-size: 32px; margin-bottom: 8px; }
+.tool-emoji { font-size: 30px; margin-bottom: 12px; color: var(--color-primary); line-height: 1; }
+.tool-card:hover .tool-emoji { color: var(--color-primary-dark); }
 .tool-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
 .tool-desc { font-size: 13px; color: var(--color-text-muted); }
 

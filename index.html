@@ -32,8 +32,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260616">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260617">
 </head>
 <body>
 
@@ -419,22 +420,22 @@
 
   <div class="tool-grid">
     <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-card">
-      <div class="tool-emoji">🤖</div>
+      <div class="tool-emoji"><i class="fa-solid fa-robot"></i></div>
       <div class="tool-name">Claude</div>
       <div class="tool-desc">메인 AI 어시스턴트 · 코딩·문서·대화</div>
     </a>
     <a href="https://cursor.sh" target="_blank" rel="noopener" class="tool-card">
-      <div class="tool-emoji">💻</div>
+      <div class="tool-emoji"><i class="fa-solid fa-laptop-code"></i></div>
       <div class="tool-name">Cursor</div>
       <div class="tool-desc">AI 내장 코드 에디터 · 바이브 코딩 메인 도구</div>
     </a>
     <a href="https://gamma.app" target="_blank" rel="noopener" class="tool-card">
-      <div class="tool-emoji">🎯</div>
+      <div class="tool-emoji"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
       <div class="tool-name">Gamma</div>
       <div class="tool-desc">AI 발표자료 자동 생성 도구</div>
     </a>
     <a href="https://www.canva.com/ai" target="_blank" rel="noopener" class="tool-card">
-      <div class="tool-emoji">🎨</div>
+      <div class="tool-emoji"><i class="fa-solid fa-palette"></i></div>
       <div class="tool-name">Canva AI</div>
       <div class="tool-desc">이미지 · 디자인 · 영상 생성</div>
     </a>
@@ -472,87 +473,105 @@
 <!-- ===== 결과물 갤러리 ===== -->
 <section class="container" style="padding-top: 0;">
   <h2 class="section-title">며칠 후 이런 걸 만들게 됩니다</h2>
-  <p class="section-sub">각자의 관심사와 주제로 본인만의 결과물을 만들어 발표합니다.</p>
+  <p class="section-sub">각자의 관심사와 주제로 본인만의 결과물을 만들어 발표합니다. — 과정 계열별로 정리했습니다.</p>
 
-  <div class="gallery-grid">
-    <div class="gallery-card dev">
-      <div>
-        <span class="gallery-card-tag">종일반</span>
-        <div class="gallery-card-emoji">🚀</div>
+  <!-- 오전반 계열 -->
+  <div class="gallery-group">
+    <h3 class="gallery-group-title ai"><i class="fa-solid fa-sun"></i> 오전반 · AI 기초</h3>
+    <div class="gallery-grid">
+      <div class="gallery-card ai">
+        <div>
+          <span class="gallery-card-tag">오전반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-person-chalkboard"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">AI 활용 발표자료</div>
+          <div class="gallery-card-desc">Gamma + Claude로 10장 슬라이드를 30분에.<br>본인 주제를 발표 가능한 형태로.</div>
+        </div>
       </div>
-      <div>
-        <div class="gallery-card-title">나만의 생성형 AI 서비스</div>
-        <div class="gallery-card-desc">API·챗봇·RAG·에이전트를 조합한 작동하는 서비스.<br>웹에 배포해 URL로 공유.</div>
+      <div class="gallery-card ai">
+        <div>
+          <span class="gallery-card-tag">오전반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-palette"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">Canva AI 인포그래픽</div>
+          <div class="gallery-card-desc">Magic Media로 이미지 생성 + 디자인까지 완성.<br>SNS·블로그용 콘텐츠 한 장.</div>
+        </div>
       </div>
-    </div>
-    <div class="gallery-card dev">
-      <div>
-        <span class="gallery-card-tag">종일반</span>
-        <div class="gallery-card-emoji">💬</div>
-      </div>
-      <div>
-        <div class="gallery-card-title">목적형 AI 챗봇</div>
-        <div class="gallery-card-desc">시스템 프롬프트로 페르소나를 잡고 맥락을 기억하는 챗봇.<br>내 문서 기반 Q&amp;A까지.</div>
-      </div>
-    </div>
-    <div class="gallery-card ai">
-      <div>
-        <span class="gallery-card-tag">오전반</span>
-        <div class="gallery-card-emoji">🎯</div>
-      </div>
-      <div>
-        <div class="gallery-card-title">AI 활용 발표자료</div>
-        <div class="gallery-card-desc">Gamma + Claude로 10장 슬라이드를 30분에.<br>본인 주제를 발표 가능한 형태로.</div>
-      </div>
-    </div>
-    <div class="gallery-card ai">
-      <div>
-        <span class="gallery-card-tag">오전반</span>
-        <div class="gallery-card-emoji">🎨</div>
-      </div>
-      <div>
-        <div class="gallery-card-title">Canva AI 인포그래픽</div>
-        <div class="gallery-card-desc">Magic Media로 이미지 생성 + 디자인까지 완성.<br>SNS·블로그용 콘텐츠 한 장.</div>
+      <div class="gallery-card amber">
+        <div>
+          <span class="gallery-card-tag">오전반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-file-pen"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">AI 활용 워크플로 문서</div>
+          <div class="gallery-card-desc">본인 업무·과제 흐름을 AI로 자동화한 기록.<br>학기 내내 재사용 가능한 자산.</div>
+        </div>
       </div>
     </div>
-    <div class="gallery-card amber">
-      <div>
-        <span class="gallery-card-tag">오전반</span>
-        <div class="gallery-card-emoji">📝</div>
+  </div>
+
+  <!-- 오후반 계열 -->
+  <div class="gallery-group">
+    <h3 class="gallery-group-title vibe"><i class="fa-solid fa-laptop-code"></i> 오후반 · 바이브 코딩</h3>
+    <div class="gallery-grid">
+      <div class="gallery-card vibe">
+        <div>
+          <span class="gallery-card-tag">오후반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-globe"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">개인 웹사이트</div>
+          <div class="gallery-card-desc">자기소개·포트폴리오·SNS 링크.<br>다크모드 토글 포함, 모바일 반응형, 인터넷 배포.</div>
+        </div>
       </div>
-      <div>
-        <div class="gallery-card-title">AI 활용 워크플로 문서</div>
-        <div class="gallery-card-desc">본인 업무·과제 흐름을 AI로 자동화한 기록.<br>학기 내내 재사용 가능한 자산.</div>
+      <div class="gallery-card vibe">
+        <div>
+          <span class="gallery-card-tag">오후반</span>
+          <div class="gallery-card-emoji"><i class="fa-brands fa-python"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">파이썬 미니 프로그램</div>
+          <div class="gallery-card-desc">계산기·숫자 맞히기·간단한 자동화 도구.<br>자연어로 만들고 본인이 다듬은 코드.</div>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <div>
+          <span class="gallery-card-tag">오후반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-clipboard-list"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">방명록·인터랙티브 페이지</div>
+          <div class="gallery-card-desc">JavaScript 이벤트, localStorage, 다크모드 — 동작하는 인터랙션 1개 이상.</div>
+        </div>
       </div>
     </div>
-    <div class="gallery-card vibe">
-      <div>
-        <span class="gallery-card-tag">오후반</span>
-        <div class="gallery-card-emoji">🌐</div>
+  </div>
+
+  <!-- 종일반 계열 -->
+  <div class="gallery-group">
+    <h3 class="gallery-group-title dev"><i class="fa-solid fa-rocket"></i> 종일반 · 생성형 AI 개발</h3>
+    <div class="gallery-grid">
+      <div class="gallery-card dev">
+        <div>
+          <span class="gallery-card-tag">종일반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-rocket"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">나만의 생성형 AI 서비스</div>
+          <div class="gallery-card-desc">API·챗봇·RAG·에이전트를 조합한 작동하는 서비스.<br>웹에 배포해 URL로 공유.</div>
+        </div>
       </div>
-      <div>
-        <div class="gallery-card-title">개인 웹사이트</div>
-        <div class="gallery-card-desc">자기소개·포트폴리오·SNS 링크.<br>다크모드 토글 포함, 모바일 반응형, 인터넷 배포.</div>
-      </div>
-    </div>
-    <div class="gallery-card vibe">
-      <div>
-        <span class="gallery-card-tag">오후반</span>
-        <div class="gallery-card-emoji">💻</div>
-      </div>
-      <div>
-        <div class="gallery-card-title">파이썬 미니 프로그램</div>
-        <div class="gallery-card-desc">계산기·숫자 맞히기·간단한 자동화 도구.<br>자연어로 만들고 본인이 다듬은 코드.</div>
-      </div>
-    </div>
-    <div class="gallery-card">
-      <div>
-        <span class="gallery-card-tag">오후반</span>
-        <div class="gallery-card-emoji">📋</div>
-      </div>
-      <div>
-        <div class="gallery-card-title">방명록·인터랙티브 페이지</div>
-        <div class="gallery-card-desc">JavaScript 이벤트, localStorage, 다크모드 — 동작하는 인터랙션 1개 이상.</div>
+      <div class="gallery-card dev">
+        <div>
+          <span class="gallery-card-tag">종일반</span>
+          <div class="gallery-card-emoji"><i class="fa-solid fa-comments"></i></div>
+        </div>
+        <div>
+          <div class="gallery-card-title">목적형 AI 챗봇</div>
+          <div class="gallery-card-desc">시스템 프롬프트로 페르소나를 잡고 맥락을 기억하는 챗봇.<br>내 문서 기반 Q&amp;A까지.</div>
+        </div>
       </div>
     </div>
   </div>
