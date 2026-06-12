@@ -1005,32 +1005,26 @@ body {
   gap: 20px;
 }
 
-/* 카드 2개 그룹(종일반) — 위 줄과 같은 전체 폭을 2칸으로 채움 */
-.gallery-group.pair .gallery-grid {
-  grid-template-columns: repeat(2, 1fr);
-}
-
 @media (max-width: 1100px) {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 560px) {
-  .gallery-grid,
-  .gallery-group.pair .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
 }
 
 .gallery-card {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  min-height: 150px;
+  min-height: 112px;
   background: linear-gradient(135deg, #1B2A4A 0%, #3D6FE0 100%);
   color: white;
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   cursor: default;
   transition: all 0.3s;
   isolation: isolate;
@@ -1053,10 +1047,19 @@ body {
 .gallery-card.vibe { background: linear-gradient(135deg, #831843 0%, #EC4899 100%); }
 .gallery-card.amber { background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%); }
 
+/* 상단 행: 태그(왼쪽) + 아이콘(오른쪽 위) */
+.gallery-card > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.gallery-card > div:first-child .gallery-card-tag { margin-bottom: 0; }
 .gallery-card-emoji {
-  font-size: 42px;
+  font-size: 32px;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: -2px;
 }
 
 /* 결과물 갤러리 — 과정 계열 그룹 */
