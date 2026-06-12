@@ -1005,16 +1005,13 @@ body {
   gap: 20px;
 }
 
-/* 카드 2개 그룹(종일반) — 카드 크기는 유지한 채 가운데 정렬 */
+/* 카드 2개 그룹(종일반) — 위 줄과 같은 전체 폭을 2칸으로 채움 */
 .gallery-group.pair .gallery-grid {
   grid-template-columns: repeat(2, 1fr);
-  max-width: calc(66.667% - 6.667px);
-  margin-inline: auto;
 }
 
 @media (max-width: 1100px) {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-group.pair .gallery-grid { max-width: none; }
 }
 
 @media (max-width: 560px) {
@@ -1026,12 +1023,13 @@ body {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
+  min-height: 150px;
   background: linear-gradient(135deg, #1B2A4A 0%, #3D6FE0 100%);
   color: white;
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 12px;
   cursor: default;
   transition: all 0.3s;
