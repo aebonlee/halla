@@ -1003,23 +1003,24 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-}
-
-/* 카드 2개 그룹(종일반) — 카드 크기는 유지한 채 가운데 정렬 */
-.gallery-group.pair .gallery-grid {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: calc(66.667% - 6.667px);
+  max-width: 50%;            /* 박스 너비 1/2 — 가운데로 모음 */
   margin-inline: auto;
 }
 
+/* 카드 2개 그룹(종일반) — 카드 크기는 3카드 그룹과 동일하게 유지 + 가운데 정렬 */
+.gallery-group.pair .gallery-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: calc(33.333% - 6.667px);
+}
+
 @media (max-width: 1100px) {
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-group.pair .gallery-grid { max-width: none; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); max-width: 80%; }
+  .gallery-group.pair .gallery-grid { max-width: calc(53.333% - 6.667px); }
 }
 
 @media (max-width: 560px) {
   .gallery-grid,
-  .gallery-group.pair .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-group.pair .gallery-grid { grid-template-columns: 1fr; max-width: 320px; }
 }
 
 .gallery-card {
